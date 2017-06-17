@@ -126,7 +126,7 @@ productNo=PN1497714192404
 }
 ```
 ## 5.创建订单
-地址:	/order/item    
+地址:	/order/create    
 
 方式:	post    
 
@@ -327,26 +327,16 @@ phone=18812345678
 
 请求参数：
 ```
-productNo=PN1497714192404
+phone=18812345678
+messageId=M325821367628857344
+verifyCode=123456
 ```
 返回参数：
 ```
 {
     "retCode": "000000",
     "retMsg": "SUCCESS",
-    "data": {
-        "item": {
-            "productNo": "PN1497714192404",
-            "name": "酸奶1",
-            "catalogNo": "CN1497713023528",
-            "description": "酸奶1酸奶1",
-            "price": 99,
-            "nowPrice": 88,
-            "icon": "",
-            "detail": "酸奶1酸奶1酸奶1酸奶1",
-            "images": ""
-        }
-    }
+    "data": {}
 }
 ```
 ## 11.新增收货地址
