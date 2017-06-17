@@ -29,16 +29,15 @@ public class TblCatalogMapperTest extends BaseDaoTest {
     @Test
     public void testInsertSelective() throws Exception {
         TblCatalog tblCatalog = new TblCatalog();
-        tblCatalog.setCatalogNo("catalogNo" + System.currentTimeMillis());
-        tblCatalog.setName("name" + System.currentTimeMillis());
+        tblCatalog.setCatalogNo("CN" + System.currentTimeMillis());
+        tblCatalog.setName("酸奶");
         tblCatalog.setCreateTime(new Date());
         tblCatalogMapper.insertSelective(tblCatalog);
 
         TblCatalog tblCatalog2 = new TblCatalog();
-        tblCatalog2.setCatalogNo("catalogNo" + System.currentTimeMillis());
-        tblCatalog2.setName("name" + System.currentTimeMillis());
+        tblCatalog2.setCatalogNo("CN" + System.currentTimeMillis());
+        tblCatalog2.setName("抽纸");
         tblCatalog2.setCreateTime(new Date());
-        tblCatalog2.setIsDelete(1);
         tblCatalogMapper.insertSelective(tblCatalog2);
     }
 

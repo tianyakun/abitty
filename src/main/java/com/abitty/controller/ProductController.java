@@ -1,20 +1,22 @@
 package com.abitty.controller;
 
-import com.abitty.entity.TblCatalog;
+import com.abitty.dto.ResponseDto;
 import com.abitty.entity.TblProduct;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.ProductService;
+import com.abitty.vo.ProductVo;
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -32,59 +34,91 @@ public class ProductController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Map<String, Object> getProductList(HttpServletRequest request) {
-        Map<String, Object> resultMap = Maps.newHashMap();
+    public ResponseDto getProductList(final String catalogNo) {
+        logger.info("获取商品列表请求 catalogNo={}", catalogNo);
+
+        ResponseDto responseDto = new ResponseDto();
 
         try {
-            String catalogNo = request.getParameter("catalogNo");
+            if (Strings.isNullOrEmpty(catalogNo)) {
+                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+            } else {
+                List<TblProduct> tblProductList = productService.getAllPublish(catalogNo);
 
-            List<TblProduct> tblProductList = productService.getAllPublish(catalogNo);
+                List<ProductVo> productVoList = buildProductVoList(tblProductList);
 
-            Map<String, Object> data = Maps.newHashMap();
-            data.put("list", tblProductList);
+                responseDto.addAttribute("list", productVoList);
 
-            resultMap.put("data", data);
-            resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
-
-            return resultMap;
+                responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            }
         } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
+
+        logger.info("获取商品列表返回: {}", responseDto);
+        return responseDto;
+    }
+
+    private List<ProductVo> buildProductVoList(List<TblProduct> tblProductList) {
+        List<ProductVo> productVoList = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(tblProductList)) {
+            productVoList = Lists.transform(tblProductList, new Function<TblProduct, ProductVo>() {
+                public ProductVo apply(TblProduct input) {
+                    return buildProductVo(input);
+                }
+            });
+        }
+        return productVoList;
+    }
+
+    private ProductVo buildProductVo(TblProduct input) {
+        if (input != null) {
+            ProductVo vo = new ProductVo();
+            vo.setProductNo(input.getProductNo());
+            vo.setName(input.getName());
+            vo.setCatalogNo(input.getCatalogNo());
+            vo.setDescription(input.getDescription());
+            vo.setNowPrice(input.getNowPrice());
+            vo.setPrice(input.getPrice());
+            vo.setIcon(input.getIcon());
+            vo.setDetail(input.getDetail());
+            vo.setImages(input.getImages());
+            return vo;
+        }
+        return null;
     }
 
     @RequestMapping(value = "/item")
     @ResponseBody
-    public Map<String, Object> getCatalogDetail(HttpServletRequest request) {
+    public ResponseDto getCatalogDetail(final String productNo) {
 
-        Map<String, Object> resultMap = Maps.newHashMap();
+        logger.info("获取商品详情请求 catalogNo={}", productNo);
+
+        ResponseDto responseDto = new ResponseDto();
 
         try {
-
-            String productNo = request.getParameter("productNo");
-
             if (Strings.isNullOrEmpty(productNo)) {
-                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
-                return resultMap;
+                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
             } else {
                 TblProduct tblProduct = productService.getByProductNo(productNo);
 
-                Map<String, Object> data = Maps.newHashMap();
-                data.put("item", tblProduct);
+                ProductVo productVo = buildProductVo(tblProduct);
 
-                resultMap.put("data", data);
-                resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
+                responseDto.addAttribute("item", productVo);
 
-                return resultMap;
+                responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
             }
         } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
+
+        logger.info("获取商品详情返回: {}", responseDto);
+        return responseDto;
     }
 }

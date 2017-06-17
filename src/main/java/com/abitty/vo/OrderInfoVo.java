@@ -1,53 +1,47 @@
-package com.abitty.dto;
+package com.abitty.vo;
 
-import net.sf.oval.constraint.NotBlank;
-import net.sf.oval.constraint.NotNull;
-
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * Created by yak on 17/6/17.
+ * Created by yak on 17/6/18.
  */
-public class OrderAddRequestDto implements Serializable {
+public class OrderInfoVo {
+    private String orderNo;
 
-    @NotNull
-    @NotBlank
     private String uid;
 
-    @NotNull
-    @NotBlank
     private String productNo;
 
-    @NotNull
     private Integer totalQuantity;
 
-    @NotNull
     private BigDecimal totalAmount;
 
-    @NotNull
-    @NotBlank
+    private Integer status;
+
     private String deliveryType;
 
-    @NotNull
-    @NotBlank
-    private String deliveryTime;
-
-    @NotNull
     private Integer subQuantity;
 
-    @NotNull
     private Integer totalSub;
 
-    @NotNull
-    @NotBlank
-    private Integer addressId;
+    private Integer finishSub;
 
-    @NotNull
+    private String nextSub;
+
+    private Date nextSubTime;
+
     private Integer userNumber;
 
     private String remark;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 
     public String getUid() {
         return uid;
@@ -81,20 +75,20 @@ public class OrderAddRequestDto implements Serializable {
         this.totalAmount = totalAmount;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getDeliveryType() {
         return deliveryType;
     }
 
     public void setDeliveryType(String deliveryType) {
         this.deliveryType = deliveryType;
-    }
-
-    public String getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public void setDeliveryTime(String deliveryTime) {
-        this.deliveryTime = deliveryTime;
     }
 
     public Integer getSubQuantity() {
@@ -113,12 +107,28 @@ public class OrderAddRequestDto implements Serializable {
         this.totalSub = totalSub;
     }
 
-    public Integer getAddressId() {
-        return addressId;
+    public Integer getFinishSub() {
+        return finishSub;
     }
 
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
+    public void setFinishSub(Integer finishSub) {
+        this.finishSub = finishSub;
+    }
+
+    public String getNextSub() {
+        return nextSub;
+    }
+
+    public void setNextSub(String nextSub) {
+        this.nextSub = nextSub;
+    }
+
+    public Date getNextSubTime() {
+        return nextSubTime;
+    }
+
+    public void setNextSubTime(Date nextSubTime) {
+        this.nextSubTime = nextSubTime;
     }
 
     public Integer getUserNumber() {
@@ -139,16 +149,19 @@ public class OrderAddRequestDto implements Serializable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("OrderRequestDto{");
-        sb.append("uid='").append(uid).append('\'');
+        final StringBuilder sb = new StringBuilder("OrderInfoVo{");
+        sb.append("orderNo='").append(orderNo).append('\'');
+        sb.append(", uid='").append(uid).append('\'');
         sb.append(", productNo='").append(productNo).append('\'');
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
+        sb.append(", status=").append(status);
         sb.append(", deliveryType='").append(deliveryType).append('\'');
-        sb.append(", deliveryTime='").append(deliveryTime).append('\'');
         sb.append(", subQuantity=").append(subQuantity);
         sb.append(", totalSub=").append(totalSub);
-        sb.append(", addressId=").append(addressId);
+        sb.append(", finishSub=").append(finishSub);
+        sb.append(", nextSub='").append(nextSub).append('\'');
+        sb.append(", nextSubTime=").append(nextSubTime);
         sb.append(", userNumber=").append(userNumber);
         sb.append(", remark='").append(remark).append('\'');
         sb.append('}');

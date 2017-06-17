@@ -26,4 +26,11 @@ public class Constants {
         public static final String YEARLY = "yearly";
     }
 
+    public class ProductState {
+        public static final int NEWLY = 0; //新增
+        public static final int ON_SALE = 1; //上架
+        public static final int SOLD_OUT = 2; //下架
+        public static final int DELETE = 3; //删除
+    }
+
 }

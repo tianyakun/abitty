@@ -1,10 +1,15 @@
 package com.abitty.controller;
 
+import com.abitty.dto.ResponseDto;
 import com.abitty.entity.TblCatalog;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.CatalogService;
+import com.abitty.vo.CatalogVo;
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,130 +34,87 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list")
     @ResponseBody
-    public Map<String, Object> getCatalogList() {
-        String retCode = "000000";
-        String retMsg = "SUCCESS";
+    public ResponseDto getCatalogList() {
+        logger.info("获取商品类别列表请求");
 
-        Map<String, Object> resultMap = Maps.newHashMap();
+        ResponseDto responseDto = new ResponseDto();
 
         try {
-            Map<String, Object> data = Maps.newHashMap();
-
             List<TblCatalog> catalogList = catalogService.getAllCatalog();
 
-            data.put("list", catalogList);
+            List<CatalogVo> catalogVoList = buildCatalogVoList(catalogList);
 
-            resultMap.put("data", data);
+            responseDto.addAttribute("list", catalogVoList);
+
+            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
         } catch (Exception e) {
-            retCode = "999999";
-            retMsg = "server error!";
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
 
-        resultMap.put("retCode", retCode);
-        resultMap.put("retMsg", retMsg);
-        return resultMap;
+        logger.info("获取商品类别列表返回: {}", responseDto);
+        return responseDto;
+    }
+
+    private List<CatalogVo> buildCatalogVoList(List<TblCatalog> catalogList) {
+        List<CatalogVo> catalogVoList = Lists.newArrayList();
+
+        if (CollectionUtils.isNotEmpty(catalogList)) {
+            catalogVoList = Lists.transform(catalogList, new Function<TblCatalog, CatalogVo>() {
+                public CatalogVo apply(TblCatalog input) {
+                    return buildCatalogVo(input);
+                }
+            });
+        }
+
+        return catalogVoList;
     }
 
     @RequestMapping(value = "/item")
     @ResponseBody
-    public Map<String, Object> getCatalogDetail(HttpServletRequest request) {
+    public ResponseDto getCatalogDetail(final String catalogNo) {
 
-        Map<String, Object> resultMap = Maps.newHashMap();
+        logger.info("获取商品类别请求 catalogNo={}", catalogNo);
+
+        ResponseDto responseDto = new ResponseDto();
 
         try {
-
-            String catalogNo = request.getParameter("catalogNo");
-
             if (Strings.isNullOrEmpty(catalogNo)) {
-                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
-                return resultMap;
+                logger.error("参数校验失败");
+                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
             } else {
                 TblCatalog tblCatalog = catalogService.getByCatalogNo(catalogNo);
 
-                Map<String, Object> data = Maps.newHashMap();
-                data.put("item", tblCatalog);
+                CatalogVo catalogVo = buildCatalogVo(tblCatalog);
 
-                resultMap.put("data", data);
-                resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
+                responseDto.addAttribute("item", catalogVo);
 
-                return resultMap;
+                responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
             }
         } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
+
+        logger.info("获取商品类别返回 responseDto={}", responseDto);
+        return responseDto;
     }
 
-//    @RequestMapping(value = "/{id:\\d+}/delete", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Map<String, Object> deleteCatalog(@PathVariable("id") int id) {
-//
-//        String retCode = "000000";
-//        String retMsg = "SUCCESS";
-//
-//        Map<String, Object> resultMap = Maps.newHashMap();
-//
-//        try {
-//            TblCatalog tblCatalog = new TblCatalog();
-//            tblCatalog.setId(id);
-//            tblCatalog.setIsDelete(1);
-//            catalogService.update(tblCatalog);
-//        } catch (Exception e) {
-//            retCode = "999999";
-//            retMsg = "server error!";
-//        }
-//
-//        resultMap.put("retCode", retCode);
-//        resultMap.put("retMsg", retMsg);
-//        return resultMap;
-//    }
-//
-//    @RequestMapping(value = "/add", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Map<String, Object> addCatalog(TblCatalog tblCatalog) {
-//
-//        String retCode = "000000";
-//        String retMsg = "SUCCESS";
-//
-//        Map<String, Object> resultMap = Maps.newHashMap();
-//
-//        try {
-//            logger.info(tblCatalog.toString());
-//            tblCatalog.setCreateTime(new Date());
-//            catalogService.add(tblCatalog);
-//        } catch (Exception e) {
-//            retCode = "999999";
-//            retMsg = "server error!";
-//        }
-//
-//        resultMap.put("retCode", retCode);
-//        resultMap.put("retMsg", retMsg);
-//        return resultMap;
-//    }
-//
-//    @RequestMapping(value = "/{id:\\d+}/upate", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Map<String, Object> updateCatalog(TblCatalog tblCatalog) {
-//
-//        String retCode = "000000";
-//        String retMsg = "SUCCESS";
-//
-//        Map<String, Object> resultMap = Maps.newHashMap();
-//
-//        try {
-//            catalogService.update(tblCatalog);
-//        } catch (Exception e) {
-//            retCode = "999999";
-//            retMsg = "server error!";
-//        }
-//
-//        resultMap.put("retCode", retCode);
-//        resultMap.put("retMsg", retMsg);
-//        return resultMap;
-//    }
+    private CatalogVo buildCatalogVo(TblCatalog input) {
+        if (input == null) {
+            return null;
+        } else {
+            CatalogVo vo = new CatalogVo();
+            vo.setCatalogNo(input.getCatalogNo());
+            vo.setName(input.getName());
+            vo.setIcon(input.getIcon());
+            vo.setDescription(input.getDescription());
+            return vo;
+        }
+    }
 }

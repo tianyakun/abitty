@@ -57,13 +57,16 @@ public class OrderServiceImpl implements OrderService{
                 return;
             }
 
-            tblOrderInfo.setStatus(Constants.OrderState.PAID);
-            tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
-
             List<TblSubOrder> subOrderList = buildSubOrders(tblOrderInfo);
             for (TblSubOrder tblSubOrder : subOrderList) {
                 tblSubOrderMapper.insertSelective(tblSubOrder);
             }
+
+            TblSubOrder firstSubOrder = subOrderList.get(0);
+            tblOrderInfo.setStatus(Constants.OrderState.PAID);
+            tblOrderInfo.setNextSub(firstSubOrder.getSubOrderNo());
+            tblOrderInfo.setNextSubTime(firstSubOrder.getDeliveryTime());
+            tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
 
             responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorCode());

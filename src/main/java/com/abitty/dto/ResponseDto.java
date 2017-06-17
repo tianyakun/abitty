@@ -40,6 +40,10 @@ public class ResponseDto implements Serializable {
         this.data = data;
     }
 
+    public void addAttribute(String key, Object value) {
+        this.data.put(key, value);
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CommonResponseDto{");

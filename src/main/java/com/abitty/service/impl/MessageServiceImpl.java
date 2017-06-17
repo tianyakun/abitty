@@ -1,6 +1,7 @@
 package com.abitty.service.impl;
 
 import com.abitty.service.MessageService;
+import com.abitty.utils.Sequence;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageServiceImpl implements MessageService {
     public boolean verify(String messageId, String verifyCode) {
-        return false;
+        return true;//todo
     }
 
     public String sendVerifyCode(String phone) {
-        return null;
+        return "M" + Sequence.next();//todo
     }
 }

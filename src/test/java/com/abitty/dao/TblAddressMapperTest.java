@@ -27,8 +27,13 @@ public class TblAddressMapperTest extends BaseDaoTest {
     @Test
     public void testInsertSelective() throws Exception {
         TblAddress tblAddress = new TblAddress();
-        tblAddress.setProvince("test");
-        tblAddress.setRecName("test");
+        tblAddress.setUid("18812345678");
+        tblAddress.setProvince("北京");
+        tblAddress.setCity("北京");
+        tblAddress.setArea("昌平区");
+        tblAddress.setAddressDetail("xxxxxxxxxxx");
+        tblAddress.setRecName("麦克斯韦");
+        tblAddress.setPhone("18812345678");
         tblAddressMapper.insertSelective(tblAddress);
     }
 

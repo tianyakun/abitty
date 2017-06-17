@@ -1,11 +1,14 @@
 package com.abitty.controller;
 
 import com.abitty.dto.LoginDto;
+import com.abitty.dto.ResponseDto;
+import com.abitty.entity.TblCatalog;
 import com.abitty.entity.TblUser;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.MessageService;
 import com.abitty.service.UserService;
 import com.abitty.utils.ParamChecker;
+import com.abitty.vo.CatalogVo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -36,30 +39,30 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addAddress(LoginDto loginDto, HttpServletRequest httpServletRequest) {
+    public ResponseDto addAddress(LoginDto loginDto, HttpServletRequest httpServletRequest) {
+        logger.info("用户登录请求 loginDto={}", loginDto);
 
-        Map<String, Object> resultMap = Maps.newHashMap();
+        ResponseDto responseDto = new ResponseDto();
 
         try {
             //参数校验
             String constraintMessage = ParamChecker.getConstraintMessage(loginDto);
             if (!Strings.isNullOrEmpty(constraintMessage)) {
                 logger.error("参数校验失败:{}", constraintMessage);
-                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
-                return resultMap;
-            }
-
-            if (messageService.verify(loginDto.getMessageId(), loginDto.getVerifyCode())) {
+                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+            } else if (!messageService.verify(loginDto.getMessageId(), loginDto.getVerifyCode())) {
+                logger.error("短信验证失败");
+                responseDto.setRetCode(ExceptionEnum.VERIFY_INVALID.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.VERIFY_INVALID.getErrorMsg());
+            } else {
                 TblUser tblUser = userService.getUserByUid(loginDto.getPhone());
-
                 if (tblUser == null) {
                     tblUser = new TblUser();
                     tblUser.setUid(loginDto.getPhone());
                     tblUser.setPhone(loginDto.getPhone());
                     tblUser.setCreateTime(new Date());
                     tblUser.setLastLoginTime(new Date());
-
                     userService.add(tblUser);
                 } else {
                     tblUser.setLastLoginTime(new Date());
@@ -68,20 +71,16 @@ public class LoginController {
 
                 httpServletRequest.getSession().setAttribute("uid", tblUser.getUid());
 
-            } else {
-                resultMap.put("retCode", ExceptionEnum.VERIFY_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.VERIFY_INVALID.getErrorMsg());
-                return resultMap;
+                responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
             }
-
-            resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
-            return resultMap;
         } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
+
+        logger.info("用户登录返回 responseDto={}", responseDto);
+        return responseDto;
     }
 
 }

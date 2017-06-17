@@ -122,4 +122,23 @@ public class TblUser {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TblUser{");
+        sb.append("id=").append(id);
+        sb.append(", uid='").append(uid).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", gender='").append(gender).append('\'');
+        sb.append(", birthday=").append(birthday);
+        sb.append(", status=").append(status);
+        sb.append(", lastLoginTime=").append(lastLoginTime);
+        sb.append(", lastLoginIp='").append(lastLoginIp).append('\'');
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append('}');
+        return sb.toString();
+    }
 }

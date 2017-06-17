@@ -1,10 +1,12 @@
-package com.abitty.entity;
+package com.abitty.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TblProduct {
-    private Integer id;
+/**
+ * Created by yak on 17/6/17.
+ */
+public class ProductVo {
 
     private String productNo;
 
@@ -18,23 +20,11 @@ public class TblProduct {
 
     private BigDecimal nowPrice;
 
-    private Integer status;
-
     private String icon;
 
     private String detail;
 
     private String images;
-
-    private Date createTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getProductNo() {
         return productNo;
@@ -84,14 +74,6 @@ public class TblProduct {
         this.nowPrice = nowPrice;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -116,29 +98,18 @@ public class TblProduct {
         this.images = images;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("TblProduct{");
-        sb.append("id=").append(id);
-        sb.append(", productNo='").append(productNo).append('\'');
+        final StringBuilder sb = new StringBuilder("ProductVo{");
+        sb.append("productNo='").append(productNo).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", catalogNo='").append(catalogNo).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
         sb.append(", nowPrice=").append(nowPrice);
-        sb.append(", status=").append(status);
         sb.append(", icon='").append(icon).append('\'');
         sb.append(", detail='").append(detail).append('\'');
         sb.append(", images='").append(images).append('\'');
-        sb.append(", createTime=").append(createTime);
         sb.append('}');
         return sb.toString();
     }
