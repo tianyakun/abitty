@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.abitty.dao.TblProductMapper" >
+  <resultMap id="BaseResultMap" type="com.abitty.entity.TblProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="catalog_no" property="catalogNo" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="now_price" property="nowPrice" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_no, name, catalog_no, description, price, now_price, status, icon, detail, 
+    images, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.abitty.entity.TblProduct" >
+    insert into tbl_product (id, product_no, name, 
+      catalog_no, description, price, 
+      now_price, status, icon, 
+      detail, images, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{catalogNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{nowPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblProduct" >
+    insert into tbl_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productNo != null" >
+        product_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="catalogNo != null" >
+        catalog_no,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="nowPrice != null" >
+        now_price,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="images != null" >
+        images,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogNo != null" >
+        #{catalogNo,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="nowPrice != null" >
+        #{nowPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.abitty.entity.TblProduct" >
+    update tbl_product
+    <set >
+      <if test="productNo != null" >
+        product_no = #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogNo != null" >
+        catalog_no = #{catalogNo,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="nowPrice != null" >
+        now_price = #{nowPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.abitty.entity.TblProduct" >
+    update tbl_product
+    set product_no = #{productNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      catalog_no = #{catalogNo,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      now_price = #{nowPrice,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllPublish" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_product
+    where status = 1
+  </select>
+  <select id="selectAllPublishByCatalogNo" resultMap="BaseResultMap" parameterType="java.lang.String"  >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_product
+    where catalog_no = #{catalogNo,jdbcType=VARCHAR} and status = 1
+  </select>
+
+  <select id="selectByProductNo" resultMap="BaseResultMap" parameterType="java.lang.String"  >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_product
+    where product_no = #{productNo,jdbcType=VARCHAR}
+  </select>
+
+</mapper>
