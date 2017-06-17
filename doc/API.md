@@ -31,8 +31,10 @@
 }
 ```
 ## 2.获取单个商品类别
-地址:	/catalog/item
-方式:	get/post
+地址:	/catalog/item    
+
+方式:	get/post    
+
 请求参数：
 ```
 catalog=CN1497713023528
@@ -53,8 +55,10 @@ catalog=CN1497713023528
 }
 ```
 ## 3.获取商品列表
-地址:	/product/list
-方式:	get/post
+地址:	/product/list    
+
+方式:	get/post    
+
 请求参数：
 ```
 catalog=CN1497713023528
@@ -93,8 +97,10 @@ catalog=CN1497713023528
 }
 ```
 ## 4.获取单个商品详情
-地址:	/product/item
-方式:	get/post
+地址:	/product/item    
+
+方式:	get/post    
+
 请求参数：
 ```
 productNo=PN1497714192404
@@ -120,8 +126,10 @@ productNo=PN1497714192404
 }
 ```
 ## 5.创建订单
-地址:	/order/item
-方式:	post
+地址:	/order/item    
+
+方式:	post    
+
 请求参数：
 ```
 uid=18812345678
@@ -147,8 +155,10 @@ remark=remark //备注
 }
 ```
 ## 6.订单确认支付
-地址:	/order/confirmPay
-方式:	post
+地址:	/order/confirmPay    
+
+方式:	post    
+
 请求参数：
 ```
 orderNo=order325801103440478208
@@ -165,8 +175,10 @@ orderNo=order325801103440478208
 }
 ```
 ## 7.获取订单列表
-地址:	/order/list
-方式:	post
+地址:	/order/list    
+
+方式:	post    
+
 请求参数：
 ```
 uid=18812345678
@@ -199,8 +211,10 @@ uid=18812345678
 }
 ```
 ## 8.获取订单详情
-地址:	/order/list
-方式:	post
+地址:	/order/list    
+
+方式:	post    
+
 请求参数：
 ```
 orderNo=order325801103440478208
@@ -287,8 +301,10 @@ orderNo=order325801103440478208
 }
 ```
 ## 9.发送短信验证码
-地址:	/verify/send
-方式:	get/post
+地址:	/verify/send    
+
+方式:	get/post    
+
 请求参数：
 ```
 phone=18812345678
@@ -305,8 +321,10 @@ phone=18812345678
 ```
 
 ## 10.用户登录／注册
-地址:	/login
-方式:	post
+地址:	/login    
+
+方式:	post    
+
 请求参数：
 ```
 productNo=PN1497714192404
