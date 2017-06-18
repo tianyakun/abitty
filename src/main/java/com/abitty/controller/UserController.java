@@ -1,9 +1,11 @@
 package com.abitty.controller;
 
+import com.abitty.dto.ResponseDto;
 import com.abitty.dto.UserDto;
 import com.abitty.entity.TblUser;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.UserService;
+import com.abitty.vo.UserVo;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -15,13 +17,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 /**
  * Created by yak on 17/6/12.
  */
 @Controller
-@RequestMapping(value = "/my")
+@RequestMapping(value = "/my/account")
 public class UserController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -29,68 +34,76 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/account")
-    @ResponseBody
-    public Map<String, Object> getUser(HttpServletRequest request) {
+    private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
 
-        Map<String, Object> resultMap = Maps.newHashMap();
+    @RequestMapping(value = "")
+    @ResponseBody
+    public ResponseDto getUser(HttpServletRequest request, HttpSession session) {
+
+        TblUser tblUser = (TblUser) session.getAttribute("user");
+
+        logger.info("查看用户信息请求 uid={}", tblUser.getUid());
+
+        ResponseDto responseDto = new ResponseDto();
 
         try {
-            String uid = request.getParameter("uid");
-
-            if (Strings.isNullOrEmpty(uid)) {
-                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
-                return resultMap;
+            UserVo vo = new UserVo();
+            vo.setUid(tblUser.getUid());
+            vo.setGender(tblUser.getGender());
+            if (tblUser.getBirthday() == null) {
+                vo.setBirthday("");
             } else {
-
-                TblUser tblUser = userService.getUserByUid(uid);
-
-                Map<String, Object> data = Maps.newHashMap();
-                data.put("item", tblUser);
-
-                resultMap.put("data", data);
-                resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
-
-                return resultMap;
+                vo.setBirthday(DATE_FORMAT.format(vo.getBirthday()));
             }
 
+            responseDto.addAttribute("item", vo);
+
+            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+
         } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
+
+        logger.info("查看用户信息返回 responseDto={}", responseDto);
+
+        return responseDto;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updateAddress(UserDto userDto) {
+    public ResponseDto updateAddress(UserDto userDto, HttpSession session) {
 
-        Map<String, Object> resultMap = Maps.newHashMap();
+        TblUser tblUser = (TblUser) session.getAttribute("user");
+
+        logger.info("修改用户信息请求 uid={} userDto={}", tblUser.getUid(), userDto);
+
+        ResponseDto responseDto = new ResponseDto();
 
         try {
 
-            if (Strings.isNullOrEmpty(userDto.getUid())) {
-                logger.error("uid is null");
-                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
-                return resultMap;
+            if (!Strings.isNullOrEmpty(userDto.getGender())) {
+                tblUser.setGender(userDto.getGender());
             }
 
-            TblUser tblUser = userService.getUserByUid(userDto.getUid());
-            tblUser.setBirthday(userDto.getBirthday());
-            tblUser.setGender(userDto.getGender());
+            if (!Strings.isNullOrEmpty(userDto.getBirthday())) {
+                tblUser.setBirthday(DATE_FORMAT.parse(userDto.getBirthday()));
+            }
+
             userService.update(tblUser);
 
-            resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
-            return resultMap;
+            session.setAttribute("user", tblUser);
+
+            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
         } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
+            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
         }
+
+        logger.info("修改用户信息返回 {}", responseDto);
+        return responseDto;
     }
 
 }
