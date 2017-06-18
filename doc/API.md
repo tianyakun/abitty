@@ -55,13 +55,13 @@ catalogNo=CN1497713023528
 }
 ```
 ## 3.获取商品列表
-地址:	/product/list    
+地址:	/product/list/{catalogNo}     
 
 方式:	get/post    
 
 请求参数：
 ```
-catalog=CN1497713023528
+catalogNo=CN1497713023528
 ```
 返回参数：
 ```

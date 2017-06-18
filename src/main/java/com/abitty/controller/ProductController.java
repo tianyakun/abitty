@@ -33,9 +33,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = "/list/{catalogNo}")
     @ResponseBody
-    public ResponseDto getProductList(final String catalogNo) {
+    public ResponseDto getProductList(@PathVariable("catalogNo") final String catalogNo) {
         logger.info("获取商品列表请求 catalogNo={}", catalogNo);
 
         ResponseDto responseDto = new ResponseDto();
