@@ -2,7 +2,7 @@
 
 <configuration>
 	<appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${catalina.base}/logs/rubik.log</File>
+		<File>${catalina.base}/logs/abitty.log</File>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -11,12 +11,12 @@
 			<level>INFO</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log_dir}/logs/rubik.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>${log_dir}/logs/abitty.%d{yyyy-MM-dd}.log</FileNamePattern>
 		</rollingPolicy>
 	</appender>
 
 	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${catalina.base}/logs/rubik_error.log</File>
+		<File>${catalina.base}/logs/abitty_error.log</File>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
@@ -25,11 +25,11 @@
 			<level>ERROR</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log_dir}/logs/rubik_error.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>${log_dir}/logs/abitty_error.%d{yyyy-MM-dd}.log</FileNamePattern>
 		</rollingPolicy>
 	</appender>
 
-	<logger name ="net.kokozu" level="INFO">
+	<logger name ="com.abitty" level="INFO">
 		<appender-ref ref="info" />
 		<appender-ref ref="error" />
 	</logger>
