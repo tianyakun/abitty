@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.Map;
 
@@ -69,7 +70,12 @@ public class LoginController {
                     userService.update(tblUser);
                 }
 
-                httpServletRequest.getSession().setAttribute("uid", tblUser.getUid());
+                HttpSession session = httpServletRequest.getSession();
+                session.setAttribute("uid", tblUser.getUid());
+                session.setAttribute("user", tblUser);
+
+                String callback = (String) session.getAttribute("callback");
+                session.removeAttribute("callback"); // 获取之后移除
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());

@@ -3,10 +3,12 @@ package com.abitty.controller;
 import com.abitty.dto.OrderCreateRequestDto;
 import com.abitty.dto.ResponseDto;
 import com.abitty.entity.TblOrderInfo;
+import com.abitty.entity.TblProduct;
 import com.abitty.entity.TblSubOrder;
+import com.abitty.entity.TblUser;
 import com.abitty.enums.ExceptionEnum;
-import com.abitty.service.AddressService;
 import com.abitty.service.OrderService;
+import com.abitty.service.ProductService;
 import com.abitty.utils.Constants;
 import com.abitty.utils.ParamChecker;
 import com.abitty.utils.Sequence;
@@ -22,9 +24,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -42,16 +47,18 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private AddressService addressService;
+    private ProductService productService;
 
     @RequestMapping(value = "/create")
     @ResponseBody
-    public ResponseDto createOrder(final OrderCreateRequestDto requestDto) {
+    public ResponseDto createOrder(final OrderCreateRequestDto requestDto, final HttpSession httpSession) {
         logger.info("创建订单请求 requestDto={}", requestDto);
 
         ResponseDto responseDto = new ResponseDto();
 
         try {
+            TblUser tblUser = (TblUser) httpSession.getAttribute("user");
+
             //参数校验
             String constraintMessage = ParamChecker.getConstraintMessage(requestDto);
             if (!Strings.isNullOrEmpty(constraintMessage)) {
@@ -61,7 +68,7 @@ public class OrderController {
             } else {
                 TblOrderInfo tblOrderInfo = new TblOrderInfo();
                 tblOrderInfo.setOrderNo("order" + Sequence.next());
-                tblOrderInfo.setUid(requestDto.getUid());
+                tblOrderInfo.setUid(tblUser.getUid());
                 tblOrderInfo.setProductNo(requestDto.getProductNo());
                 tblOrderInfo.setTotalQuantity(requestDto.getTotalQuantity());
                 tblOrderInfo.setTotalAmount(requestDto.getTotalAmount());
@@ -92,9 +99,9 @@ public class OrderController {
         return responseDto;
     }
 
-    @RequestMapping(value = "/confirmPay")
+    @RequestMapping(value = "/confirmPay/{orderNo}")
     @ResponseBody
-    public ResponseDto confirmPay(final String orderNo) {
+    public ResponseDto confirmPay(@PathVariable("orderNo") final String orderNo) {
         logger.info("订单确认支付请求 orderNo={}", orderNo);
 
         ResponseDto responseDto = new ResponseDto();
@@ -119,7 +126,10 @@ public class OrderController {
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public ResponseDto getOrderList(final String uid) {
+    public ResponseDto getOrderList(final HttpSession httpSession) {
+
+        TblUser tblUser = (TblUser) httpSession.getAttribute("user");
+        String uid = tblUser.getUid();
         logger.info("获取订单列表请求 uid={}", uid);
 
         ResponseDto responseDto = new ResponseDto();
@@ -152,9 +162,9 @@ public class OrderController {
         return responseDto;
     }
 
-    @RequestMapping(value = "/detail")
+    @RequestMapping(value = "/detail/{orderNo}")
     @ResponseBody
-    public ResponseDto getOrderDetail(final String orderNo) {
+    public ResponseDto getOrderDetail(@PathVariable("orderNo") final String orderNo) {
 
         logger.info("获取订单详情请求 orderNo={}", orderNo);
 
@@ -254,8 +264,56 @@ public class OrderController {
             vo.setNextSubTime(input.getNextSubTime());
             vo.setUserNumber(input.getUserNumber());
             vo.setRemark(input.getRemark());
+
+            TblProduct tblProduct = productService.getByProductNo(input.getProductNo());
+            if (tblProduct != null) {
+                vo.setProductName(tblProduct.getName());
+                vo.setProductIcon(tblProduct.getIcon());
+            }
+
+            vo.setIntervalDays(getIntervalDays(new Date(), vo.getNextSubTime()));
+            vo.setProgress(getProgess(vo.getIntervalDays(), vo.getDeliveryType()));
+
             return vo;
         }
         return null;
     }
+
+    private int getIntervalDays(Date fDate, Date oDate) {
+
+        Calendar aCalendar = Calendar.getInstance();
+
+        aCalendar.setTime(fDate);
+
+        int day1 = aCalendar.get(Calendar.DAY_OF_YEAR);
+
+        aCalendar.setTime(oDate);
+
+        int day2 = aCalendar.get(Calendar.DAY_OF_YEAR);
+
+        return day2 - day1;
+    }
+
+    private String getProgess(int intervalDays, String deliveryType) {
+        if (intervalDays <=0) {
+            return "100%";
+        }
+
+        int periodDays;
+        if (Constants.DeliveryType.YEARLY.equalsIgnoreCase(deliveryType)) {
+            periodDays = 356;
+        } else if (Constants.DeliveryType.MONTHLY.equalsIgnoreCase(deliveryType)) {
+            periodDays = 30;
+        } else {
+            periodDays = 7;
+        }
+
+        if (intervalDays >= periodDays) {
+            return "0%";
+        }
+
+        return 100*intervalDays/periodDays + "%";
+    }
+
+
 }

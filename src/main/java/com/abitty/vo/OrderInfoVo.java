@@ -13,6 +13,10 @@ public class OrderInfoVo {
 
     private String productNo;
 
+    private String productName;
+
+    private String productIcon;
+
     private Integer totalQuantity;
 
     private BigDecimal totalAmount;
@@ -30,6 +34,10 @@ public class OrderInfoVo {
     private String nextSub;
 
     private Date nextSubTime;
+
+    private int intervalDays;
+
+    private String progress;
 
     private Integer userNumber;
 
@@ -147,12 +155,46 @@ public class OrderInfoVo {
         this.remark = remark;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductIcon() {
+        return productIcon;
+    }
+
+    public void setProductIcon(String productIcon) {
+        this.productIcon = productIcon;
+    }
+
+    public int getIntervalDays() {
+        return intervalDays;
+    }
+
+    public void setIntervalDays(int intervalDays) {
+        this.intervalDays = intervalDays;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("OrderInfoVo{");
         sb.append("orderNo='").append(orderNo).append('\'');
         sb.append(", uid='").append(uid).append('\'');
         sb.append(", productNo='").append(productNo).append('\'');
+        sb.append(", productName='").append(productName).append('\'');
+        sb.append(", productIcon='").append(productIcon).append('\'');
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", status=").append(status);
@@ -162,6 +204,8 @@ public class OrderInfoVo {
         sb.append(", finishSub=").append(finishSub);
         sb.append(", nextSub='").append(nextSub).append('\'');
         sb.append(", nextSubTime=").append(nextSubTime);
+        sb.append(", intervalDays=").append(intervalDays);
+        sb.append(", progress='").append(progress).append('\'');
         sb.append(", userNumber=").append(userNumber);
         sb.append(", remark='").append(remark).append('\'');
         sb.append('}');

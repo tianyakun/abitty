@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -91,9 +92,9 @@ public class ProductController {
         return null;
     }
 
-    @RequestMapping(value = "/item")
+    @RequestMapping(value = "/detail/{productNo}")
     @ResponseBody
-    public ResponseDto getCatalogDetail(final String productNo) {
+    public ResponseDto getCatalogDetail(@PathVariable("productNo") final String productNo) {
 
         logger.info("获取商品详情请求 catalogNo={}", productNo);
 

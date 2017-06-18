@@ -30,14 +30,14 @@
     }
 }
 ```
-## 2.获取单个商品类别
-地址:	/catalog/item    
+## 2.获取单个类别
+地址:	/catalog/detail/{catalogNo}    
 
 方式:	get/post    
 
 请求参数：
 ```
-catalog=CN1497713023528
+catalogNo=CN1497713023528
 ```
 返回参数：
 ```
@@ -97,7 +97,7 @@ catalog=CN1497713023528
 }
 ```
 ## 4.获取单个商品详情
-地址:	/product/item    
+地址:	/product/detail/{productNo}    
 
 方式:	get/post    
 
@@ -132,7 +132,6 @@ productNo=PN1497714192404
 
 请求参数：
 ```
-uid=18812345678
 productNo=PN1497714192404
 totalQuantity=4 //商品总数
 totalAmount=352 //订单总金额
@@ -155,7 +154,7 @@ remark=remark //备注
 }
 ```
 ## 6.订单确认支付
-地址:	/order/confirmPay    
+地址:	/order/confirmPay/{orderNo}    
 
 方式:	post    
 
@@ -181,7 +180,6 @@ orderNo=order325801103440478208
 
 请求参数：
 ```
-uid=18812345678
 ```
 返回参数：
 ```
@@ -194,6 +192,8 @@ uid=18812345678
                 "orderNo": "order325801103440478208",
                 "uid": "18812345678",
                 "productNo": "PN1497714192404",
+                "productName": "酸奶1",
+                "productIcon": "",
                 "totalQuantity": 4,
                 "totalAmount": 352,
                 "status": 1,
@@ -202,7 +202,9 @@ uid=18812345678
                 "totalSub": 4,
                 "finishSub": 0,
                 "nextSub": "sub325804314515734528",
-                "nextSubTime":"2017-06-21 00:57:16",
+                "nextSubTime": "2017-06-21 00:57:16",
+                "intervalDays": 3,
+                "progress": "42%",
                 "userNumber": 2,
                 "remark": "remark"
             }
@@ -211,7 +213,7 @@ uid=18812345678
 }
 ```
 ## 8.获取订单详情
-地址:	/order/list    
+地址:	/order/detail/{orderNo}    
 
 方式:	post    
 
@@ -230,6 +232,8 @@ orderNo=order325801103440478208
                 "orderNo": "order325801103440478208",
                 "uid": "18812345678",
                 "productNo": "PN1497714192404",
+                "productName": "酸奶1",
+                "productIcon": "",
                 "totalQuantity": 4,
                 "totalAmount": 352,
                 "status": 1,
@@ -239,6 +243,8 @@ orderNo=order325801103440478208
                 "finishSub": 0,
                 "nextSub": "sub325804314515734528",
                 "nextSubTime": "2017-06-21 00:57:16",
+                "intervalDays": 3,
+                "progress": "42%",
                 "userNumber": 2,
                 "remark": "remark"
             },
@@ -264,7 +270,7 @@ orderNo=order325801103440478208
                     "status": 0,
                     "recvName": "麦克斯韦",
                     "phone": "18812345678",
-                    "address": "北京北京市昌平区xxxxxxxxxxx",
+                    "address": "xxxxxxxxxxx",
                     "deliveryTime": "2017-06-28 00:57:16",
                     "usedPercent": 0,
                     "remark": ""
@@ -277,7 +283,7 @@ orderNo=order325801103440478208
                     "status": 0,
                     "recvName": "麦克斯韦",
                     "phone": "18812345678",
-                    "address": "北京北京市昌平区xxxxxxxxxxx",
+                    "address": "xxxxxxxxxxx",
                     "deliveryTime": "2017-07-05 00:57:16",
                     "usedPercent": 0,
                     "remark": ""
@@ -290,7 +296,7 @@ orderNo=order325801103440478208
                     "status": 0,
                     "recvName": "麦克斯韦",
                     "phone": "18812345678",
-                    "address": "北京北京市昌平区xxxxxxxxxxx",
+                    "address": "xxxxxxxxxxx",
                     "deliveryTime": "2017-07-12 00:57:16",
                     "usedPercent": 0,
                     "remark": ""

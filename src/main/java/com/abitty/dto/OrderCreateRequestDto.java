@@ -12,9 +12,9 @@ import java.util.Date;
  */
 public class OrderCreateRequestDto implements Serializable {
 
-    @NotNull
-    @NotBlank
-    private String uid;
+//    @NotNull
+//    @NotBlank
+//    private String uid;
 
     @NotNull
     @NotBlank
@@ -49,13 +49,13 @@ public class OrderCreateRequestDto implements Serializable {
 
     private String remark;
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
+//    public String getUid() {
+//        return uid;
+//    }
+//
+//    public void setUid(String uid) {
+//        this.uid = uid;
+//    }
 
     public String getProductNo() {
         return productNo;
@@ -137,15 +137,14 @@ public class OrderCreateRequestDto implements Serializable {
         this.remark = remark;
     }
 
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("OrderRequestDto{");
-        sb.append("uid='").append(uid).append('\'');
-        sb.append(", productNo='").append(productNo).append('\'');
+        final StringBuilder sb = new StringBuilder("OrderCreateRequestDto{");
+        sb.append("productNo='").append(productNo).append('\'');
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", deliveryType='").append(deliveryType).append('\'');
-//        sb.append(", deliveryTime='").append(deliveryTime).append('\'');
         sb.append(", subQuantity=").append(subQuantity);
         sb.append(", totalSub=").append(totalSub);
         sb.append(", addressId=").append(addressId);
