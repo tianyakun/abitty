@@ -29,12 +29,15 @@ public class TblAddressMapperTest extends BaseDaoTest {
         TblAddress tblAddress = new TblAddress();
         tblAddress.setUid("18812345678");
         tblAddress.setProvince("北京");
-        tblAddress.setCity("北京");
+        tblAddress.setCity("北京市");
         tblAddress.setArea("昌平区");
-        tblAddress.setAddressDetail("xxxxxxxxxxx");
+        tblAddress.setPcaDetail("北京北京市昌平区");
+        tblAddress.setAddressDetail("yyyyyyy");
         tblAddress.setRecName("麦克斯韦");
         tblAddress.setPhone("18812345678");
-        tblAddressMapper.insertSelective(tblAddress);
+        int id = tblAddressMapper.insertSelective(tblAddress);
+        System.out.println(id);
+        System.out.println(tblAddress);
     }
 
     @Test

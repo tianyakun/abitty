@@ -2,11 +2,9 @@ package com.abitty.controller;
 
 import com.abitty.dto.OrderCreateRequestDto;
 import com.abitty.dto.ResponseDto;
-import com.abitty.entity.TblOrderInfo;
-import com.abitty.entity.TblProduct;
-import com.abitty.entity.TblSubOrder;
-import com.abitty.entity.TblUser;
+import com.abitty.entity.*;
 import com.abitty.enums.ExceptionEnum;
+import com.abitty.service.AddressService;
 import com.abitty.service.OrderService;
 import com.abitty.service.ProductService;
 import com.abitty.utils.Constants;
@@ -49,6 +47,9 @@ public class OrderController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private AddressService addressService;
+
     @RequestMapping(value = "/create")
     @ResponseBody
     public ResponseDto createOrder(final OrderCreateRequestDto requestDto, final HttpSession httpSession) {
@@ -78,9 +79,21 @@ public class OrderController {
                 tblOrderInfo.setSubQuantity(requestDto.getSubQuantity());
                 tblOrderInfo.setTotalSub(requestDto.getTotalSub());
                 tblOrderInfo.setCreateTime(new Date());
-                tblOrderInfo.setAddressId(requestDto.getAddressId());
                 tblOrderInfo.setUserNumber(requestDto.getUserNumber());
                 tblOrderInfo.setRemark(requestDto.getRemark());
+
+                TblAddress tblAddress = new TblAddress();
+                tblAddress.setUid(tblUser.getUid());
+                tblAddress.setProvince(requestDto.getAddressProvince());
+                tblAddress.setCity(requestDto.getAddressCity());
+                tblAddress.setArea(requestDto.getAddressArea());
+                tblAddress.setPcaDetail(tblAddress.getProvince() + tblAddress.getCity() + tblAddress.getArea());
+                tblAddress.setAddressDetail(requestDto.getAddressDetail());
+                tblAddress.setPostcode(requestDto.getPostcode());
+
+                addressService.add(tblAddress);
+
+                tblOrderInfo.setAddressId(tblAddress.getId());
 
                 orderService.add(tblOrderInfo);
 

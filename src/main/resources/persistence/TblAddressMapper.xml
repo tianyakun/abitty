@@ -30,7 +30,7 @@
     delete from tbl_address
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblAddress" >
+  <insert id="insert" parameterType="com.abitty.entity.TblAddress" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_address (id, uid, rec_name, 
       province, city, area, 
       pca_detail, address_detail, postcode, 
@@ -42,7 +42,7 @@
       #{phone,jdbcType=VARCHAR}, #{isDefault,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblAddress" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblAddress" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_address
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

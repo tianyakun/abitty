@@ -12,10 +12,6 @@ import java.util.Date;
  */
 public class OrderCreateRequestDto implements Serializable {
 
-//    @NotNull
-//    @NotBlank
-//    private String uid;
-
     @NotNull
     @NotBlank
     private String productNo;
@@ -41,21 +37,37 @@ public class OrderCreateRequestDto implements Serializable {
     private Integer totalSub;
 
     @NotNull
-    @NotBlank
-    private Integer addressId;
-
-    @NotNull
     private Integer userNumber;
 
     private String remark;
 
-//    public String getUid() {
-//        return uid;
-//    }
-//
-//    public void setUid(String uid) {
-//        this.uid = uid;
-//    }
+    @NotNull
+    @NotBlank
+    private String receiverName;
+
+    @NotNull
+    @NotBlank
+    private String phoneNumber;
+
+    @NotNull
+    @NotBlank
+    private String addressProvince;
+
+    @NotNull
+    @NotBlank
+    private String addressCity;
+
+    @NotNull
+    @NotBlank
+    private String addressArea;
+
+    @NotNull
+    @NotBlank
+    private String addressDetail;
+
+    @NotNull
+    @NotBlank
+    private String postcode;
 
     public String getProductNo() {
         return productNo;
@@ -113,14 +125,6 @@ public class OrderCreateRequestDto implements Serializable {
         this.totalSub = totalSub;
     }
 
-    public Integer getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
-    }
-
     public Integer getUserNumber() {
         return userNumber;
     }
@@ -137,6 +141,61 @@ public class OrderCreateRequestDto implements Serializable {
         this.remark = remark;
     }
 
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddressProvince() {
+        return addressProvince;
+    }
+
+    public void setAddressProvince(String addressProvince) {
+        this.addressProvince = addressProvince;
+    }
+
+    public String getAddressCity() {
+        return addressCity;
+    }
+
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public String getAddressArea() {
+        return addressArea;
+    }
+
+    public void setAddressArea(String addressArea) {
+        this.addressArea = addressArea;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
 
     @Override
     public String toString() {
@@ -147,9 +206,15 @@ public class OrderCreateRequestDto implements Serializable {
         sb.append(", deliveryType='").append(deliveryType).append('\'');
         sb.append(", subQuantity=").append(subQuantity);
         sb.append(", totalSub=").append(totalSub);
-        sb.append(", addressId=").append(addressId);
         sb.append(", userNumber=").append(userNumber);
         sb.append(", remark='").append(remark).append('\'');
+        sb.append(", receiverName='").append(receiverName).append('\'');
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", addressProvince='").append(addressProvince).append('\'');
+        sb.append(", addressCity='").append(addressCity).append('\'');
+        sb.append(", addressArea='").append(addressArea).append('\'');
+        sb.append(", addressDetail='").append(addressDetail).append('\'');
+        sb.append(", postcode='").append(postcode).append('\'');
         sb.append('}');
         return sb.toString();
     }

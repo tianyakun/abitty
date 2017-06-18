@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +26,57 @@ import java.util.Map;
 /**
  * Created by yak on 17/6/15.
  */
-@Controller
-@RequestMapping(value = "/address")
+//@Controller
+//@RequestMapping(value = "/my/address")
 public class AddressController {
 
     private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
 
     @Autowired
     private AddressService addressService;
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addAddress(final AddressDto addressDto) {
+
+        logger.info("新增地址");
+
+        Map<String, Object> resultMap = Maps.newHashMap();
+
+        try {
+            //参数校验
+            String constraintMessage = ParamChecker.getConstraintMessage(addressDto);
+            if (!Strings.isNullOrEmpty(constraintMessage)) {
+                logger.error("参数校验失败:{}", constraintMessage);
+                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
+                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                return resultMap;
+            }
+
+            TblAddress tblAddress = new TblAddress();
+            tblAddress.setUid(addressDto.getUid());
+            tblAddress.setProvince(addressDto.getProvince());
+            tblAddress.setCity(addressDto.getCity());
+            tblAddress.setArea(addressDto.getArea());
+            tblAddress.setPcaDetail(addressDto.getProvince() + addressDto.getCity() + addressDto.getArea());
+            tblAddress.setAddressDetail(addressDto.getAddressDetail());
+            tblAddress.setPostcode(addressDto.getPostcode());
+            tblAddress.setPhone(addressDto.getPhone());
+            tblAddress.setIsDefault(0);
+            tblAddress.setIsDelete(0);
+            tblAddress.setCreateTime(new Date());
+
+            addressService.add(tblAddress);
+
+            resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
+            resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
+            return resultMap;
+        } catch (Exception e) {
+            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            return resultMap;
+        }
+    }
 
     @RequestMapping(value = "/list")
     @ResponseBody
@@ -92,47 +136,6 @@ public class AddressController {
                 return resultMap;
             }
 
-        } catch (Exception e) {
-            resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-            return resultMap;
-        }
-    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> addAddress(AddressDto addressDto) {
-
-        Map<String, Object> resultMap = Maps.newHashMap();
-
-        try {
-            //参数校验
-            String constraintMessage = ParamChecker.getConstraintMessage(addressDto);
-            if (!Strings.isNullOrEmpty(constraintMessage)) {
-                logger.error("参数校验失败:{}", constraintMessage);
-                resultMap.put("retCode", ExceptionEnum.PARAM_INVALID.getErrorCode());
-                resultMap.put("retMsg", ExceptionEnum.PARAM_INVALID.getErrorMsg());
-                return resultMap;
-            }
-
-            TblAddress tblAddress = new TblAddress();
-            tblAddress.setUid(addressDto.getUid());
-            tblAddress.setProvince(addressDto.getProvince());
-            tblAddress.setCity(addressDto.getCity());
-            tblAddress.setArea(addressDto.getArea());
-            tblAddress.setPcaDetail(addressDto.getProvince() + addressDto.getCity() + addressDto.getArea());
-            tblAddress.setAddressDetail(addressDto.getAddressDetail());
-            tblAddress.setPostcode(addressDto.getPostcode());
-            tblAddress.setPhone(addressDto.getPhone());
-            tblAddress.setIsDefault(0);
-            tblAddress.setIsDelete(0);
-            tblAddress.setCreateTime(new Date());
-
-            addressService.add(tblAddress);
-
-            resultMap.put("retCode", ExceptionEnum.SUCCESS.getErrorCode());
-            resultMap.put("retMsg", ExceptionEnum.SUCCESS.getErrorMsg());
-            return resultMap;
         } catch (Exception e) {
             resultMap.put("retCode", ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             resultMap.put("retMsg", ExceptionEnum.SYSTEM_ERROR.getErrorMsg());

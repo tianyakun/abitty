@@ -138,9 +138,15 @@ totalAmount=352 //订单总金额
 deliveryType=weekly //配送周期 weekly、monthly、yearly
 subQuantity=1 //单次配送数量
 totalSub=4 //配送次数
-addressId=1 //收货地址id
 userNumber=2 //使用人数
 remark=remark //备注
+receiverName=麦克斯韦 //以下为收货人信息
+phoneNumber=18812345678
+addressProvince=北京
+addressCity=北京市
+addressArea=昌平区
+addressDetail=龙域中路融泽嘉园1号院
+postcode=102200
 ```
 返回参数：
 ```
