@@ -29,9 +29,14 @@
 		</rollingPolicy>
 	</appender>
 
-	<logger name ="com.abitty" level="INFO">
+	<!--<logger name ="com.abitty" level="INFO">-->
+		<!--<appender-ref ref="info" />-->
+		<!--<appender-ref ref="error" />-->
+	<!--</logger>-->
+
+	<root level="INFO">
 		<appender-ref ref="info" />
 		<appender-ref ref="error" />
-	</logger>
+	</root>
 
 </configuration>
