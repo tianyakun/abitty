@@ -28,14 +28,6 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private Sender aliyunMnsSender;
 
-    public boolean verify(String messageId, String verifyCode) {
-        return true;//todo
-    }
-
-    public String sendVerifyCode(String phone) {
-        return "M" + Sequence.next();//todo
-    }
-
     public boolean saveRequestMessage(TblMessageInfo tblMessageInfo) {
         logger.info("消息请求数据入库处理，参数 " + tblMessageInfo.toString());
 

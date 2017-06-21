@@ -24,9 +24,6 @@ public class MessageController {
     private final static Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     @Autowired
-    private MessageService messageService;
-
-    @Autowired
     private MessageProcessBiz messageProcessBiz;
 
     @RequestMapping(value = "/send")
