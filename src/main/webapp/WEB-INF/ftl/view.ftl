@@ -5,7 +5,7 @@
         <title>一点生活</title>
         <script>
             $Config = {
-                userName: "13888888888"
+                uid: ${uid}
             }
         </script>
     </head>
