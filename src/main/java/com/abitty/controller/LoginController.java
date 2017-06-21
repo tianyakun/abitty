@@ -1,5 +1,6 @@
 package com.abitty.controller;
 
+import com.abitty.biz.MessageProcessBiz;
 import com.abitty.dto.LoginDto;
 import com.abitty.dto.ResponseDto;
 import com.abitty.entity.TblUser;
@@ -32,7 +33,7 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
-    private MessageService messageService;
+    private MessageProcessBiz messageProcessBiz;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -48,7 +49,7 @@ public class LoginController {
                 logger.error("参数校验失败:{}", constraintMessage);
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
-            } else if (!messageService.verify(loginDto.getMessageId(), loginDto.getVerifyCode())) {
+            } else if (!messageProcessBiz.checkValidateCode(loginDto.getMessageId(), loginDto.getVerifyCode())) {
                 logger.error("短信验证失败");
                 responseDto.setRetCode(ExceptionEnum.VERIFY_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.VERIFY_INVALID.getErrorMsg());
