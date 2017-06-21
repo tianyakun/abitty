@@ -1,15 +1,14 @@
 package com.abitty.dao;
 
+import com.abitty.BaseTest;
 import com.abitty.entity.TblAddress;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by kkk on 17/6/17.
  */
-public class TblAddressMapperTest extends BaseDaoTest {
+public class TblAddressMapperTest extends BaseTest {
 
     @Autowired
     private TblAddressMapper tblAddressMapper;

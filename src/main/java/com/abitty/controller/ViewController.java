@@ -8,14 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by kkk on 17/6/11.
  */
 @Controller
-//@RequestMapping("/view")
+@RequestMapping("/view")
 public class ViewController {
-
-    @RequestMapping(value = "/hello")
-    public String helloFtl(Model model) {
-        model.addAttribute("name", "张三f");
-        return "hello";
-    }
 
     @RequestMapping(value = "/myService")
     public String myService(Model model) {

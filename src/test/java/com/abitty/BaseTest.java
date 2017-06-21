@@ -1,4 +1,4 @@
-package com.abitty.dao;
+package com.abitty;
 
 /**
  * Created by kkk on 17/5/27.
@@ -10,5 +10,5 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:applicationContext.xml" })
-public class BaseDaoTest {
+public class BaseTest {
 }

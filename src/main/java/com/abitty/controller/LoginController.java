@@ -2,15 +2,12 @@ package com.abitty.controller;
 
 import com.abitty.dto.LoginDto;
 import com.abitty.dto.ResponseDto;
-import com.abitty.entity.TblCatalog;
 import com.abitty.entity.TblUser;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.MessageService;
 import com.abitty.service.UserService;
 import com.abitty.utils.ParamChecker;
-import com.abitty.vo.CatalogVo;
 import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Created by yak on 17/6/17.

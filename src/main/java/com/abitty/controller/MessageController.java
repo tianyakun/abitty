@@ -1,35 +1,33 @@
 package com.abitty.controller;
 
+import com.abitty.biz.MessageProcessBiz;
+import com.abitty.constant.MessageConstants;
+import com.abitty.dto.SendMessageRequestDto;
 import com.abitty.dto.ResponseDto;
-import com.abitty.entity.TblCatalog;
 import com.abitty.enums.ExceptionEnum;
+import com.abitty.enums.MessageType;
 import com.abitty.service.MessageService;
-import com.abitty.vo.CatalogVo;
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yak on 17/6/17.
  */
 @Controller
-@RequestMapping(value = "/verify")
+@RequestMapping(value = "/message")
 public class MessageController {
 
     private final static Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private MessageProcessBiz messageProcessBiz;
 
     @RequestMapping(value = "/send")
     @ResponseBody
@@ -40,19 +38,13 @@ public class MessageController {
         ResponseDto responseDto = new ResponseDto();
 
         try {
+            SendMessageRequestDto messageSendRequestDto = new SendMessageRequestDto();
+            messageSendRequestDto.setMessageAddress(phone);
+            messageSendRequestDto.setMessageType(MessageType.VALIDATE);
+            messageSendRequestDto.setMessageChannel(MessageConstants.MESSAGE_CHANNEL);
+            messageSendRequestDto.setTemplateCode(MessageConstants.TEMPLATE_CODE);
 
-            if (Strings.isNullOrEmpty(phone)) {
-                logger.error("参数校验失败");
-                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
-            } else {
-                String messageId = messageService.sendVerifyCode(phone);
-
-                responseDto.addAttribute("messageId", messageId);
-
-                responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
-            }
+            messageProcessBiz.sendMessage(messageSendRequestDto, responseDto);
 
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());

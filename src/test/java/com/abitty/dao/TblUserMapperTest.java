@@ -1,5 +1,6 @@
 package com.abitty.dao;
 
+import com.abitty.BaseTest;
 import com.abitty.entity.TblUser;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.Date;
 /**
  * Created by kkk on 17/5/28.
  */
-public class TblUserMapperTest extends BaseDaoTest{
+public class TblUserMapperTest extends BaseTest {
 
     @Autowired
     private TblUserMapper tblUserMapper;

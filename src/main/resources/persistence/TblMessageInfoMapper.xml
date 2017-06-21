@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.abitty.dao.TblMessageInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.abitty.entity.TblMessageInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="message_id" property="messageId" jdbcType="VARCHAR" />
+    <result column="channel_message_id" property="channelMessageId" jdbcType="VARCHAR" />
+    <result column="message_type" property="messageType" jdbcType="INTEGER" />
+    <result column="message_channel" property="messageChannel" jdbcType="VARCHAR" />
+    <result column="template_code" property="templateCode" jdbcType="VARCHAR" />
+    <result column="message_address" property="messageAddress" jdbcType="VARCHAR" />
+    <result column="send_status" property="sendStatus" jdbcType="INTEGER" />
+    <result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+    <result column="result_info" property="resultInfo" jdbcType="VARCHAR" />
+    <result column="send_content" property="sendContent" jdbcType="VARCHAR" />
+    <result column="vcode" property="vcode" jdbcType="VARCHAR" />
+    <result column="validate_status" property="validateStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, message_id, channel_message_id, message_type, message_channel, template_code, 
+    message_address, send_status, result_code, result_info, send_content, vcode, validate_status, 
+    create_time, send_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_message_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_message_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.abitty.entity.TblMessageInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_message_info (id, message_id, channel_message_id, 
+      message_type, message_channel, template_code, 
+      message_address, send_status, result_code, 
+      result_info, send_content, vcode, 
+      validate_status, create_time, send_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{messageId,jdbcType=VARCHAR}, #{channelMessageId,jdbcType=VARCHAR}, 
+      #{messageType,jdbcType=INTEGER}, #{messageChannel,jdbcType=VARCHAR}, #{templateCode,jdbcType=VARCHAR}, 
+      #{messageAddress,jdbcType=VARCHAR}, #{sendStatus,jdbcType=INTEGER}, #{resultCode,jdbcType=VARCHAR}, 
+      #{resultInfo,jdbcType=VARCHAR}, #{sendContent,jdbcType=VARCHAR}, #{vcode,jdbcType=VARCHAR}, 
+      #{validateStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{sendTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblMessageInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_message_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="channelMessageId != null" >
+        channel_message_id,
+      </if>
+      <if test="messageType != null" >
+        message_type,
+      </if>
+      <if test="messageChannel != null" >
+        message_channel,
+      </if>
+      <if test="templateCode != null" >
+        template_code,
+      </if>
+      <if test="messageAddress != null" >
+        message_address,
+      </if>
+      <if test="sendStatus != null" >
+        send_status,
+      </if>
+      <if test="resultCode != null" >
+        result_code,
+      </if>
+      <if test="resultInfo != null" >
+        result_info,
+      </if>
+      <if test="sendContent != null" >
+        send_content,
+      </if>
+      <if test="vcode != null" >
+        vcode,
+      </if>
+      <if test="validateStatus != null" >
+        validate_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="messageId != null" >
+        #{messageId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelMessageId != null" >
+        #{channelMessageId,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="messageChannel != null" >
+        #{messageChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="templateCode != null" >
+        #{templateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageAddress != null" >
+        #{messageAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resultInfo != null" >
+        #{resultInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendContent != null" >
+        #{sendContent,jdbcType=VARCHAR},
+      </if>
+      <if test="vcode != null" >
+        #{vcode,jdbcType=VARCHAR},
+      </if>
+      <if test="validateStatus != null" >
+        #{validateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.abitty.entity.TblMessageInfo" >
+    update tbl_message_info
+    <set >
+      <if test="messageId != null" >
+        message_id = #{messageId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelMessageId != null" >
+        channel_message_id = #{channelMessageId,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        message_type = #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="messageChannel != null" >
+        message_channel = #{messageChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="templateCode != null" >
+        template_code = #{templateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageAddress != null" >
+        message_address = #{messageAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStatus != null" >
+        send_status = #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="resultCode != null" >
+        result_code = #{resultCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resultInfo != null" >
+        result_info = #{resultInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendContent != null" >
+        send_content = #{sendContent,jdbcType=VARCHAR},
+      </if>
+      <if test="vcode != null" >
+        vcode = #{vcode,jdbcType=VARCHAR},
+      </if>
+      <if test="validateStatus != null" >
+        validate_status = #{validateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.abitty.entity.TblMessageInfo" >
+    update tbl_message_info
+    set message_id = #{messageId,jdbcType=VARCHAR},
+      channel_message_id = #{channelMessageId,jdbcType=VARCHAR},
+      message_type = #{messageType,jdbcType=INTEGER},
+      message_channel = #{messageChannel,jdbcType=VARCHAR},
+      template_code = #{templateCode,jdbcType=VARCHAR},
+      message_address = #{messageAddress,jdbcType=VARCHAR},
+      send_status = #{sendStatus,jdbcType=INTEGER},
+      result_code = #{resultCode,jdbcType=VARCHAR},
+      result_info = #{resultInfo,jdbcType=VARCHAR},
+      send_content = #{sendContent,jdbcType=VARCHAR},
+      vcode = #{vcode,jdbcType=VARCHAR},
+      validate_status = #{validateStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      send_time = #{sendTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByMessageId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_message_info
+    where message_id = #{messageId,jdbcType=VARCHAR}
+  </select>
+</mapper>

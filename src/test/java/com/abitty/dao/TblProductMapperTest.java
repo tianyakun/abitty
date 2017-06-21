@@ -1,20 +1,18 @@
 package com.abitty.dao;
 
+import com.abitty.BaseTest;
 import com.abitty.entity.TblProduct;
-import com.abitty.utils.Constants;
+import com.abitty.constant.AbittyConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.awt.*;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by kkk on 17/6/17.
  */
-public class TblProductMapperTest extends BaseDaoTest{
+public class TblProductMapperTest extends BaseTest {
 
     @Autowired
     private TblProductMapper tblProductMapper;
@@ -38,7 +36,7 @@ public class TblProductMapperTest extends BaseDaoTest{
         tblProduct.setDescription("酸奶1酸奶1");
         tblProduct.setPrice(new BigDecimal("99"));
         tblProduct.setNowPrice(new BigDecimal("88"));
-        tblProduct.setStatus(Constants.ProductState.ON_SALE);
+        tblProduct.setStatus(AbittyConstants.ProductState.ON_SALE);
         tblProduct.setIcon("");
         tblProduct.setDetail("酸奶1酸奶1酸奶1酸奶1");
         tblProduct.setImages("");
@@ -52,7 +50,7 @@ public class TblProductMapperTest extends BaseDaoTest{
         tblProduct2.setDescription("酸奶2酸奶2");
         tblProduct2.setPrice(new BigDecimal("90"));
         tblProduct2.setNowPrice(new BigDecimal("85"));
-        tblProduct2.setStatus(Constants.ProductState.ON_SALE);
+        tblProduct2.setStatus(AbittyConstants.ProductState.ON_SALE);
         tblProduct2.setIcon("");
         tblProduct2.setDetail("酸奶2酸奶2酸奶2酸奶2");
         tblProduct2.setImages("");

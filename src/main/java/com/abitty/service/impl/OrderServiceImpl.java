@@ -9,7 +9,7 @@ import com.abitty.entity.TblOrderInfo;
 import com.abitty.entity.TblSubOrder;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.OrderService;
-import com.abitty.utils.Constants;
+import com.abitty.constant.AbittyConstants;
 import com.abitty.utils.DateUtils;
 import com.abitty.utils.Sequence;
 import com.google.common.collect.Lists;
@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService{
                 return;
             }
 
-            if (tblOrderInfo.getStatus() != Constants.OrderState.INITIAL) {
+            if (tblOrderInfo.getStatus() != AbittyConstants.OrderState.INITIAL) {
                 responseDto.setRetCode(ExceptionEnum.ORDER_STATUS_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.ORDER_STATUS_INVALID.getErrorMsg());
                 return;
@@ -63,7 +63,7 @@ public class OrderServiceImpl implements OrderService{
             }
 
             TblSubOrder firstSubOrder = subOrderList.get(0);
-            tblOrderInfo.setStatus(Constants.OrderState.PAID);
+            tblOrderInfo.setStatus(AbittyConstants.OrderState.PAID);
             tblOrderInfo.setNextSub(firstSubOrder.getSubOrderNo());
             tblOrderInfo.setNextSubTime(firstSubOrder.getDeliveryTime());
             tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
@@ -116,7 +116,7 @@ public class OrderServiceImpl implements OrderService{
             tblSubOrder.setOrderNo(orderNo);
             tblSubOrder.setProductNo(productNo);
             tblSubOrder.setQuantity(quantity);
-            tblSubOrder.setStatus(Constants.SubOrderState.INITIAL);
+            tblSubOrder.setStatus(AbittyConstants.SubOrderState.INITIAL);
             tblSubOrder.setRecvName(recName);
             tblSubOrder.setPhone(phone);
             tblSubOrder.setAddress(address);

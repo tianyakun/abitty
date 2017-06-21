@@ -30,7 +30,7 @@
     delete from tbl_sub_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblSubOrder" >
+  <insert id="insert" parameterType="com.abitty.entity.TblSubOrder" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_sub_order (id, sub_order_no, order_no, 
       product_no, quantity, status, 
       recv_name, phone, address, 
@@ -42,7 +42,7 @@
       #{deliveryTime,jdbcType=TIMESTAMP}, #{usedPercent,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblSubOrder" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblSubOrder" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_sub_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

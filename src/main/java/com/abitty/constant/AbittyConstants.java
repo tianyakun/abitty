@@ -1,9 +1,9 @@
-package com.abitty.utils;
+package com.abitty.constant;
 
 /**
  * Created by yak on 17/6/17.
  */
-public class Constants {
+public class AbittyConstants {
 
     public class OrderState {
         public static final int INITIAL = 0; //初始化

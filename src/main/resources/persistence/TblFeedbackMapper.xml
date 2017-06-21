@@ -23,7 +23,7 @@
     delete from tbl_feedback
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblFeedback" >
+  <insert id="insert" parameterType="com.abitty.entity.TblFeedback" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_feedback (id, feedback_no, uid, 
       content, images, create_time, 
       update_time)
@@ -31,7 +31,7 @@
       #{content,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblFeedback" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblFeedback" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_feedback
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

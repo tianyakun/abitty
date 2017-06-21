@@ -1,17 +1,16 @@
 package com.abitty.dao;
 
+import com.abitty.BaseTest;
 import com.abitty.entity.TblCatalog;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by kkk on 17/6/12.
  */
-public class TblCatalogMapperTest extends BaseDaoTest {
+public class TblCatalogMapperTest extends BaseTest {
 
     @Autowired
     private TblCatalogMapper tblCatalogMapper;

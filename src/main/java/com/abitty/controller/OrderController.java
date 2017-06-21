@@ -7,7 +7,7 @@ import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.AddressService;
 import com.abitty.service.OrderService;
 import com.abitty.service.ProductService;
-import com.abitty.utils.Constants;
+import com.abitty.constant.AbittyConstants;
 import com.abitty.utils.ParamChecker;
 import com.abitty.utils.Sequence;
 import com.abitty.vo.OrderDetailVo;
@@ -73,7 +73,7 @@ public class OrderController {
                 tblOrderInfo.setProductNo(requestDto.getProductNo());
                 tblOrderInfo.setTotalQuantity(requestDto.getTotalQuantity());
                 tblOrderInfo.setTotalAmount(requestDto.getTotalAmount());
-                tblOrderInfo.setStatus(Constants.OrderState.INITIAL);
+                tblOrderInfo.setStatus(AbittyConstants.OrderState.INITIAL);
                 tblOrderInfo.setDeliveryType(requestDto.getDeliveryType());//todo
 //                tblOrderInfo.setDeliveryTime(requestDto.getDeliveryTime());
                 tblOrderInfo.setSubQuantity(requestDto.getSubQuantity());
@@ -313,9 +313,9 @@ public class OrderController {
         }
 
         int periodDays;
-        if (Constants.DeliveryType.YEARLY.equalsIgnoreCase(deliveryType)) {
+        if (AbittyConstants.DeliveryType.YEARLY.equalsIgnoreCase(deliveryType)) {
             periodDays = 356;
-        } else if (Constants.DeliveryType.MONTHLY.equalsIgnoreCase(deliveryType)) {
+        } else if (AbittyConstants.DeliveryType.MONTHLY.equalsIgnoreCase(deliveryType)) {
             periodDays = 30;
         } else {
             periodDays = 7;

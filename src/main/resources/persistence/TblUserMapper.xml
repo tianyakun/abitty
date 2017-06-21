@@ -29,7 +29,7 @@
     delete from tbl_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblUser" >
+  <insert id="insert" parameterType="com.abitty.entity.TblUser" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_user (id, uid, name, 
       phone, password, gender, 
       birthday, status, last_login_time, 
@@ -41,7 +41,7 @@
       #{lastLoginIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblUser" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblUser" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
