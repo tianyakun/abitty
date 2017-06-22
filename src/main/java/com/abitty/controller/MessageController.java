@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,9 +27,9 @@ public class MessageController {
     @Autowired
     private MessageProcessBiz messageProcessBiz;
 
-    @RequestMapping(value = "/send")
+    @RequestMapping(value = "/send/{phone}")
     @ResponseBody
-    public ResponseDto addAddress(final String phone) {
+    public ResponseDto addAddress(@PathVariable("phone") final String phone) {
 
         logger.info("发送短信验证码请求 phone={}", phone);
 
