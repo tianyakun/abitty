@@ -57,6 +57,8 @@ public class TblOrderInfo {
 
     private String ip;
 
+    private String openidCode;
+
     public Integer getId() {
         return id;
     }
@@ -265,6 +267,14 @@ public class TblOrderInfo {
         this.ip = ip;
     }
 
+    public String getOpenidCode() {
+        return openidCode;
+    }
+
+    public void setOpenidCode(String openidCode) {
+        this.openidCode = openidCode;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("TblOrderInfo{");
@@ -294,6 +304,7 @@ public class TblOrderInfo {
         sb.append(", subOrderList=").append(subOrderList);
         sb.append(", productBody='").append(productBody).append('\'');
         sb.append(", ip='").append(ip).append('\'');
+        sb.append(", openidCode='").append(openidCode).append('\'');
         sb.append('}');
         return sb.toString();
     }

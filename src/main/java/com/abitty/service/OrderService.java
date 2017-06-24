@@ -19,4 +19,6 @@ public interface OrderService {
     TblOrderInfo queryOrderInfo(String orderNo);
 
     boolean saveRequestOrder(TblOrderInfo tblOrderInfo, TblAddress tblAddress);
+
+    void recievePayinfo(TblOrderInfo tblOrderInfo);
 }

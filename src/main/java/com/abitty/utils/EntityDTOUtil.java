@@ -31,7 +31,7 @@ public class EntityDTOUtil {
         tblOrderInfo.setTotalQuantity(requestDto.getTotalQuantity());
         tblOrderInfo.setTotalAmount(requestDto.getTotalAmount());
         tblOrderInfo.setServId("wechatjs");
-        tblOrderInfo.setServPayId("P" + Sequence.next());
+        tblOrderInfo.setServPayId(String.valueOf(Sequence.next()));
         tblOrderInfo.setStatus(AbittyConstants.OrderState.INITIAL);
         tblOrderInfo.setDeliveryType(requestDto.getDeliveryType());
         tblOrderInfo.setSubQuantity(requestDto.getSubQuantity());
@@ -41,6 +41,7 @@ public class EntityDTOUtil {
         tblOrderInfo.setRemark(requestDto.getRemark());
         tblOrderInfo.setProductBody(requestDto.getProductBody());
         tblOrderInfo.setIp(requestDto.getIp());
+        tblOrderInfo.setOpenidCode(requestDto.getOpenidCode());
 
         return tblOrderInfo;
 

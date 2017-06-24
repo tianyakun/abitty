@@ -1,5 +1,6 @@
 package com.abitty.wechat;
 
+import com.abitty.constant.WechatConstants;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
@@ -78,6 +79,16 @@ public class WechatDataUtil {
         String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap);
         try {
             return SHA1.sign(str);
+        } catch (Exception e) {
+            logger.error("sha1签名异常");
+            return null;
+        }
+    }
+
+    public static String md5Sign(Map<String, String> signMap) {
+        String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap) + "&key=" + WechatConstants.PAY_KEY;
+        try {
+            return MD5.MD5Encode(str, WechatConstants.CHARSET).toUpperCase();
         } catch (Exception e) {
             logger.error("sha1签名异常");
             return null;

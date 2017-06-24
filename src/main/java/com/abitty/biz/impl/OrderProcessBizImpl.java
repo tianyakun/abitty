@@ -59,7 +59,9 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
             wechatPayProxy.paySubmit(tblOrderInfo);
 
             //根据发送结果更新数据
-            orderService.recievePayinfo(tblMessageInfo);
+            orderService.recievePayinfo(tblOrderInfo);
+
+            wechatPayProxy.packageJs(tblOrderInfo, responseDto);
 
             //最终结果回填Dto
 //            responseDto.setRetCode(tblMessageInfo.getResultCode());

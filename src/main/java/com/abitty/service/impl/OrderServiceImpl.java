@@ -143,4 +143,9 @@ public class OrderServiceImpl implements OrderService{
 
         return true;
     }
+
+    @Override
+    public void recievePayinfo(TblOrderInfo tblOrderInfo) {
+        tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
+    }
 }

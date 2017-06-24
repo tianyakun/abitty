@@ -17,9 +17,9 @@ import java.util.Map;
  * Created by yak on 17/6/23.
  */
 @Component
-public class WechatTicketProxy {
+public class WechatProxy {
 
-    private final static Logger logger = LoggerFactory.getLogger(WechatTicketProxy.class);
+    private final static Logger logger = LoggerFactory.getLogger(WechatProxy.class);
 
     private SyncHttpSender httpSender = SyncHttpSender.createCustomHttpSender(WechatConstants.READ_TIMEOUT, WechatConstants.CONN_TIMEOUT, HttpConstants.DEFAULT_MAX_TOTAL, true);
 
@@ -70,5 +70,32 @@ public class WechatTicketProxy {
         }
 
         return responseMap.get("ticket");
+    }
+
+    public String getOpenId(String openIdCode) {
+        Preconditions.checkNotNull(openIdCode, "openIdCode is null");
+
+        Map<String, String> paramMap = Maps.newHashMap();
+        paramMap.put("appid", WechatConstants.APP_ID);
+        paramMap.put("secret", WechatConstants.SECRET);
+        paramMap.put("code", openIdCode);
+        paramMap.put("grant_type", "authorization_code");
+
+        logger.info("获取微信openid请求 paramMap={}", paramMap);
+        String response = httpSender.doGet(WechatConstants.OPEN_ID_URL, paramMap, WechatConstants.CHARSET);
+        logger.info("获取微信openId返回 response={}", response);
+
+        if (Strings.isNullOrEmpty(response)) {
+            logger.error("获取微信openid返回为空");
+            return null;
+        }
+
+        Map<String, String> responseMap = WechatDataUtil.transJson2Map(response);
+        if (MapUtils.isEmpty(responseMap)) {
+            logger.error("解析获取微信openid返回报文异常");
+            return null;
+        }
+
+        return responseMap.get("openid");
     }
 }

@@ -5,7 +5,7 @@ import com.abitty.constant.WechatConstants;
 import com.abitty.dto.ResponseDto;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.wechat.WechatDataUtil;
-import com.abitty.wechat.WechatTicketProxy;
+import com.abitty.wechat.WechatProxy;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
@@ -25,14 +25,14 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
     private final static Logger logger = LoggerFactory.getLogger(WechatProcessBizImpl.class);
 
     @Autowired
-    private WechatTicketProxy wechatTicketProxy;
+    private WechatProxy wechatProxy;
 
     @Override
     public void getTicket(String code, ResponseDto responseDto) {
         Preconditions.checkNotNull(code, "code is null");
 
         //获取access_token
-        String accessToken = wechatTicketProxy.getAccessToken();
+        String accessToken = wechatProxy.getAccessToken();
         logger.info("获取access_token={}", accessToken);
 
         if (Strings.isNullOrEmpty(accessToken)) {
@@ -43,7 +43,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
         }
 
         //获取jsapi_ticket
-        String ticket = wechatTicketProxy.getJsapiTicket(accessToken);
+        String ticket = wechatProxy.getJsapiTicket(accessToken);
         logger.info("获取ticket={}", ticket);
 
         if (Strings.isNullOrEmpty(ticket)) {

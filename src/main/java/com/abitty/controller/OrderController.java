@@ -56,10 +56,10 @@ public class OrderController {
     @Autowired
     private OrderProcessBiz orderProcessBiz;
 
-    @RequestMapping(value = "/create")
+    @RequestMapping(value = "/confirm")
     @ResponseBody
     public ResponseDto createOrder(final OrderConfirmRequestDto requestDto, final HttpServletRequest httpServletRequest, final HttpSession httpSession) {
-        logger.info("创建订单请求 requestDto={}", requestDto);
+        logger.info("订单确认请求 requestDto={}", requestDto);
 
         ResponseDto responseDto = new ResponseDto();
 
@@ -81,39 +81,6 @@ public class OrderController {
 
                 orderProcessBiz.confirmOrder(requestDto, responseDto);
 
-                TblOrderInfo tblOrderInfo = new TblOrderInfo();
-                tblOrderInfo.setOrderNo("order" + Sequence.next());
-                tblOrderInfo.setUid(tblUser.getUid());
-                tblOrderInfo.setProductNo(requestDto.getProductNo());
-                tblOrderInfo.setTotalQuantity(requestDto.getTotalQuantity());
-                tblOrderInfo.setTotalAmount(requestDto.getTotalAmount());
-                tblOrderInfo.setStatus(AbittyConstants.OrderState.INITIAL);
-                tblOrderInfo.setDeliveryType(requestDto.getDeliveryType());//todo
-//                tblOrderInfo.setDeliveryTime(requestDto.getDeliveryTime());
-                tblOrderInfo.setSubQuantity(requestDto.getSubQuantity());
-                tblOrderInfo.setTotalSub(requestDto.getTotalSub());
-                tblOrderInfo.setCreateTime(new Date());
-                tblOrderInfo.setUserNumber(requestDto.getUserNumber());
-                tblOrderInfo.setRemark(requestDto.getRemark());
-
-                TblAddress tblAddress = new TblAddress();
-                tblAddress.setUid(tblUser.getUid());
-                tblAddress.setProvince(requestDto.getAddressProvince());
-                tblAddress.setCity(requestDto.getAddressCity());
-                tblAddress.setArea(requestDto.getAddressArea());
-                tblAddress.setPcaDetail(tblAddress.getProvince() + tblAddress.getCity() + tblAddress.getArea());
-                tblAddress.setAddressDetail(requestDto.getAddressDetail());
-                tblAddress.setPostcode(requestDto.getPostcode());
-
-                addressService.add(tblAddress);
-
-                tblOrderInfo.setAddressId(tblAddress.getId());
-
-                orderService.add(tblOrderInfo);
-
-                responseDto.addAttribute("orderNo", tblOrderInfo.getOrderNo());
-                responseDto.addAttribute("totalAmount", tblOrderInfo.getTotalAmount());
-
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
             }
@@ -122,7 +89,7 @@ public class OrderController {
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
 
-        logger.info("创建订单返回: {}", responseDto);
+        logger.info("订单确认返回: {}", responseDto);
         return responseDto;
     }
 

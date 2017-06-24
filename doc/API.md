@@ -115,7 +115,7 @@ productNo=PN1497714192404
             "productNo": "PN1497714192404",
             "name": "酸奶1",
             "catalogNo": "CN1497713023528",
-            "description": "酸奶1酸奶1",
+            "description": "400ml*5瓶", //商品规格
             "price": 99,
             "nowPrice": 88,
             "icon": "",
@@ -126,8 +126,8 @@ productNo=PN1497714192404
     }
 }
 ```
-## 5.创建订单
-地址:	/order/create    
+## 5.创建订单并调用微信统一下单接口预支付
+地址:	/order/confirm    
 
 方式:	post    
 
@@ -148,6 +148,8 @@ addressCity=北京市
 addressArea=昌平区
 addressDetail=龙域中路融泽嘉园1号院
 postcode=102200
+productBody=一点生活-酸奶 //商品描述 商家名称-销售商品类目
+openidCode=xxxxxxx //微信支付时获取用户openid的code
 ```
 返回参数：
 ```
@@ -155,19 +157,20 @@ postcode=102200
     "retCode": "000000",
     "retMsg": "SUCCESS",
     "data": {
-        "orderNo": "order325801103440478208",
-        "totalAmount": 352
+        timeStamp: "234234234",//时间戳
+			nonceStr: "xxxxx",//16位随机字符串
+			package: "sdxxxxx",//商品签名
+    		signType: "MD5", //签名算法
+    		paySign: "xxxx" //支付签名
     }
 }
 ```
-## 6.订单确认支付
-地址:	/order/confirmPay/{orderNo}    
-
-方式:	post    
-
+## 6.JS-SDK权限获取
+地址:	/wechat/ticket/{code}    
+方式:	get/post    
 请求参数：
 ```
-orderNo=order325801103440478208
+code=xxxxx
 ```
 返回参数：
 ```
@@ -175,8 +178,11 @@ orderNo=order325801103440478208
     "retCode": "000000",
     "retMsg": "SUCCESS",
     "data": {
-        "orderNo": "order325801103440478208",
-        "totalAmount": 352
+        jsapi_ticket: 'xxxx',//公众号JS-SDK使用权限签名
+    		noncestr: 'xxx',//16位随机字符串
+    		timestamp: 'xxx',//时间戳
+    		signature: 'xxxx',//JS各接口签名
+    		appid: 'xxxxxx'//公众号id
     }
 }
 ```

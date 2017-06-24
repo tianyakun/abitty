@@ -76,6 +76,10 @@ public class OrderConfirmRequestDto implements Serializable {
 
     private String ip;
 
+    @NotNull
+    @NotBlank
+    private String openidCode;
+
     public String getProductNo() {
         return productNo;
     }
@@ -228,6 +232,14 @@ public class OrderConfirmRequestDto implements Serializable {
         this.ip = ip;
     }
 
+    public String getOpenidCode() {
+        return openidCode;
+    }
+
+    public void setOpenidCode(String openidCode) {
+        this.openidCode = openidCode;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("OrderConfirmRequestDto{");
@@ -249,6 +261,7 @@ public class OrderConfirmRequestDto implements Serializable {
         sb.append(", productBody='").append(productBody).append('\'');
         sb.append(", uid='").append(uid).append('\'');
         sb.append(", ip='").append(ip).append('\'');
+        sb.append(", openidCode='").append(openidCode).append('\'');
         sb.append('}');
         return sb.toString();
     }

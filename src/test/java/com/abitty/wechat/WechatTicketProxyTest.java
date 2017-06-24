@@ -4,15 +4,13 @@ import com.abitty.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by kkk on 17/6/24.
  */
 public class WechatTicketProxyTest extends BaseTest {
 
     @Autowired
-    private WechatTicketProxy wechatTicketProxy;
+    private WechatProxy wechatTicketProxy;
 
     @Test
     public void testGetAccessToken() throws Exception {
