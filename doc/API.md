@@ -136,6 +136,7 @@ productNo=PN1497714192404
 productNo=PN1497714192404
 totalQuantity=4 //商品总数
 totalAmount=352 //订单总金额
+serviceAtomCount=1 //服务次数（即订购月数）
 deliveryType=weekly //配送周期 weekly、monthly、yearly
 subQuantity=1 //单次配送数量
 totalSub=4 //配送次数
