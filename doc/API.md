@@ -120,7 +120,8 @@ productNo=PN1497714192404
             "nowPrice": 88,
             "icon": "",
             "detail": "酸奶1酸奶1酸奶1酸奶1",
-            "images": ""
+            "images": "",
+            "deliveryType": "weekly" //配送周期 weekly：按周配送，monthly：按月配送，yearly：按年配送
         }
     }
 }

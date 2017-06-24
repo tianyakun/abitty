@@ -69,6 +69,10 @@ public class OrderCreateRequestDto implements Serializable {
     @NotBlank
     private String postcode;
 
+    @NotNull
+    @NotBlank
+    private String body;//商品描述 商家名称-销售商品类目
+
     public String getProductNo() {
         return productNo;
     }

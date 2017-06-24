@@ -1,5 +1,6 @@
 package com.abitty.controller;
 
+import com.abitty.biz.OrderProcessBiz;
 import com.abitty.dto.OrderCreateRequestDto;
 import com.abitty.dto.ResponseDto;
 import com.abitty.entity.*;
@@ -49,6 +50,9 @@ public class OrderController {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private OrderProcessBiz orderProcessBiz;
 
     @RequestMapping(value = "/create")
     @ResponseBody
