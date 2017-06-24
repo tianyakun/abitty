@@ -12,6 +12,7 @@ import com.abitty.service.OrderService;
 import com.abitty.constant.AbittyConstants;
 import com.abitty.utils.DateUtils;
 import com.abitty.utils.Sequence;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -130,4 +131,16 @@ public class OrderServiceImpl implements OrderService{
         return tblSubOrderList;
     }
 
+    @Transactional
+    @Override
+    public boolean saveRequestOrder(TblOrderInfo tblOrderInfo, TblAddress tblAddress) {
+
+
+        tblAddressMapper.insertSelective(tblAddress);
+
+        tblOrderInfo.setAddressId(tblAddress.getId());
+        tblOrderInfoMapper.insertSelective(tblOrderInfo);
+
+        return true;
+    }
 }

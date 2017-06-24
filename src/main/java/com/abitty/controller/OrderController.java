@@ -1,7 +1,7 @@
 package com.abitty.controller;
 
 import com.abitty.biz.OrderProcessBiz;
-import com.abitty.dto.OrderCreateRequestDto;
+import com.abitty.dto.OrderConfirmRequestDto;
 import com.abitty.dto.ResponseDto;
 import com.abitty.entity.*;
 import com.abitty.enums.ExceptionEnum;
@@ -9,6 +9,7 @@ import com.abitty.service.AddressService;
 import com.abitty.service.OrderService;
 import com.abitty.service.ProductService;
 import com.abitty.constant.AbittyConstants;
+import com.abitty.utils.IpAddrUtil;
 import com.abitty.utils.ParamChecker;
 import com.abitty.utils.Sequence;
 import com.abitty.vo.OrderDetailVo;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,7 +58,7 @@ public class OrderController {
 
     @RequestMapping(value = "/create")
     @ResponseBody
-    public ResponseDto createOrder(final OrderCreateRequestDto requestDto, final HttpSession httpSession) {
+    public ResponseDto createOrder(final OrderConfirmRequestDto requestDto, final HttpServletRequest httpServletRequest, final HttpSession httpSession) {
         logger.info("创建订单请求 requestDto={}", requestDto);
 
         ResponseDto responseDto = new ResponseDto();
@@ -71,6 +73,14 @@ public class OrderController {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
             } else {
+
+                requestDto.setUid(tblUser.getUid());
+
+                String ip = IpAddrUtil.getIpAddr(httpServletRequest);
+                requestDto.setIp(ip);
+
+                orderProcessBiz.confirmOrder(requestDto, responseDto);
+
                 TblOrderInfo tblOrderInfo = new TblOrderInfo();
                 tblOrderInfo.setOrderNo("order" + Sequence.next());
                 tblOrderInfo.setUid(tblUser.getUid());

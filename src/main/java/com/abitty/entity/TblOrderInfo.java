@@ -19,6 +19,12 @@ public class TblOrderInfo {
 
     private Integer status;
 
+    private String servId;
+
+    private String servPayId;
+
+    private String servPayReturnId;
+
     private String deliveryType;
 
     private String deliveryTime;
@@ -41,7 +47,15 @@ public class TblOrderInfo {
 
     private Date createTime;
 
+    private String errorCode;
+
+    private String errorMsg;
+
     private List<TblSubOrder> subOrderList;
+
+    private String productBody;
+
+    private String ip;
 
     public Integer getId() {
         return id;
@@ -195,6 +209,62 @@ public class TblOrderInfo {
         this.subOrderList = subOrderList;
     }
 
+    public String getServId() {
+        return servId;
+    }
+
+    public void setServId(String servId) {
+        this.servId = servId;
+    }
+
+    public String getServPayId() {
+        return servPayId;
+    }
+
+    public void setServPayId(String servPayId) {
+        this.servPayId = servPayId;
+    }
+
+    public String getServPayReturnId() {
+        return servPayReturnId;
+    }
+
+    public void setServPayReturnId(String servPayReturnId) {
+        this.servPayReturnId = servPayReturnId;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getProductBody() {
+        return productBody;
+    }
+
+    public void setProductBody(String productBody) {
+        this.productBody = productBody;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("TblOrderInfo{");
@@ -205,6 +275,9 @@ public class TblOrderInfo {
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", status=").append(status);
+        sb.append(", servId='").append(servId).append('\'');
+        sb.append(", servPayId='").append(servPayId).append('\'');
+        sb.append(", servPayReturnId='").append(servPayReturnId).append('\'');
         sb.append(", deliveryType='").append(deliveryType).append('\'');
         sb.append(", deliveryTime='").append(deliveryTime).append('\'');
         sb.append(", subQuantity=").append(subQuantity);
@@ -216,7 +289,11 @@ public class TblOrderInfo {
         sb.append(", userNumber=").append(userNumber);
         sb.append(", remark='").append(remark).append('\'');
         sb.append(", createTime=").append(createTime);
+        sb.append(", errorCode='").append(errorCode).append('\'');
+        sb.append(", errorMsg='").append(errorMsg).append('\'');
         sb.append(", subOrderList=").append(subOrderList);
+        sb.append(", productBody='").append(productBody).append('\'');
+        sb.append(", ip='").append(ip).append('\'');
         sb.append('}');
         return sb.toString();
     }

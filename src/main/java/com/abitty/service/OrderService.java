@@ -1,6 +1,7 @@
 package com.abitty.service;
 
 import com.abitty.dto.ResponseDto;
+import com.abitty.entity.TblAddress;
 import com.abitty.entity.TblOrderInfo;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface OrderService {
     List<TblOrderInfo> getAllByUid(String uid);
 
     TblOrderInfo queryOrderInfo(String orderNo);
+
+    boolean saveRequestOrder(TblOrderInfo tblOrderInfo, TblAddress tblAddress);
 }

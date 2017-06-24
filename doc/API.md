@@ -369,7 +369,7 @@ verifyCode=123456
         "item": {
             "uid": "18812345678",
             "gender": "s",
-            "birthday": "2017年06月18日"
+            "birthday": "2017-06-18"
         }
     }
 }
@@ -382,7 +382,7 @@ verifyCode=123456
 请求参数：
 ```
 gender=m
-birthday=1999年10月1日
+birthday=1999-10-01
 ```
 返回参数：
 ```

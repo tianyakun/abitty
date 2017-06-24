@@ -5,12 +5,11 @@ import net.sf.oval.constraint.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by yak on 17/6/17.
  */
-public class OrderCreateRequestDto implements Serializable {
+public class OrderConfirmRequestDto implements Serializable {
 
     @NotNull
     @NotBlank
@@ -71,7 +70,11 @@ public class OrderCreateRequestDto implements Serializable {
 
     @NotNull
     @NotBlank
-    private String body;//商品描述 商家名称-销售商品类目
+    private String productBody;//商品描述 商家名称-销售商品类目
+
+    private String uid;
+
+    private String ip;
 
     public String getProductNo() {
         return productNo;
@@ -201,9 +204,33 @@ public class OrderCreateRequestDto implements Serializable {
         this.postcode = postcode;
     }
 
+    public String getProductBody() {
+        return productBody;
+    }
+
+    public void setProductBody(String productBody) {
+        this.productBody = productBody;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("OrderCreateRequestDto{");
+        final StringBuilder sb = new StringBuilder("OrderConfirmRequestDto{");
         sb.append("productNo='").append(productNo).append('\'');
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
@@ -219,6 +246,9 @@ public class OrderCreateRequestDto implements Serializable {
         sb.append(", addressArea='").append(addressArea).append('\'');
         sb.append(", addressDetail='").append(addressDetail).append('\'');
         sb.append(", postcode='").append(postcode).append('\'');
+        sb.append(", productBody='").append(productBody).append('\'');
+        sb.append(", uid='").append(uid).append('\'');
+        sb.append(", ip='").append(ip).append('\'');
         sb.append('}');
         return sb.toString();
     }

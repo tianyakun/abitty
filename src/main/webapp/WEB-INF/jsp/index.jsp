@@ -3,7 +3,7 @@
 <head>
     <title></title>
 </head>
-<body>
+<productBody>
 
-</body>
+</productBody>
 </html>

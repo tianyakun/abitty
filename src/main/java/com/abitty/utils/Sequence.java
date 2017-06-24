@@ -10,4 +10,8 @@ public class Sequence {
     public static long next() {
         return idWorker.nextId();
     }
+
+    public static void main(String[] args) {
+        System.out.println(Sequence.next());
+    }
 }
