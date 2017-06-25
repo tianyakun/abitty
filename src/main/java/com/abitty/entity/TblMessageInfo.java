@@ -152,4 +152,26 @@ public class TblMessageInfo {
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TblMessageInfo{");
+        sb.append("id=").append(id);
+        sb.append(", messageId='").append(messageId).append('\'');
+        sb.append(", channelMessageId='").append(channelMessageId).append('\'');
+        sb.append(", messageType=").append(messageType);
+        sb.append(", messageChannel='").append(messageChannel).append('\'');
+        sb.append(", templateCode='").append(templateCode).append('\'');
+        sb.append(", messageAddress='").append(messageAddress).append('\'');
+        sb.append(", sendStatus=").append(sendStatus);
+        sb.append(", resultCode='").append(resultCode).append('\'');
+        sb.append(", resultInfo='").append(resultInfo).append('\'');
+        sb.append(", sendContent='").append(sendContent).append('\'');
+        sb.append(", vcode='").append(vcode).append('\'');
+        sb.append(", validateStatus=").append(validateStatus);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", sendTime=").append(sendTime);
+        sb.append('}');
+        return sb.toString();
+    }
 }
