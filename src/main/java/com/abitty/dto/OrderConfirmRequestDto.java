@@ -34,7 +34,6 @@ public class OrderConfirmRequestDto implements Serializable {
     @NotNull
     private Integer totalSub;
 
-    @NotNull
     private Integer userNumber;
 
     @NotNull

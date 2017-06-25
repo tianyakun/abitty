@@ -3,8 +3,10 @@ package com.abitty.wechat;
 import com.abitty.constant.WechatConstants;
 import com.abitty.dto.ResponseDto;
 import com.abitty.entity.TblOrderInfo;
+import com.abitty.enums.ExceptionEnum;
 import com.abitty.transport.http.HttpConstants;
 import com.abitty.transport.http.SyncHttpSender;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections4.MapUtils;
@@ -30,6 +32,9 @@ public class WechatPayProxy {
 
     public void paySubmit(TblOrderInfo tblOrderInfo) {
         try {
+            String openid = wechatProxy.getOpenId(tblOrderInfo.getOpenidCode());
+            Preconditions.checkNotNull(openid, "get openid is null");
+
             Map<String, String> data = Maps.newTreeMap();
             data.put("appid", WechatConstants.APP_ID);
             data.put("body", tblOrderInfo.getProductBody());
@@ -38,11 +43,11 @@ public class WechatPayProxy {
             String nonceStr = WechatDataUtil.randomStr();
             data.put("nonce_str", nonceStr);
             data.put("out_trade_no", tblOrderInfo.getPayId());
-            data.put("total_fee", String.valueOf(tblOrderInfo.getTotalAmount().doubleValue() * 100));
+            data.put("total_fee", String.valueOf((int)tblOrderInfo.getTotalAmount().doubleValue() * 100));
             data.put("notify_url", WechatConstants.NOTIFY_URL);
             data.put("trade_type", WechatConstants.TRADE_TYPE);
             data.put("spbill_create_ip", tblOrderInfo.getIp());
-            data.put("openid", wechatProxy.getOpenId(tblOrderInfo.getOpenidCode()));
+            data.put("openid", openid);
             data.put("sign", WechatDataUtil.md5Sign(data).toUpperCase());
 
             String requestXml = WechatDataUtil.transMap2XML(data);
@@ -53,19 +58,24 @@ public class WechatPayProxy {
 
             if (Strings.isNullOrEmpty(responseXml)) {
                 logger.error("微信统一下单返回为空");
-//                tblOrderInfo.setErrorCode();
-//                tblOrderInfo.setErrorMsg();
+                tblOrderInfo.setErrorCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+                tblOrderInfo.setErrorMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
                 return;
             }
 
             Map<String, String> responseMap = WechatDataUtil.transXML2Map(requestXml);
             if (MapUtils.isEmpty(responseMap)) {
                 logger.error("微信统一下单返回报文解析异常");
+                tblOrderInfo.setErrorCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+                tblOrderInfo.setErrorMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
                 return;
             }
 
 
             if (!"SUCCESS".equals(responseMap.get("return_code"))) {
+                logger.error("微信统一下单失败 return_code={}", responseMap.get("return_code"));
+                tblOrderInfo.setErrorCode(responseMap.get("return_code"));
+                tblOrderInfo.setErrorMsg(responseMap.get("return_code"));
                 return;
             }
 
@@ -78,7 +88,7 @@ public class WechatPayProxy {
 
             tblOrderInfo.setPayReturnId(responseMap.get("prepay_id"));
         } catch (Exception e) {
-            logger.error("微信统一下单请求异常");
+            logger.error("微信统一下单请求异常", e);
         }
     }
 
@@ -97,5 +107,13 @@ public class WechatPayProxy {
         responseDto.addAttribute("package", data.get("package"));
         responseDto.addAttribute("signType", data.get("signType"));
         responseDto.addAttribute("paySign", data.get("paySign"));
+    }
+
+    public WechatProxy getWechatProxy() {
+        return wechatProxy;
+    }
+
+    public void setWechatProxy(WechatProxy wechatProxy) {
+        this.wechatProxy = wechatProxy;
     }
 }

@@ -1,6 +1,6 @@
 # 接口文档
-Base Url：www.abitty.com
-IP：47.93.17.130
+Base Url：www.abitty.com:8080
+IP：47.93.17.130:8080
 ## 视图页
 地址: /view/*
 ## 登录页
