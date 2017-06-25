@@ -1,8 +1,8 @@
 $(function(){
+
     var Jform = $("#J_login_form"),
         Jphone = Jform.find("input[name='phone']"),
         Jvcode = Jform.find("input[name='vcode']"),
-        JmessageId,
         Jcode = $("#J_code"),
         timer = null;
         regPhone = /^1[34578]\d{9}$/;
@@ -18,8 +18,7 @@ $(function(){
                 type: "POST",
                 data: {
                     phone: Jphone.val(),
-                    verifyCode: Jvcode.val(),
-                    messageId: JmessageId
+                    verifyCode: Jvcode.val()
                 }
             }).done(function(res){
                 if(res.retCode == 000000){
@@ -51,7 +50,7 @@ $(function(){
         timer = setInterval(function(){
             if(i==0){
                 clearInterval(timer);
-                _this.removeClass("counting");
+                el.removeClass("counting").text("发送验证码");
                 return;
             }
             el.text(--i+"秒");
@@ -67,11 +66,8 @@ $(function(){
         }
         if(_this.hasClass("pending") || _this.hasClass("counting")) return;
         $.ajax({
-            url: $Config.root + "/verify/send",
+            url: $Config.root + "/verify/send/"+Jphone.val(),
             type: "GET",
-            data: {
-                phone: Jphone.val()
-            },
             beforeSend: function(){
                 _this.addClass("pending");
             }

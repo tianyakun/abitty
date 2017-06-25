@@ -1780,7 +1780,6 @@ module.exports = function(ctx, tpl){
         })
     }
     function bindCreateOrder(){
-
         $("#J_pay").on("click", function(){
             var _this = $(this);
             if(_this.hasClass("pending")) return;
@@ -1822,6 +1821,8 @@ module.exports = function(ctx, tpl){
 
     //微信开发权限获取
     getAccess();
+
+    bindCreateOrder();
 
 
 }
@@ -2365,7 +2366,7 @@ module.exports = "<section class=product-select-wrapper> <div class=page-service
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a href=/view/user class=\"user-item icon-user\">{{? it.userName}}{{=it.userName}}{{??}}登录{{?}}</a> </section>";
+module.exports = "<section class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a href=/view/user class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
 
 /***/ }),
 /* 27 */
@@ -2670,7 +2671,7 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-        !$Config.userName ? location.href="/loginIndex" : next();
+        !$Config.uid ? location.href="/loginIndex" : next();
     }
 
     //当前用户订购服务列表
