@@ -1,4 +1,13 @@
 # 接口文档
+Base Url：www.abitty.com
+IP：47.93.17.130
+## 视图页
+地址: /view/*
+## 登录页
+地址: /loginIndex
+
+## 获取商品类别列表
+
 ## 1.获取商品类别列表
 地址:	/catalog/list    
 

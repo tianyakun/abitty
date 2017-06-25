@@ -13,11 +13,18 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ViewController {
 
+    @RequestMapping("/loginIndex")
+    public String index(Model model) {
+        return "loginIndex";
+    }
+
     @RequestMapping("/view/*")
     public String myService(Model model, HttpSession httpSession) {
         TblUser tblUser = (TblUser) httpSession.getAttribute("user");
         if (tblUser != null) {
             model.addAttribute("uid", tblUser.getUid());
+        } else {
+            model.addAttribute("uid", "");
         }
         return "view";
     }
