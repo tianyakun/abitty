@@ -3,5 +3,5 @@
     <!--<a href="javascript:history.back();" class="back icon-back"> </a>-->
     <!--{{?}}-->
     <h1 class="top-bar-item top-bar-tit">{{=it.title}}</h1>
-    <a href="/view/user" class="user-item icon-user">{{=it.userName}}</a>
+    <a href="/view/user" class="user-item icon-user">{{? it.userName}}{{=it.userName}}{{??}}登录{{?}}</a>
 </section>
