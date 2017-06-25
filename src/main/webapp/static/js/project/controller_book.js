@@ -37,7 +37,6 @@ module.exports = function(ctx, tpl){
         })
     }
     function bindCreateOrder(){
-
         $("#J_pay").on("click", function(){
             var _this = $(this);
             if(_this.hasClass("pending")) return;
@@ -79,6 +78,8 @@ module.exports = function(ctx, tpl){
 
     //微信开发权限获取
     getAccess();
+
+    bindCreateOrder();
 
 
 }
