@@ -74,7 +74,7 @@ public class WechatPayProxy {
 
             if (!"SUCCESS".equals(responseMap.get("return_code"))) {
                 logger.error("微信统一下单失败 return_code={}", responseMap.get("return_code"));
-                tblOrderInfo.setErrorCode(responseMap.get("return_code"));
+                tblOrderInfo.setErrorCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
                 tblOrderInfo.setErrorMsg(responseMap.get("return_code"));
                 return;
             }
@@ -83,10 +83,16 @@ public class WechatPayProxy {
             //验签 todo
 
             if (!"SUCCESS".equals("result_code")) {
+                logger.error("微信统一下单失败 result_code={}", responseMap.get("result_code"));
+                tblOrderInfo.setErrorCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+                tblOrderInfo.setErrorMsg(responseMap.get("result_code"));
                 return;
             }
 
-            tblOrderInfo.setPayReturnId(responseMap.get("prepay_id"));
+            String payReturnId = responseMap.get("prepay_id");
+            logger.info("微信统一下单返回 prepay_id={}", payReturnId);
+
+          tblOrderInfo.setPayReturnId(payReturnId);
         } catch (Exception e) {
             logger.error("微信统一下单请求异常", e);
         }
