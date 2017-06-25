@@ -15,6 +15,7 @@ public class ViewController {
 
     @RequestMapping("/loginIndex")
     public String index(Model model) {
+        model.addAttribute("uid", "");
         return "loginIndex";
     }
 

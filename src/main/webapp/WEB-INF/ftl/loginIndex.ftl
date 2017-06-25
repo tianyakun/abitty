@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="http://47.93.123.19:8080/static/css/common.css">
     <script>
         $Config = {
-            userName: ${uid}
+            userName: "${uid}"
         }
     </script><style>.gray-bg {
     background-color: #f4f4f4;

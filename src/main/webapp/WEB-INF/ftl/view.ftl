@@ -5,7 +5,7 @@
         <title>一点生活</title>
         <script>
             $Config = {
-                uid: ${uid},
+                uid: "${uid}",
                 root: "http://www.abitty.com:8080"
             }
         </script>

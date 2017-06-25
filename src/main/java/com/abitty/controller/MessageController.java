@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by yak on 17/6/17.
  */
 @Controller
-@RequestMapping(value = "/message")
+@RequestMapping(value = "/verify")
 public class MessageController {
 
     private final static Logger logger = LoggerFactory.getLogger(MessageController.class);
