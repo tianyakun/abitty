@@ -1,11 +1,12 @@
 package com.abitty.wechat;
 
+import com.abitty.constant.AbittyConstants;
 import com.abitty.constant.WechatConstants;
-import com.abitty.dto.ResponseDto;
 import com.abitty.entity.TblOrderInfo;
 import com.abitty.enums.ExceptionEnum;
 import com.abitty.transport.http.HttpConstants;
 import com.abitty.transport.http.SyncHttpSender;
+import com.abitty.utils.BankUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
@@ -96,6 +97,35 @@ public class WechatPayProxy {
         } catch (Exception e) {
             logger.error("微信统一下单请求异常", e);
         }
+    }
+
+    public TblOrderInfo receiveNotify(Map<String, String> notifyMap) {
+        String xml=notifyMap.get("content");
+
+        logger.info("接收到微信异步回调数据:{}",xml);
+
+        Map<String,String> map=WechatDataUtil.transXML2Map(xml);
+        if ("SUCCESS".equals(map.get("return_code"))) {
+            logger.error("微信支付回调返回错误信息{}", map.get("return_msg"));
+            return null;
+        }
+        //验签 todo
+
+        if ("SUCCESS".equals(map.get("result_code"))) {
+            logger.error("微信支付回调参数result_code={},err_code={},err_code_des={}", new Object[]{map.get("result_code"),map.get("err_code"), map.get("err_code_des")});
+            return null;
+        }
+
+        // 以下字段在 return_code 和 result_code都为 SUCCESS的时候有返回 微信V3只有成功才有回调结果
+        TblOrderInfo tblOrderInfo = new TblOrderInfo();
+        tblOrderInfo.setPayId(map.get("out_trade_no"));
+        tblOrderInfo.setPayReturnId(map.get("transaction_id"));
+        tblOrderInfo.setTotalAmount(BankUtils.toYuan(map.get("total_fee")));
+        tblOrderInfo.setStatus(AbittyConstants.OrderState.PAY_SUCCESS);
+        tblOrderInfo.setErrorCode(ExceptionEnum.SUCCESS.getErrorCode());
+        tblOrderInfo.setErrorMsg("支付成功");
+        return tblOrderInfo;
+
     }
 
     public WechatProxy getWechatProxy() {

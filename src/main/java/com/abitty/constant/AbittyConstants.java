@@ -7,7 +7,7 @@ public class AbittyConstants {
 
     public class OrderState {
         public static final int INITIAL = 0; //初始化
-        public static final int PAID = 1; //已支付
+        public static final int PAY_SUCCESS = 1; //已支付
         public static final int SERVING = 2; //配送服务中
         public static final int FINISH = 3; //订单完成
         public static final int CANCEL = 4; //订单取消

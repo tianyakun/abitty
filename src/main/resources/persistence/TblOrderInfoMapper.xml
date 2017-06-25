@@ -315,5 +315,10 @@
     from tbl_order_info
     where uid = #{uid,jdbcType=VARCHAR}
   </select>
-
+  <select id="selectByPayId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_order_info
+    where pay_id = #{payId,jdbcType=VARCHAR}
+  </select>
 </mapper>

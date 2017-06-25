@@ -12,7 +12,6 @@ import com.abitty.service.OrderService;
 import com.abitty.constant.AbittyConstants;
 import com.abitty.utils.DateUtils;
 import com.abitty.utils.Sequence;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -64,7 +63,7 @@ public class OrderServiceImpl implements OrderService{
             }
 
             TblSubOrder firstSubOrder = subOrderList.get(0);
-            tblOrderInfo.setStatus(AbittyConstants.OrderState.PAID);
+            tblOrderInfo.setStatus(AbittyConstants.OrderState.PAY_SUCCESS);
             tblOrderInfo.setNextSub(firstSubOrder.getSubOrderNo());
             tblOrderInfo.setNextSubTime(firstSubOrder.getDeliveryTime());
             tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
@@ -147,5 +146,10 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void recievePayinfo(TblOrderInfo tblOrderInfo) {
         tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
+    }
+
+    @Override
+    public TblOrderInfo getByPayId(String payId) {
+        return tblOrderInfoMapper.selectByPayId(payId);
     }
 }
