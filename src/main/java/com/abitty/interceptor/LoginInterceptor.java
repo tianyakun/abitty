@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         String callback = request.getRequestURL().toString();
         session.setAttribute("callback", callback);
-        response.sendRedirect(request.getContextPath() + "/login.html?callback=" + callback);
+        response.sendRedirect(request.getContextPath() + "/loginIndex?callback=" + callback);
         return false;
     }
 
