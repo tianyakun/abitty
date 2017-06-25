@@ -76,8 +76,9 @@ public class WechatDataUtil {
     }
 
     public static String sha1Sign(Map<String, String> signMap) {
-        String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap);
         try {
+            String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap);
+
             return SHA1.sign(str);
         } catch (Exception e) {
             logger.error("sha1签名异常");
@@ -86,8 +87,9 @@ public class WechatDataUtil {
     }
 
     public static String md5Sign(Map<String, String> signMap) {
-        String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap) + "&key=" + WechatConstants.PAY_KEY;
         try {
+            String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap) + "&key=" + WechatConstants.PAY_KEY;
+
             return MD5.MD5Encode(str, WechatConstants.CHARSET).toUpperCase();
         } catch (Exception e) {
             logger.error("sha1签名异常");

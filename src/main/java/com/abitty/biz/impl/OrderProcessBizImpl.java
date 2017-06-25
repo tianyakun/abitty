@@ -10,6 +10,7 @@ import com.abitty.service.OrderService;
 import com.abitty.utils.EntityDTOUtil;
 import com.abitty.utils.ParamChecker;
 import com.abitty.wechat.WechatPayProxy;
+import com.abitty.wechat.WechatProxy;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
 
     @Autowired
     private WechatPayProxy wechatPayProxy;
+
+    @Autowired
+    private WechatProxy wechatProxy;
 
     @Override
     public void confirmOrder(OrderConfirmRequestDto requestDto, ResponseDto responseDto) {
@@ -57,23 +61,32 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
 
             //请求微信下单支付过程
             wechatPayProxy.paySubmit(tblOrderInfo);
+            if (Strings.isNullOrEmpty(tblOrderInfo.getPayReturnId())) {
+                logger.error("请求微信预下单失败");
+                responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+                responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+                return;
+            }
 
-            //根据发送结果更新数据
+            //根据请求结果更新订单
             orderService.recievePayinfo(tblOrderInfo);
 
-            wechatPayProxy.packageJs(tblOrderInfo, responseDto);
+            wechatProxy.packageForJsPay(tblOrderInfo, responseDto);
 
-            //最终结果回填Dto
-//            responseDto.setRetCode(tblMessageInfo.getResultCode());
-//            responseDto.setRetMsg(tblMessageInfo.getResultInfo());
-//            responseDto.addAttribute("messageId", tblMessageInfo.getMessageId());
-
-            logger.info("消息发送处理完成, 响应参数:{}", responseDto.toString());
+            logger.info("订单确认处理完成, 响应参数:{}", responseDto.toString());
 
         } catch (Exception e) {
-            logger.error("消息发送处理系统异常", e);
+            logger.error("订单确认处理异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
+    }
+
+    public WechatPayProxy getWechatPayProxy() {
+        return wechatPayProxy;
+    }
+
+    public void setWechatPayProxy(WechatPayProxy wechatPayProxy) {
+        this.wechatPayProxy = wechatPayProxy;
     }
 }

@@ -25,7 +25,7 @@
     delete from tbl_catalog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblCatalog" >
+  <insert id="insert" parameterType="com.abitty.entity.TblCatalog" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_catalog (id, catalog_no, catalog_name,
     icon, pid, description,
     delivery_type, is_delete, create_time
@@ -35,7 +35,7 @@
     #{deliveryType,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
     )
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblCatalog" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblCatalog" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_catalog
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

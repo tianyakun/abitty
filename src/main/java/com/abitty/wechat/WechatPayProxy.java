@@ -98,7 +98,7 @@ public class WechatPayProxy {
         }
     }
 
-    public void packageJs(TblOrderInfo tblOrderInfo, ResponseDto responseDto) {
+    public void packageForJs(TblOrderInfo tblOrderInfo, ResponseDto responseDto) {
         Map<String, String> data = Maps.newTreeMap();
         data.put("appid",WechatConstants.APP_ID);
         data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));

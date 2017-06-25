@@ -1,6 +1,9 @@
 package com.abitty.wechat;
 
 import com.abitty.constant.WechatConstants;
+import com.abitty.dto.ResponseDto;
+import com.abitty.entity.TblOrderInfo;
+import com.abitty.enums.ExceptionEnum;
 import com.abitty.transport.http.HttpConstants;
 import com.abitty.transport.http.SyncHttpSender;
 import com.google.common.base.Preconditions;
@@ -97,5 +100,25 @@ public class WechatProxy {
         }
 
         return responseMap.get("openid");
+    }
+
+    public void packageForJsPay(TblOrderInfo tblOrderInfo, ResponseDto responseDto) {
+        Map<String, String> data = Maps.newTreeMap();
+        data.put("appid",WechatConstants.APP_ID);
+        data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));
+        data.put("nonceStr", WechatDataUtil.randomStr());
+        data.put("package", "prepay_id=" + tblOrderInfo.getPayReturnId());
+        data.put("signType", "MD5");
+        data.put("paySign", WechatDataUtil.md5Sign(data).toUpperCase());
+
+        responseDto.addAttribute("appid", data.get("appid"));
+        responseDto.addAttribute("timeStamp", data.get("timeStamp"));
+        responseDto.addAttribute("nonceStr", data.get("nonceStr"));
+        responseDto.addAttribute("package", data.get("package"));
+        responseDto.addAttribute("signType", data.get("signType"));
+        responseDto.addAttribute("paySign", data.get("paySign"));
+
+        responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+        responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
     }
 }

@@ -42,7 +42,7 @@
     delete from tbl_order_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblOrderInfo" >
+  <insert id="insert" parameterType="com.abitty.entity.TblOrderInfo" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_order_info (id, order_no, uid,
     product_no, service_atom_count, total_quantity,
     total_amount, status, pay_id,
@@ -60,7 +60,7 @@
     #{userNumber,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{errorCode,jdbcType=VARCHAR},
     #{errorMsg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblOrderInfo" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblOrderInfo" useGeneratedKeys="true" keyProperty="id">
     insert into tbl_order_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
