@@ -36,8 +36,9 @@ module.exports = function(ctx, tpl){
         return;
     }
 
+    console.log(ctx.path.split("/"));
 
-    var api = $Config.root + "/product/list/"+ctx.path.split("/")[2];
+    var api = $Config.root + "/product/list/"+ctx.path.split("/")[ctx.path.split("/").length-1];
     $.ajax({
       url: api,
       type: "GET",
