@@ -28,9 +28,9 @@ public class EntityDTOUtil {
         tblOrderInfo.setOrderNo("O" + Sequence.next());
         tblOrderInfo.setUid(requestDto.getUid());
         tblOrderInfo.setProductNo(requestDto.getProductNo());
+        tblOrderInfo.setServiceAtomCount(requestDto.getServiceAtomCount());
         tblOrderInfo.setTotalQuantity(requestDto.getTotalQuantity());
         tblOrderInfo.setTotalAmount(requestDto.getTotalAmount());
-        tblOrderInfo.setServId("wechatjs");
         tblOrderInfo.setPayId(String.valueOf(Sequence.next()));
         tblOrderInfo.setStatus(AbittyConstants.OrderState.INITIAL);
         tblOrderInfo.setDeliveryType(requestDto.getDeliveryType());
@@ -43,9 +43,9 @@ public class EntityDTOUtil {
         tblOrderInfo.setIp(requestDto.getIp());
         tblOrderInfo.setOpenidCode(requestDto.getOpenidCode());
 
+        tblOrderInfo.setProductBody("一点生活-商品");//todo
+
         return tblOrderInfo;
-
-
 
     }
 

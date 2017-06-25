@@ -16,6 +16,9 @@ public class OrderConfirmRequestDto implements Serializable {
     private String productNo;
 
     @NotNull
+    private Integer serviceAtomCount;
+
+    @NotNull
     private Integer totalQuantity;
 
     @NotNull
@@ -25,10 +28,6 @@ public class OrderConfirmRequestDto implements Serializable {
     @NotBlank
     private String deliveryType;
 
-//    @NotNull
-//    @NotBlank
-//    private String deliveryTime;
-
     @NotNull
     private Integer subQuantity;
 
@@ -37,8 +36,6 @@ public class OrderConfirmRequestDto implements Serializable {
 
     @NotNull
     private Integer userNumber;
-
-    private String remark;
 
     @NotNull
     @NotBlank
@@ -70,15 +67,15 @@ public class OrderConfirmRequestDto implements Serializable {
 
     @NotNull
     @NotBlank
+    private String openidCode;
+
+    private String remark;//订单备注
+
     private String productBody;//商品描述 商家名称-销售商品类目
 
     private String uid;
 
     private String ip;
-
-    @NotNull
-    @NotBlank
-    private String openidCode;
 
     public String getProductNo() {
         return productNo;
@@ -86,6 +83,14 @@ public class OrderConfirmRequestDto implements Serializable {
 
     public void setProductNo(String productNo) {
         this.productNo = productNo;
+    }
+
+    public Integer getServiceAtomCount() {
+        return serviceAtomCount;
+    }
+
+    public void setServiceAtomCount(Integer serviceAtomCount) {
+        this.serviceAtomCount = serviceAtomCount;
     }
 
     public Integer getTotalQuantity() {
@@ -111,14 +116,6 @@ public class OrderConfirmRequestDto implements Serializable {
     public void setDeliveryType(String deliveryType) {
         this.deliveryType = deliveryType;
     }
-
-//    public String getDeliveryTime() {
-//        return deliveryTime;
-//    }
-//
-//    public void setDeliveryTime(String deliveryTime) {
-//        this.deliveryTime = deliveryTime;
-//    }
 
     public Integer getSubQuantity() {
         return subQuantity;
@@ -244,6 +241,7 @@ public class OrderConfirmRequestDto implements Serializable {
     public String toString() {
         final StringBuilder sb = new StringBuilder("OrderConfirmRequestDto{");
         sb.append("productNo='").append(productNo).append('\'');
+        sb.append(", serviceAtomCount=").append(serviceAtomCount);
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", deliveryType='").append(deliveryType).append('\'');

@@ -66,24 +66,16 @@ public class OrderController {
         try {
             TblUser tblUser = (TblUser) httpSession.getAttribute("user");
 
-            //参数校验
-            String constraintMessage = ParamChecker.getConstraintMessage(requestDto);
-            if (!Strings.isNullOrEmpty(constraintMessage)) {
-                logger.error("参数校验失败:{}", constraintMessage);
-                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
-            } else {
+            requestDto.setUid(tblUser.getUid());
 
-                requestDto.setUid(tblUser.getUid());
+            String ip = IpAddrUtil.getIpAddr(httpServletRequest);
+            requestDto.setIp(ip);
 
-                String ip = IpAddrUtil.getIpAddr(httpServletRequest);
-                requestDto.setIp(ip);
+            orderProcessBiz.confirmOrder(requestDto, responseDto);
 
-                orderProcessBiz.confirmOrder(requestDto, responseDto);
+            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
 
-                responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
-            }
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
