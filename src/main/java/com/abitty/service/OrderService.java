@@ -12,8 +12,6 @@ import java.util.List;
 public interface OrderService {
     void add(TblOrderInfo tblOrderInfo);
 
-    void confirmPay(String orderNo, ResponseDto responseDto);
-
     List<TblOrderInfo> getAllByUid(String uid);
 
     TblOrderInfo queryOrderInfo(String orderNo);
@@ -23,4 +21,7 @@ public interface OrderService {
     void recievePayinfo(TblOrderInfo tblOrderInfo);
 
     TblOrderInfo getByPayId(String payId);
+
+    boolean paySuccess(TblOrderInfo tblOrderInfo);
+
 }

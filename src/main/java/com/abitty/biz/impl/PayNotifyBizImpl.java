@@ -35,30 +35,31 @@ public class PayNotifyBizImpl implements PayNotifyBiz {
 
         if (notifyOrderInfo == null) {
             logger.error("支付结果解析失败");
-
-            return null;
+            return wechatPayProxy.getReceiveNotifyResponse(false);
         }
-
-        boolean notifySucc = false;
-        boolean needUpdate = false;
 
         TblOrderInfo dbOrderInfo = orderService.getByPayId(notifyOrderInfo.getPayId());
         if (dbOrderInfo == null) {
             logger.error("未找到原支付订单 payId={}", notifyOrderInfo.getPayId());
-        } else {
-            if (AbittyConstants.OrderState.INITIAL == dbOrderInfo.getStatus()) {
-                needUpdate = true;
-                notifySucc = true;
+            return wechatPayProxy.getReceiveNotifyResponse(false);
+        }
+
+        if (dbOrderInfo.getTotalAmount().compareTo(notifyOrderInfo.getTotalAmount()) != 0) {
+            logger.error("订单金额校验失败 payId={} dbAmount={} notifyAmount={}", notifyOrderInfo.getPayId(), dbOrderInfo.getTotalAmount(), notifyOrderInfo.getTotalAmount());
+            return wechatPayProxy.getReceiveNotifyResponse(false);
+        }
+
+        if (AbittyConstants.OrderState.INITIAL == dbOrderInfo.getStatus()) {
+            dbOrderInfo.setStatus(AbittyConstants.OrderState.PAY_SUCCESS);
+
+            if (orderService.paySuccess(dbOrderInfo)) {
+                logger.info("订单支付成功 更新入库成功");
+                return wechatPayProxy.getReceiveNotifyResponse(true);
             } else {
-                needUpdate = false;
-                notifySucc = true;
+                return wechatPayProxy.getReceiveNotifyResponse(false);
             }
         }
 
-        if (needUpdate) {
-            dbOrderInfo.setStatus(AbittyConstants.OrderState.PAY_SUCCESS);
-        }
-
-        return wechatPayProxy.getReceiveNotifyResponse(notifySucc);
+        return wechatPayProxy.getReceiveNotifyResponse(true);
     }
 }

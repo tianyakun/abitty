@@ -12,7 +12,10 @@ import com.abitty.service.OrderService;
 import com.abitty.constant.AbittyConstants;
 import com.abitty.utils.DateUtils;
 import com.abitty.utils.Sequence;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,8 @@ import java.util.List;
  */
 @Component
 public class OrderServiceImpl implements OrderService{
+
+    private final static Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     private TblOrderInfoMapper tblOrderInfoMapper;
@@ -40,22 +45,10 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Transactional
-    public void confirmPay(String orderNo, ResponseDto responseDto) {
+    public boolean paySuccess(TblOrderInfo tblOrderInfo) {
 
         try {
-            TblOrderInfo tblOrderInfo = tblOrderInfoMapper.selectByOrderNo(orderNo);
-
-            if (tblOrderInfo == null) {
-                responseDto.setRetCode(ExceptionEnum.ORDER_NOT_EXIST.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.ORDER_NOT_EXIST.getErrorMsg());
-                return;
-            }
-
-            if (tblOrderInfo.getStatus() != AbittyConstants.OrderState.INITIAL) {
-                responseDto.setRetCode(ExceptionEnum.ORDER_STATUS_INVALID.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.ORDER_STATUS_INVALID.getErrorMsg());
-                return;
-            }
+            Preconditions.checkNotNull(tblOrderInfo, "tblOrderInfo is null");
 
             List<TblSubOrder> subOrderList = buildSubOrders(tblOrderInfo);
             for (TblSubOrder tblSubOrder : subOrderList) {
@@ -68,11 +61,10 @@ public class OrderServiceImpl implements OrderService{
             tblOrderInfo.setNextSubTime(firstSubOrder.getDeliveryTime());
             tblOrderInfoMapper.updateByPrimaryKeySelective(tblOrderInfo);
 
-            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
-            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorCode());
+            return true;
         } catch (Exception e) {
-            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            logger.error("订单支付成功 更新失败", e);
+            return false;
         }
 
 

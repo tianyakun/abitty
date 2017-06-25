@@ -83,31 +83,6 @@ public class OrderController {
         return responseDto;
     }
 
-    @RequestMapping(value = "/confirmPay/{orderNo}")
-    @ResponseBody
-    public ResponseDto confirmPay(@PathVariable("orderNo") final String orderNo) {
-        logger.info("订单确认支付请求 orderNo={}", orderNo);
-
-        ResponseDto responseDto = new ResponseDto();
-
-        try {
-
-            if (Strings.isNullOrEmpty(orderNo)) {
-                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
-                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorCode());
-            } else {
-                orderService.confirmPay(orderNo, responseDto);
-            }
-
-        } catch (Exception e) {
-            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-        }
-
-        logger.info("订单确认支付返回 responseDto={}", responseDto);
-        return responseDto;
-    }
-
     @RequestMapping(value = "/list")
     @ResponseBody
     public ResponseDto getOrderList(final HttpSession httpSession) {

@@ -1,10 +1,14 @@
 package com.abitty.controller;
 
 import com.abitty.biz.PayNotifyBiz;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,15 +30,26 @@ public class PayController {
     private PayNotifyBiz payNotifyBiz;
 
     @RequestMapping(value = "/notify")
-    @ResponseBody
-    public void notify(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity notify(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> notifyMap = transformToMap(request.getParameterMap());
         logger.info("支付结果通知 {}", notifyMap);
 
-        String responseBody = payNotifyBiz.receivePayNotify(notifyMap);
+        try {
+            String responseBody = payNotifyBiz.receivePayNotify(notifyMap);
+            logger.info("接收支付结果通知结果 responseBody={}", responseBody);
 
+            if (Strings.isNullOrEmpty(responseBody)) {
+                logger.error("接收支付结果通知失败");
+                return new ResponseEntity<String>("UNKNOWN_EXCEPTION", null, HttpStatus.MOVED_TEMPORARILY);
+            }
 
-        return;
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-type", "text/html; charset=utf-8");
+            return new ResponseEntity<String>(responseBody, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("接收支付结果通知异常", e);
+            return new ResponseEntity<String>("UNKNOWN_EXCEPTION", null, HttpStatus.MOVED_TEMPORARILY);
+        }
     }
 
     /**
