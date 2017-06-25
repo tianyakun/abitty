@@ -33,7 +33,7 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-        !$Config.userName ? location.href="/login" : next();
+        !$Config.userName ? location.href="/loginIndex" : next();
     }
 
     //当前用户订购服务列表
@@ -47,16 +47,16 @@ $(function(){
     })
 
     //APP服务列表 EX: 纸巾,酸奶
-    page('/view/supports', isLogin, function(ctx){
+    page('/view/supports', function(ctx){
         require('./controller_support')(ctx, tpl);
     })
 
     //服务产品列表 EX: A纸巾,B纸巾
-    page('/view/supports/:id', isLogin, function(ctx){
+    page('/view/supports/:id', function(ctx){
         require('./controller_products')(ctx, tpl);
     })
 
-    page('/view/products/:id', isLogin, function(ctx){
+    page('/view/products/:id', function(ctx){
         require('./controller_products_detail')(ctx, tpl);
     });
 

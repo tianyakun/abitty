@@ -1746,6 +1746,9 @@ module.exports = {
  */
 
 module.exports = function(ctx, tpl){
+
+    var access = null;
+
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
         $Config = $.extend($Config, {back: true, title: data.name});
@@ -1764,19 +1767,44 @@ module.exports = function(ctx, tpl){
             type: "GET",
             data: {code : $Prime.getUrlParam("code")},
             beforeSend: function(){}
-        }).done(function(){
+        }).done(function(res){
+            if(res.retCode != 000000){
+                alert(res.retMsg);
+                return;
+            }
+
+            access = res.data;
 
         }).fail(function(){
             alert("服务器发生未知错误,请稍后重试");
         })
     }
     function bindCreateOrder(){
+
         $("#J_pay").on("click", function(){
             var _this = $(this);
             if(_this.hasClass("pending")) return;
+            var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
                 url: $Config.root + "/order/create",
                 type: "POST",
+                data: {
+                    productNo:      currentBook.productNo,
+                    totalQuantity:  currentBook.totalQuantity,
+                    totalAmount:    currentBook.totalAmount * 100,
+                    deliveryType:   currentBook.deliveryType,
+                    subQuantity:    currentBook.subQuantity,
+                    totalSub:       currentBook.totalSub,
+                    remark:         currentBook.remark,
+
+                    receiverName:  "老杨",
+                    phoneNumber:   $Config.uid,
+                    addressProvince: "北京",
+                    addressCity:   "北京市",
+                    addressArea:   "昌平区",
+                    addressDetail: "龙域中路融泽嘉园1号院",
+                    postcode:      "102200"
+                },
                 beforeSend: function(){
                     _this.addClass("pending");
                 }
@@ -2331,13 +2359,13 @@ module.exports = "<section id=J_list class=support-wrapper> <section class=theme
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=product-select-wrapper> <div class=page-service-form> <form id=J_form method=POST class=\"page-item-form book-wrapper\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label for=\"\" class=cell-label>定几个月?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_time> {{? it.deliveryType == \"weekly\"}} <option value=1|4>1月(4次)</option> <option value=3|12>3月(12次)</option> <option value=6|24>6月(24次)</option> {{?? it.deliveryType == \"monthly\"}} <option value=1|1>1月(1次)</option> <option value=3|3>3月(3次)</option> <option value=6|6>6月(6次)</option> {{?}} </select> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>每次件数?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_count> <option value=1>1件</option> <option value=2>2件</option> <option value=3>3件</option> </select> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>其他需求：</label> </div> <div class=item-cell-bd> <textarea name=remark id=\"\" cols=30 rows=10></textarea> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>总价：</label> </div> <div class=item-cell-bd> <span id=J_total class=total-price>0</span>元 <input type=hidden name=subQuantity> <input type=hidden name=totalSub> <input type=hidden name=totalAmount> <input type=hidden name=totalQuantity> <input type=hidden name=totalMouth> </div> </div> </li> </ul> </form> </div> </section> <a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6567f481349fba16&redirect_uri=http://www.abitty.com:8080/view/book&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect;\" id=J_select class=foot-fixed-btn>开始订购</a>";
+module.exports = "<section class=product-select-wrapper> <div class=page-service-form> <form id=J_form method=POST class=\"page-item-form book-wrapper\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label for=\"\" class=cell-label>定几个月?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_time> {{? it.deliveryType == \"weekly\"}} <option value=1|4>1月(4次)</option> <option value=3|12>3月(12次)</option> <option value=6|24>6月(24次)</option> {{?? it.deliveryType == \"monthly\"}} <option value=1|1>1月(1次)</option> <option value=3|3>3月(3次)</option> <option value=6|6>6月(6次)</option> {{?}} </select> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>每次件数?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_count> <option value=1>1件</option> <option value=2>2件</option> <option value=3>3件</option> </select> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>其他需求：</label> </div> <div class=item-cell-bd> <textarea name=remark id=\"\" cols=30 rows=10></textarea> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>总价：</label> </div> <div class=item-cell-bd> <span id=J_total class=total-price>0</span>元 <input type=hidden name=subQuantity> <input type=hidden name=totalSub> <input type=hidden name=totalAmount> <input type=hidden name=totalQuantity> <input type=hidden name=totalMouth> </div> </div> </li> </ul> </form> </div> </section> <a href=/view/book id=J_select class=foot-fixed-btn>开始订购</a> ";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a href=/view/user class=\"user-item icon-user\">{{=it.userName}}</a> </section>";
+module.exports = "<section class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a href=/view/user class=\"user-item icon-user\">{{? it.userName}}{{=it.userName}}{{??}}登录{{?}}</a> </section>";
 
 /***/ }),
 /* 27 */
@@ -2642,7 +2670,7 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-        !$Config.userName ? location.href="/login" : next();
+        !$Config.userName ? location.href="/loginIndex" : next();
     }
 
     //当前用户订购服务列表
@@ -2656,16 +2684,16 @@ $(function(){
     })
 
     //APP服务列表 EX: 纸巾,酸奶
-    page('/view/supports', isLogin, function(ctx){
+    page('/view/supports', function(ctx){
         __webpack_require__(13)(ctx, tpl);
     })
 
     //服务产品列表 EX: A纸巾,B纸巾
-    page('/view/supports/:id', isLogin, function(ctx){
+    page('/view/supports/:id', function(ctx){
         __webpack_require__(11)(ctx, tpl);
     })
 
-    page('/view/products/:id', isLogin, function(ctx){
+    page('/view/products/:id', function(ctx){
         __webpack_require__(36)(ctx, tpl);
     });
 
