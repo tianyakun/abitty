@@ -33,23 +33,32 @@ public class PayNotifyBizImpl implements PayNotifyBiz {
         TblOrderInfo notifyOrderInfo = wechatPayProxy.receiveNotify(notifyMap);
         logger.info("支付结果通知解析 {}", notifyOrderInfo);
 
+        if (notifyOrderInfo == null) {
+            logger.error("支付结果解析失败");
+
+            return null;
+        }
+
         boolean notifySucc = false;
         boolean needUpdate = false;
 
-        if (notifyOrderInfo != null) {
-            TblOrderInfo dbOrderInfo = orderService.getByPayId(notifyOrderInfo.getPayId());
-
-            if (dbOrderInfo == null) {
-                logger.error("未找到原支付订单 payId={}", notifyOrderInfo.getPayId());
+        TblOrderInfo dbOrderInfo = orderService.getByPayId(notifyOrderInfo.getPayId());
+        if (dbOrderInfo == null) {
+            logger.error("未找到原支付订单 payId={}", notifyOrderInfo.getPayId());
+        } else {
+            if (AbittyConstants.OrderState.INITIAL == dbOrderInfo.getStatus()) {
+                needUpdate = true;
+                notifySucc = true;
             } else {
-                if (AbittyConstants.OrderState.INITIAL == dbOrderInfo.getStatus()) {
-                    logger.info("原支付订单状态 payId={}", notifyOrderInfo.getPayId());
-                } else {
-
-                }
+                needUpdate = false;
+                notifySucc = true;
             }
         }
 
-        return null;
+        if (needUpdate) {
+            dbOrderInfo.setStatus(AbittyConstants.OrderState.PAY_SUCCESS);
+        }
+
+        return wechatPayProxy.getReceiveNotifyResponse(notifySucc);
     }
 }

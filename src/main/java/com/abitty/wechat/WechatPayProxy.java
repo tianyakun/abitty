@@ -135,4 +135,12 @@ public class WechatPayProxy {
     public void setWechatProxy(WechatProxy wechatProxy) {
         this.wechatProxy = wechatProxy;
     }
+
+    public String getReceiveNotifyResponse(boolean notifySucc) {
+        if (notifySucc) {
+            return "<xml><return_code>SUCCESS</return_code></xml>";
+        } else {
+            return "<xml><return_code>FAIL</return_code><return_msg>ERROR</return_msg></xml>";
+        }
+    }
 }
