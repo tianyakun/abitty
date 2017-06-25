@@ -8,7 +8,6 @@ import com.abitty.vo.ProductVo;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yak on 17/6/12.
@@ -79,7 +77,7 @@ public class ProductController {
         if (input != null) {
             ProductVo vo = new ProductVo();
             vo.setProductNo(input.getProductNo());
-            vo.setName(input.getName());
+            vo.setName(input.getProductName());
             vo.setCatalogNo(input.getCatalogNo());
             vo.setDescription(input.getDescription());
             vo.setNowPrice(input.getNowPrice());

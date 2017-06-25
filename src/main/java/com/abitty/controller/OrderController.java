@@ -10,8 +10,6 @@ import com.abitty.service.OrderService;
 import com.abitty.service.ProductService;
 import com.abitty.constant.AbittyConstants;
 import com.abitty.utils.IpAddrUtil;
-import com.abitty.utils.ParamChecker;
-import com.abitty.utils.Sequence;
 import com.abitty.vo.OrderDetailVo;
 import com.abitty.vo.OrderInfoVo;
 import com.abitty.vo.SubOrderVo;
@@ -253,7 +251,7 @@ public class OrderController {
 
             TblProduct tblProduct = productService.getByProductNo(input.getProductNo());
             if (tblProduct != null) {
-                vo.setProductName(tblProduct.getName());
+                vo.setProductName(tblProduct.getProductName());
                 vo.setProductIcon(tblProduct.getIcon());
             }
 

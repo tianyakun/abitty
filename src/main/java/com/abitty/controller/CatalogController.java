@@ -8,7 +8,6 @@ import com.abitty.vo.CatalogVo;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yak on 17/6/12.
@@ -112,7 +108,7 @@ public class CatalogController {
         } else {
             CatalogVo vo = new CatalogVo();
             vo.setCatalogNo(input.getCatalogNo());
-            vo.setName(input.getName());
+            vo.setName(input.getCatalogName());
             vo.setIcon(input.getIcon());
             vo.setDescription(input.getDescription());
             return vo;

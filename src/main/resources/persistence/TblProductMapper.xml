@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.abitty.entity.TblProduct" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="product_no" property="productNo" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
     <result column="catalog_no" property="catalogNo" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
@@ -17,8 +17,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, product_no, name, catalog_no, description, price, now_price, status, icon, detail,
-    images, delivery_type, create_time
+    id, product_no, product_name, catalog_no, description, price, now_price, status,
+    icon, detail, images, delivery_type, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -31,12 +31,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.abitty.entity.TblProduct" >
-    insert into tbl_product (id, product_no, name,
+    insert into tbl_product (id, product_no, product_name,
     catalog_no, description, price,
     now_price, status, icon,
     detail, images, delivery_type,
     create_time)
-    values (#{id,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    values (#{id,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
     #{catalogNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
     #{nowPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR},
     #{detail,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR},
@@ -51,8 +51,8 @@
       <if test="productNo != null" >
         product_no,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="productName != null" >
+        product_name,
       </if>
       <if test="catalogNo != null" >
         catalog_no,
@@ -92,8 +92,8 @@
       <if test="productNo != null" >
         #{productNo,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
       </if>
       <if test="catalogNo != null" >
         #{catalogNo,jdbcType=VARCHAR},
@@ -133,8 +133,8 @@
       <if test="productNo != null" >
         product_no = #{productNo,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
       </if>
       <if test="catalogNo != null" >
         catalog_no = #{catalogNo,jdbcType=VARCHAR},
@@ -172,7 +172,7 @@
   <update id="updateByPrimaryKey" parameterType="com.abitty.entity.TblProduct" >
     update tbl_product
     set product_no = #{productNo,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
       catalog_no = #{catalogNo,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},

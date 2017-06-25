@@ -7,7 +7,7 @@ public class TblCatalog {
 
     private String catalogNo;
 
-    private String name;
+    private String catalogName;
 
     private String icon;
 
@@ -37,12 +37,12 @@ public class TblCatalog {
         this.catalogNo = catalogNo;
     }
 
-    public String getName() {
-        return name;
+    public String getCatalogName() {
+        return catalogName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String catalogName) {
+        this.catalogName = catalogName;
     }
 
     public String getIcon() {
@@ -98,7 +98,7 @@ public class TblCatalog {
         final StringBuilder sb = new StringBuilder("TblCatalog{");
         sb.append("id=").append(id);
         sb.append(", catalogNo='").append(catalogNo).append('\'');
-        sb.append(", name='").append(name).append('\'');
+        sb.append(", name='").append(catalogName).append('\'');
         sb.append(", icon='").append(icon).append('\'');
         sb.append(", pid=").append(pid);
         sb.append(", description='").append(description).append('\'');

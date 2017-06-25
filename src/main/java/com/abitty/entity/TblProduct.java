@@ -8,7 +8,7 @@ public class TblProduct {
 
     private String productNo;
 
-    private String name;
+    private String productName;
 
     private String catalogNo;
 
@@ -46,12 +46,12 @@ public class TblProduct {
         this.productNo = productNo;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String productName) {
+        this.productName = productName;
     }
 
     public String getCatalogNo() {
@@ -139,7 +139,7 @@ public class TblProduct {
         final StringBuilder sb = new StringBuilder("TblProduct{");
         sb.append("id=").append(id);
         sb.append(", productNo='").append(productNo).append('\'');
-        sb.append(", name='").append(name).append('\'');
+        sb.append(", name='").append(productName).append('\'');
         sb.append(", catalogNo='").append(catalogNo).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
