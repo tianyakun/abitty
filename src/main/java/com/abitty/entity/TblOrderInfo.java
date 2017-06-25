@@ -13,17 +13,17 @@ public class TblOrderInfo {
 
     private String productNo;
 
+    private Integer serviceAtomCount;
+
     private Integer totalQuantity;
 
     private BigDecimal totalAmount;
 
     private Integer status;
 
-    private String servId;
+    private String payId;
 
-    private String servPayId;
-
-    private String servPayReturnId;
+    private String payReturnId;
 
     private String deliveryType;
 
@@ -45,12 +45,13 @@ public class TblOrderInfo {
 
     private String remark;
 
-    private Date createTime;
-
     private String errorCode;
 
     private String errorMsg;
 
+    private Date createTime;
+
+    //以下字段不入库
     private List<TblSubOrder> subOrderList;
 
     private String productBody;
@@ -89,6 +90,14 @@ public class TblOrderInfo {
 
     public void setProductNo(String productNo) {
         this.productNo = productNo;
+    }
+
+    public Integer getServiceAtomCount() {
+        return serviceAtomCount;
+    }
+
+    public void setServiceAtomCount(Integer serviceAtomCount) {
+        this.serviceAtomCount = serviceAtomCount;
     }
 
     public Integer getTotalQuantity() {
@@ -211,28 +220,20 @@ public class TblOrderInfo {
         this.subOrderList = subOrderList;
     }
 
-    public String getServId() {
-        return servId;
+    public String getPayId() {
+        return payId;
     }
 
-    public void setServId(String servId) {
-        this.servId = servId;
+    public void setPayId(String payId) {
+        this.payId = payId;
     }
 
-    public String getServPayId() {
-        return servPayId;
+    public String getPayReturnId() {
+        return payReturnId;
     }
 
-    public void setServPayId(String servPayId) {
-        this.servPayId = servPayId;
-    }
-
-    public String getServPayReturnId() {
-        return servPayReturnId;
-    }
-
-    public void setServPayReturnId(String servPayReturnId) {
-        this.servPayReturnId = servPayReturnId;
+    public void setPayReturnId(String payReturnId) {
+        this.payReturnId = payReturnId;
     }
 
     public String getErrorCode() {
@@ -282,12 +283,12 @@ public class TblOrderInfo {
         sb.append(", orderNo='").append(orderNo).append('\'');
         sb.append(", uid='").append(uid).append('\'');
         sb.append(", productNo='").append(productNo).append('\'');
+        sb.append(", serviceAtomCount=").append(serviceAtomCount);
         sb.append(", totalQuantity=").append(totalQuantity);
         sb.append(", totalAmount=").append(totalAmount);
         sb.append(", status=").append(status);
-        sb.append(", servId='").append(servId).append('\'');
-        sb.append(", servPayId='").append(servPayId).append('\'');
-        sb.append(", servPayReturnId='").append(servPayReturnId).append('\'');
+        sb.append(", payId='").append(payId).append('\'');
+        sb.append(", payReturnId='").append(payReturnId).append('\'');
         sb.append(", deliveryType='").append(deliveryType).append('\'');
         sb.append(", deliveryTime='").append(deliveryTime).append('\'');
         sb.append(", subQuantity=").append(subQuantity);
@@ -298,9 +299,9 @@ public class TblOrderInfo {
         sb.append(", addressId=").append(addressId);
         sb.append(", userNumber=").append(userNumber);
         sb.append(", remark='").append(remark).append('\'');
-        sb.append(", createTime=").append(createTime);
         sb.append(", errorCode='").append(errorCode).append('\'');
         sb.append(", errorMsg='").append(errorMsg).append('\'');
+        sb.append(", createTime=").append(createTime);
         sb.append(", subOrderList=").append(subOrderList);
         sb.append(", productBody='").append(productBody).append('\'');
         sb.append(", ip='").append(ip).append('\'');

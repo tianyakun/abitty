@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,7 +37,7 @@ public class WechatPayProxy {
             data.put("mch_id", WechatConstants.MERCHANT_ID);
             String nonceStr = WechatDataUtil.randomStr();
             data.put("nonce_str", nonceStr);
-            data.put("out_trade_no", tblOrderInfo.getServPayId());
+            data.put("out_trade_no", tblOrderInfo.getPayId());
             data.put("total_fee", String.valueOf(tblOrderInfo.getTotalAmount().doubleValue() * 100));
             data.put("notify_url", WechatConstants.NOTIFY_URL);
             data.put("trade_type", WechatConstants.TRADE_TYPE);
@@ -77,7 +76,7 @@ public class WechatPayProxy {
                 return;
             }
 
-            tblOrderInfo.setServPayReturnId(responseMap.get("prepay_id"));
+            tblOrderInfo.setPayReturnId(responseMap.get("prepay_id"));
         } catch (Exception e) {
             logger.error("微信统一下单请求异常");
         }
@@ -88,7 +87,7 @@ public class WechatPayProxy {
         data.put("appid",WechatConstants.APP_ID);
         data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));
         data.put("nonceStr", WechatDataUtil.randomStr());
-        data.put("package", "prepay_id=" + tblOrderInfo.getServPayReturnId());
+        data.put("package", "prepay_id=" + tblOrderInfo.getPayReturnId());
         data.put("signType", "MD5");
         data.put("paySign", WechatDataUtil.md5Sign(data).toUpperCase());
 

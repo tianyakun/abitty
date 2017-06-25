@@ -6,9 +6,12 @@
     <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
     <result column="product_no" property="productNo" jdbcType="VARCHAR" />
+    <result column="service_atom_count" property="serviceAtomCount" jdbcType="INTEGER" />
     <result column="total_quantity" property="totalQuantity" jdbcType="INTEGER" />
     <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="pay_id" property="payId" jdbcType="VARCHAR" />
+    <result column="pay_return_id" property="payReturnId" jdbcType="VARCHAR" />
     <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
     <result column="delivery_time" property="deliveryTime" jdbcType="VARCHAR" />
     <result column="sub_quantity" property="subQuantity" jdbcType="INTEGER" />
@@ -19,15 +22,18 @@
     <result column="address_id" property="addressId" jdbcType="INTEGER" />
     <result column="user_number" property="userNumber" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="error_code" property="errorCode" jdbcType="VARCHAR" />
+    <result column="error_msg" property="errorMsg" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, order_no, uid, product_no, total_quantity, total_amount, status, delivery_type, 
-    delivery_time, sub_quantity, total_sub, finish_sub, next_sub, next_sub_time, address_id, 
-    user_number, remark, create_time
+    id, order_no, uid, product_no, service_atom_count, total_quantity, total_amount,
+    status, pay_id, pay_return_id, delivery_type, delivery_time, sub_quantity, total_sub,
+    finish_sub, next_sub, next_sub_time, address_id, user_number, remark, error_code,
+    error_msg, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_order_info
     where id = #{id,jdbcType=INTEGER}
@@ -36,23 +42,25 @@
     delete from tbl_order_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblOrderInfo" useGeneratedKeys="true" keyProperty="id">
-    insert into tbl_order_info (id, order_no, uid, 
-      product_no, total_quantity, total_amount, 
-      status, delivery_type, delivery_time, 
-      sub_quantity, total_sub, finish_sub, 
-      next_sub, next_sub_time, address_id, 
-      user_number, remark, create_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
-      #{productNo,jdbcType=VARCHAR}, #{totalQuantity,jdbcType=INTEGER}, #{totalAmount,jdbcType=DECIMAL}, 
-      #{status,jdbcType=INTEGER}, #{deliveryType,jdbcType=VARCHAR}, #{deliveryTime,jdbcType=VARCHAR}, 
-      #{subQuantity,jdbcType=INTEGER}, #{totalSub,jdbcType=INTEGER}, #{finishSub,jdbcType=INTEGER}, 
-      #{nextSub,jdbcType=VARCHAR}, #{nextSubTime,jdbcType=TIMESTAMP}, #{addressId,jdbcType=INTEGER}, 
-      #{userNumber,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.abitty.entity.TblOrderInfo" >
+    insert into tbl_order_info (id, order_no, uid,
+    product_no, service_atom_count, total_quantity,
+    total_amount, status, pay_id,
+    pay_return_id, delivery_type, delivery_time,
+    sub_quantity, total_sub, finish_sub,
+    next_sub, next_sub_time, address_id,
+    user_number, remark, error_code,
+    error_msg, create_time)
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR},
+    #{productNo,jdbcType=VARCHAR}, #{serviceAtomCount,jdbcType=INTEGER}, #{totalQuantity,jdbcType=INTEGER},
+    #{totalAmount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{payId,jdbcType=VARCHAR},
+    #{payReturnId,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR}, #{deliveryTime,jdbcType=VARCHAR},
+    #{subQuantity,jdbcType=INTEGER}, #{totalSub,jdbcType=INTEGER}, #{finishSub,jdbcType=INTEGER},
+    #{nextSub,jdbcType=VARCHAR}, #{nextSubTime,jdbcType=TIMESTAMP}, #{addressId,jdbcType=INTEGER},
+    #{userNumber,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{errorCode,jdbcType=VARCHAR},
+    #{errorMsg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblOrderInfo" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblOrderInfo" >
     insert into tbl_order_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -67,6 +75,9 @@
       <if test="productNo != null" >
         product_no,
       </if>
+      <if test="serviceAtomCount != null" >
+        service_atom_count,
+      </if>
       <if test="totalQuantity != null" >
         total_quantity,
       </if>
@@ -75,6 +86,12 @@
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="payReturnId != null" >
+        pay_return_id,
       </if>
       <if test="deliveryType != null" >
         delivery_type,
@@ -106,6 +123,12 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="errorCode != null" >
+        error_code,
+      </if>
+      <if test="errorMsg != null" >
+        error_msg,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -123,6 +146,9 @@
       <if test="productNo != null" >
         #{productNo,jdbcType=VARCHAR},
       </if>
+      <if test="serviceAtomCount != null" >
+        #{serviceAtomCount,jdbcType=INTEGER},
+      </if>
       <if test="totalQuantity != null" >
         #{totalQuantity,jdbcType=INTEGER},
       </if>
@@ -131,6 +157,12 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payReturnId != null" >
+        #{payReturnId,jdbcType=VARCHAR},
       </if>
       <if test="deliveryType != null" >
         #{deliveryType,jdbcType=VARCHAR},
@@ -162,6 +194,12 @@
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="errorCode != null" >
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMsg != null" >
+        #{errorMsg,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -179,6 +217,9 @@
       <if test="productNo != null" >
         product_no = #{productNo,jdbcType=VARCHAR},
       </if>
+      <if test="serviceAtomCount != null" >
+        service_atom_count = #{serviceAtomCount,jdbcType=INTEGER},
+      </if>
       <if test="totalQuantity != null" >
         total_quantity = #{totalQuantity,jdbcType=INTEGER},
       </if>
@@ -187,6 +228,12 @@
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="payId != null" >
+        pay_id = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payReturnId != null" >
+        pay_return_id = #{payReturnId,jdbcType=VARCHAR},
       </if>
       <if test="deliveryType != null" >
         delivery_type = #{deliveryType,jdbcType=VARCHAR},
@@ -218,6 +265,12 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="errorCode != null" >
+        error_code = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMsg != null" >
+        error_msg = #{errorMsg,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -229,9 +282,12 @@
     set order_no = #{orderNo,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=VARCHAR},
       product_no = #{productNo,jdbcType=VARCHAR},
+      service_atom_count = #{serviceAtomCount,jdbcType=INTEGER},
       total_quantity = #{totalQuantity,jdbcType=INTEGER},
       total_amount = #{totalAmount,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
+      pay_id = #{payId,jdbcType=VARCHAR},
+      pay_return_id = #{payReturnId,jdbcType=VARCHAR},
       delivery_type = #{deliveryType,jdbcType=VARCHAR},
       delivery_time = #{deliveryTime,jdbcType=VARCHAR},
       sub_quantity = #{subQuantity,jdbcType=INTEGER},
@@ -242,6 +298,8 @@
       address_id = #{addressId,jdbcType=INTEGER},
       user_number = #{userNumber,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
+      error_code = #{errorCode,jdbcType=VARCHAR},
+      error_msg = #{errorMsg,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
