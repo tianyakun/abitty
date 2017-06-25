@@ -1,0 +1,45 @@
+{{? it.list.length}}
+    <section id="J_list" class="item-list item-service-list gray-bg buttom-height">
+        <ul>
+            {{~it.list:item:index}}
+                <li>
+                    <div class="item-hd">
+                        <img src="{{=item.icon}}" alt="">
+                        {{? item.status == 1}}
+                            {{? item.progress=="100%"}}
+                                <div class="count-action-wrapper">
+                                    <a id="J_book" href="/view/select" data-order="{{=item.orderNo}}" class="btn btn-active">再次订购</a>
+                                    <textarea style="display: none;" id="J_{{=item.orderNo}}" >{{= JSON.stringify(item)}}</textarea>
+                                </div>
+                                {{??}}
+                                <div class="progress_wrapper">
+                                    <div class="progress_bar" >
+                                        <div style="width:{{=item.progress}};" class="progress_current"></div>
+                                    </div>
+                                    <p class="left_over">距离下次配送: {{=item.nextTime}}天</p>
+                                </div>
+                            {{?}}
+
+                        {{?}}
+                    </div>
+                    <div class="item-bd">
+                        <h3>{{=item.name}}</h3>
+                        <p>
+                            <em>{{=item.count_desc}}</em>
+                            <em>状态: {{? item.status == 1}}正在使用{{??}}下单成功{{?}}</em>
+                        </p>
+                    </div>
+                </li>
+            {{~}}
+        </ul>
+    </section>
+    <!--<div class="add-icon"><a href="/supports">+</a></div>-->
+    {{??}}
+    <section class="start-service">
+        <h1 class="logo"></h1>
+        <div class="slogen"><i class="slogen-eye-icon"></i>
+            <h2>尚无服务</h2>
+            <h3>赶紧来享受一点生活吧</h3>
+        </div><a class="btn" href="/view/supports" >添加服务</a>
+    </section>
+{{?}}

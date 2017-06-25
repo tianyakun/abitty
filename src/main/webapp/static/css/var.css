@@ -1,0 +1,14 @@
+.gray-bg {
+  background-color: #f4f4f4;
+}
+.icon-back {
+  background: url("../img/back.png") no-repeat 0 0;
+  background-size: contain;
+  width: 1.4rem;
+  height: 1.6rem;
+  display: block;
+}
+.icon-user {
+  background: url("../img/user.png") no-repeat 0 0;
+  background-size: contain;
+}

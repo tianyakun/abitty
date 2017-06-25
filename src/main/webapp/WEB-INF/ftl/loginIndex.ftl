@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="http://47.93.123.19:8080/static/css/common.css">
     <script>
         $Config = {
-            userName: "13888888888"
+            userName: ${uid}
         }
     </script><style>.gray-bg {
     background-color: #f4f4f4;
@@ -664,10 +664,10 @@ em {
         </form>
     </section>
 </section>
-<script src="http://47.93.123.19:8080/static/js/prime/zepto.js"></script>
-<script src="http://47.93.123.19:8080/static/js/prime/page.js"></script>
-<script src="http://47.93.123.19:8080/static/js/prime/doT.js"></script>
-<script src="http://47.93.123.19:8080/static/js/prime/util.js"></script>
-<script src="http://47.93.123.19:8080/static/js/project/page_login.js"></script>
+<script src="http://www.abitty.com:8080/static/js/prime/zepto.js"></script>
+<script src="http://www.abitty.com:8080/static/js/prime/page.js"></script>
+<script src="http://www.abitty.com:8080/static/js/prime/doT.js"></script>
+<script src="http://www.abitty.com:8080/static/js/prime/util.js"></script>
+<script src="http://www.abitty.com:8080/static/js/project/page_login.js"></script>
 </body>
 </html>

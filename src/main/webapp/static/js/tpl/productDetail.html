@@ -1,0 +1,100 @@
+<section class="slider-wrapper item-list order-result gray-bg">
+    <ul>
+        <li>
+            <div class="item-hd">
+                <div><img src="{{=it.icon}}" /></div>
+            </div>
+            <div class="item-bd">
+                <h3>{{=it.name}}</h3>
+                <p>
+                    <span>¥{{=it.totalAmount}}</span>
+                </p>
+            </div>
+        </li>
+        <li class="order-info">
+            <div class="item-bd">
+                <p>定几个月: {{=it.totalMouth}}个月(4次)</p>
+                <p>每次件数: {{=it.subQuantity}}件</p>
+                <p>备注: {{=it.remark}}</p>
+            </div>
+        </li>
+    </ul>
+</section>
+<section class="product-des select-result has-bottom-fixed">
+    <section class="book-contact">
+
+            <!--<ul>-->
+                <!--<li>-->
+                    <!--<label for="">使用新地址</label>-->
+                    <!--<input type="radio" name="address" >-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<label for="">使用新地址</label>-->
+                    <!--<input type="radio" name="address">-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<form action="">-->
+                <!--<ul>-->
+                    <!--<li class="item-cells">-->
+                        <!--<div class="item-cell">-->
+                            <!--<div class="item-cell-bd">-->
+                                <!--<input type="text" placeholder="姓名"  class="ui-input">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-cells">-->
+                        <!--<div class="item-cell">-->
+                            <!--<div class="item-cell-bd">-->
+                                <!--<input type="text" placeholder="电话"  class="ui-input">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-cells">-->
+                        <!--<div class="item-cell">-->
+                            <!--<div class="item-cell-bd">-->
+                                <!--<select class="ui-select" name="province" id="">-->
+                                    <!--<option value="">请选择省</option>-->
+                                    <!--<option value="">北京</option>-->
+                                    <!--<option value="">上海</option>-->
+                                    <!--<option value="">天津</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-cells">-->
+                        <!--<div class="item-cell">-->
+                            <!--<div class="item-cell-bd">-->
+                                <!--<select class="ui-select" name="province" id="">-->
+                                    <!--<option value="">请选择市</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-cells">-->
+                        <!--<div class="item-cell">-->
+                            <!--<div class="item-cell-bd">-->
+                                <!--<select class="ui-select" name="province" id="">-->
+                                    <!--<option value="">请选择区</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                    <!--<li class="item-cells">-->
+                        <!--<div class="item-cell">-->
+                            <!--<div class="item-cell-bd">-->
+                                <!--<input type="text" placeholder="详细地址"  class="ui-input">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</form>-->
+
+    </section>
+</section>
+<!--<section class="product-des has-bottom-fixed">-->
+<!--<img src="{{=it.des}}" width="100%" />-->
+<!--</section>-->
+<section class="buttom-fixed buttom-control-wrap flex-row">
+    <span><label>总价:</label> ¥{{= it.totalAmount}}</span>
+    <a id="J_pay">马上下单</a>
+</section>

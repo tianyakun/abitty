@@ -1,0 +1,21 @@
+<section id="J_list" class="support-wrapper">
+    <section class="theme-wrapper">
+        <a href="">
+
+        </a>
+    </section>
+    <ul>
+        {{~it.list:item:index}}
+            <li>
+                <a data-id="{{=item.catalogNo}}" class="J_item" href="/view/supports/{{=item.catalogNo}}?title={{=item.name}}">
+                    <img src="{{=item.icon}}" alt="">
+                    <p>{{=item.name}}</p>
+                </a>
+                <div id="J_json_{{=item.catalogNo}}" style="display: none;" >{{=JSON.stringify(item)}}</div>
+            </li>
+        {{~}}
+    </ul>
+    <section class="support-btn-wrapper">
+        <a href="/feedback" class="btn">没有想要的?</a>
+    </section>
+</section>

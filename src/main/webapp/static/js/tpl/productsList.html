@@ -1,0 +1,22 @@
+<section id="J_list" class="item-list product-list gray-bg">
+    <ul>
+        {{~it.list:item:index}}
+             <li>
+                 <a href="/view/products/{{=item.productNo}}?title={{=item.name}}" data-productNo="{{=item.productNo}}"  class="J_item">
+                     <div class="item-hd">
+                         <img src="{{=item.icon}}" alt="">
+                     </div>
+                     <div class="item-bd">
+                         <h3>{{=item.name}}</h3>
+                         <p>
+                             <span>¥{{=item.price}}</span>
+                         </p>
+                     </div>
+                 </a>
+             </li>
+        {{~}}
+    </ul>
+    <section class="item-user-repy">
+        <a class="btn" href="/feedback">没有想要的?</a>
+    </section>
+</section>
