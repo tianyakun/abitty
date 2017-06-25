@@ -38,7 +38,7 @@ public class OrderProcessBizImplTest extends BaseTest{
             @Override
             public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
                 TblOrderInfo tblOrderInfo = (TblOrderInfo) invocationOnMock.getArguments()[0];
-                tblOrderInfo.setPayReturnId("payreturnid" + System.currentTimeMillis());
+                tblOrderInfo.setPayReturnId("PR" + System.currentTimeMillis());
                 return null;
             }
         }).when(mockWechatPayProxy).paySubmit(any(TblOrderInfo.class));

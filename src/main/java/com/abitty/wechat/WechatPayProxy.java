@@ -98,23 +98,6 @@ public class WechatPayProxy {
         }
     }
 
-    public void packageForJs(TblOrderInfo tblOrderInfo, ResponseDto responseDto) {
-        Map<String, String> data = Maps.newTreeMap();
-        data.put("appid",WechatConstants.APP_ID);
-        data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));
-        data.put("nonceStr", WechatDataUtil.randomStr());
-        data.put("package", "prepay_id=" + tblOrderInfo.getPayReturnId());
-        data.put("signType", "MD5");
-        data.put("paySign", WechatDataUtil.md5Sign(data).toUpperCase());
-
-        responseDto.addAttribute("appid", data.get("appid"));
-        responseDto.addAttribute("timeStamp", data.get("timeStamp"));
-        responseDto.addAttribute("nonceStr", data.get("nonceStr"));
-        responseDto.addAttribute("package", data.get("package"));
-        responseDto.addAttribute("signType", data.get("signType"));
-        responseDto.addAttribute("paySign", data.get("paySign"));
-    }
-
     public WechatProxy getWechatProxy() {
         return wechatProxy;
     }

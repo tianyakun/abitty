@@ -111,8 +111,6 @@
         <property name="maxInMemorySize" value="40960" />
     </bean>
 
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
-          <!--p:viewClass="org.springframework.web.servlet.view.JstlView"-->
-          <!--p:prefix="/WEB-INF/jsp/"-->
-          <!--p:suffix=".jsp"/>-->
+    <!-- 静态资源映射-->
+    <mvc:resources mapping="/static/**" location="/static/" cache-period="31536000"/>
 </beans>
