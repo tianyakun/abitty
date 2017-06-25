@@ -37,7 +37,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseDto addAddress(LoginDto loginDto, HttpServletRequest httpServletRequest) {
+    public ResponseDto login(LoginDto loginDto, HttpServletRequest httpServletRequest) {
         logger.info("用户登录请求 loginDto={}", loginDto);
 
         ResponseDto responseDto = new ResponseDto();
