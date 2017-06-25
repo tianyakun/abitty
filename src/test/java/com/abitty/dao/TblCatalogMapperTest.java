@@ -1,6 +1,7 @@
 package com.abitty.dao;
 
 import com.abitty.BaseTest;
+import com.abitty.constant.AbittyConstants;
 import com.abitty.entity.TblCatalog;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class TblCatalogMapperTest extends BaseTest {
         TblCatalog tblCatalog = new TblCatalog();
         tblCatalog.setCatalogNo("CN" + System.currentTimeMillis());
         tblCatalog.setName("酸奶");
+        tblCatalog.setDeliveryType(AbittyConstants.DeliveryType.WEEKLY);
         tblCatalog.setCreateTime(new Date());
         tblCatalogMapper.insertSelective(tblCatalog);
 
@@ -37,6 +39,7 @@ public class TblCatalogMapperTest extends BaseTest {
         tblCatalog2.setCatalogNo("CN" + System.currentTimeMillis());
         tblCatalog2.setName("抽纸");
         tblCatalog2.setCreateTime(new Date());
+        tblCatalog2.setDeliveryType(AbittyConstants.DeliveryType.MONTHLY);
         tblCatalogMapper.insertSelective(tblCatalog2);
     }
 

@@ -13,14 +13,15 @@
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, product_no, name, catalog_no, description, price, now_price, status, icon, detail, 
-    images, create_time
+    id, product_no, name, catalog_no, description, price, now_price, status, icon, detail,
+    images, delivery_type, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_product
     where id = #{id,jdbcType=INTEGER}
@@ -29,19 +30,19 @@
     delete from tbl_product
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblProduct" useGeneratedKeys="true" keyProperty="id">
-    insert into tbl_product (id, product_no, name, 
-      catalog_no, description, price, 
-      now_price, status, icon, 
-      detail, images, create_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{catalogNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{nowPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.abitty.entity.TblProduct" >
+    insert into tbl_product (id, product_no, name,
+    catalog_no, description, price,
+    now_price, status, icon,
+    detail, images, delivery_type,
+    create_time)
+    values (#{id,jdbcType=INTEGER}, #{productNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{catalogNo,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+    #{nowPrice,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR},
+    #{detail,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{deliveryType,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblProduct" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblProduct" >
     insert into tbl_product
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -76,6 +77,9 @@
       </if>
       <if test="images != null" >
         images,
+      </if>
+      <if test="deliveryType != null" >
+        delivery_type,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -115,6 +119,9 @@
       <if test="images != null" >
         #{images,jdbcType=VARCHAR},
       </if>
+      <if test="deliveryType != null" >
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -153,6 +160,9 @@
       <if test="images != null" >
         images = #{images,jdbcType=VARCHAR},
       </if>
+      <if test="deliveryType != null" >
+        delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -171,6 +181,7 @@
       icon = #{icon,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
       images = #{images,jdbcType=VARCHAR},
+      delivery_type = #{deliveryType,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

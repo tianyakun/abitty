@@ -15,6 +15,8 @@ public class TblCatalog {
 
     private String description;
 
+    private String deliveryType;
+
     private Integer isDelete;
 
     private Date createTime;
@@ -83,6 +85,14 @@ public class TblCatalog {
         this.createTime = createTime;
     }
 
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("TblCatalog{");
@@ -92,6 +102,7 @@ public class TblCatalog {
         sb.append(", icon='").append(icon).append('\'');
         sb.append(", pid=").append(pid);
         sb.append(", description='").append(description).append('\'');
+        sb.append(", deliveryType='").append(deliveryType).append('\'');
         sb.append(", isDelete=").append(isDelete);
         sb.append(", createTime=").append(createTime);
         sb.append('}');

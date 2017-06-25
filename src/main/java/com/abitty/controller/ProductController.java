@@ -84,6 +84,7 @@ public class ProductController {
             vo.setDescription(input.getDescription());
             vo.setNowPrice(input.getNowPrice());
             vo.setPrice(input.getPrice());
+            vo.setDeliveryType(input.getDeliveryType());
             vo.setIcon(input.getIcon());
             vo.setDetail(input.getDetail());
             vo.setImages(input.getImages());

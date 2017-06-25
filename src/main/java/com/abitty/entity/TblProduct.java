@@ -26,6 +26,8 @@ public class TblProduct {
 
     private String images;
 
+    private String deliveryType;
+
     private Date createTime;
 
     public Integer getId() {
@@ -124,6 +126,14 @@ public class TblProduct {
         this.createTime = createTime;
     }
 
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("TblProduct{");
@@ -138,6 +148,7 @@ public class TblProduct {
         sb.append(", icon='").append(icon).append('\'');
         sb.append(", detail='").append(detail).append('\'');
         sb.append(", images='").append(images).append('\'');
+        sb.append(", deliveryType='").append(deliveryType).append('\'');
         sb.append(", createTime=").append(createTime);
         sb.append('}');
         return sb.toString();

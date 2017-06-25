@@ -8,14 +8,15 @@
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, catalog_no, name, icon, pid, description, is_delete, create_time
+    id, catalog_no, name, icon, pid, description, delivery_type, is_delete, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_catalog
     where id = #{id,jdbcType=INTEGER}
@@ -24,15 +25,17 @@
     delete from tbl_catalog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.abitty.entity.TblCatalog" useGeneratedKeys="true" keyProperty="id" >
-    insert into tbl_catalog (id, catalog_no, name, 
-      icon, pid, description, 
-      is_delete, create_time)
-    values (#{id,jdbcType=INTEGER}, #{catalogNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.abitty.entity.TblCatalog" >
+    insert into tbl_catalog (id, catalog_no, name,
+    icon, pid, description,
+    delivery_type, is_delete, create_time
+    )
+    values (#{id,jdbcType=INTEGER}, #{catalogNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{icon,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR},
+    #{deliveryType,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+    )
   </insert>
-  <insert id="insertSelective" parameterType="com.abitty.entity.TblCatalog" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.abitty.entity.TblCatalog" >
     insert into tbl_catalog
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -52,6 +55,9 @@
       </if>
       <if test="description != null" >
         description,
+      </if>
+      <if test="deliveryType != null" >
+        delivery_type,
       </if>
       <if test="isDelete != null" >
         is_delete,
@@ -79,6 +85,9 @@
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
+      <if test="deliveryType != null" >
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=INTEGER},
       </if>
@@ -105,6 +114,9 @@
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="deliveryType != null" >
+        delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
@@ -121,6 +133,7 @@
       icon = #{icon,jdbcType=VARCHAR},
       pid = #{pid,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
+      delivery_type = #{deliveryType,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

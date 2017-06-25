@@ -20,6 +20,8 @@ public class ProductVo {
 
     private BigDecimal nowPrice;
 
+    private String deliveryType;
+
     private String icon;
 
     private String detail;
@@ -98,6 +100,14 @@ public class ProductVo {
         this.images = images;
     }
 
+    public String getDeliveryType() {
+        return deliveryType;
+    }
+
+    public void setDeliveryType(String deliveryType) {
+        this.deliveryType = deliveryType;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("ProductVo{");
@@ -107,6 +117,7 @@ public class ProductVo {
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
         sb.append(", nowPrice=").append(nowPrice);
+        sb.append(", deliveryType=").append(deliveryType);
         sb.append(", icon='").append(icon).append('\'');
         sb.append(", detail='").append(detail).append('\'');
         sb.append(", images='").append(images).append('\'');

@@ -30,8 +30,8 @@ public class TblProductMapperTest extends BaseTest {
     @Test
     public void testInsertSelective() throws Exception {
         TblProduct tblProduct = new TblProduct();
-        tblProduct.setProductNo("PN" + System.currentTimeMillis());
-        tblProduct.setCatalogNo("CN1497713023528");
+        tblProduct.setProductNo("PN0010001");
+        tblProduct.setCatalogNo("CN001");
         tblProduct.setName("酸奶1");
         tblProduct.setDescription("酸奶1酸奶1");
         tblProduct.setPrice(new BigDecimal("99"));
@@ -41,11 +41,12 @@ public class TblProductMapperTest extends BaseTest {
         tblProduct.setDetail("酸奶1酸奶1酸奶1酸奶1");
         tblProduct.setImages("");
         tblProduct.setCreateTime(new Date());
+        tblProduct.setDeliveryType(AbittyConstants.DeliveryType.WEEKLY);
         tblProductMapper.insertSelective(tblProduct);
 
         TblProduct tblProduct2 = new TblProduct();
-        tblProduct2.setProductNo("PN" + System.currentTimeMillis());
-        tblProduct2.setCatalogNo("CN1497713023528");
+        tblProduct2.setProductNo("PN0020001");
+        tblProduct2.setCatalogNo("CN002");
         tblProduct2.setName("酸奶2");
         tblProduct2.setDescription("酸奶2酸奶2");
         tblProduct2.setPrice(new BigDecimal("90"));
@@ -55,6 +56,7 @@ public class TblProductMapperTest extends BaseTest {
         tblProduct2.setDetail("酸奶2酸奶2酸奶2酸奶2");
         tblProduct2.setImages("");
         tblProduct2.setCreateTime(new Date());
+        tblProduct2.setDeliveryType(AbittyConstants.DeliveryType.MONTHLY);
         tblProductMapper.insertSelective(tblProduct2);
     }
 
@@ -80,7 +82,7 @@ public class TblProductMapperTest extends BaseTest {
 
     @Test
     public void testSelectAllPublishByCatalogNo() throws Exception {
-        tblProductMapper.selectAllPublishByCatalogNo("CN1497713023528");
+        System.out.println(tblProductMapper.selectAllPublishByCatalogNo("CN001"));;
     }
 
     @Test
