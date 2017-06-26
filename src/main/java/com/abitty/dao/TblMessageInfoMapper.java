@@ -16,4 +16,6 @@ public interface TblMessageInfoMapper {
     int updateByPrimaryKey(TblMessageInfo record);
 
     TblMessageInfo selectByMessageId(String messageId);
+
+    TblMessageInfo selectByMessageAddress(String messageAddress);
 }

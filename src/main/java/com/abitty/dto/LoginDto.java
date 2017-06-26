@@ -1,14 +1,21 @@
 package com.abitty.dto;
 
+import net.sf.oval.constraint.NotBlank;
+import net.sf.oval.constraint.NotNull;
+
 /**
  * Created by yak on 17/6/17.
  */
 public class LoginDto {
 
+    @NotNull
+    @NotBlank
     private String phone;
 
     private String messageId;
 
+    @NotNull
+    @NotBlank
     private String verifyCode;
 
     public String getPhone() {

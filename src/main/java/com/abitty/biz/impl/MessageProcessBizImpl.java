@@ -69,12 +69,12 @@ public class MessageProcessBizImpl implements MessageProcessBiz {
         }
     }
 
-    public boolean checkValidateCode(String messageId, String validateCode) {
+    public boolean checkValidateCode(String phoneNum, String validateCode) {
         try {
-            Preconditions.checkNotNull(messageId, " messageId is null");
+            Preconditions.checkNotNull(phoneNum, " phoneNum is null");
             Preconditions.checkNotNull(validateCode, "validateCode is null");
 
-            return messageService.validateTransaction(messageId, validateCode);
+            return messageService.validateTransaction(phoneNum, validateCode);
 
         } catch (Exception e) {
             logger.error("验证码校验失败", e);

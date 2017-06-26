@@ -216,4 +216,10 @@
     from tbl_message_info
     where message_id = #{messageId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByMessageAddress" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_message_info
+    where message_address = #{messageAddress,jdbcType=VARCHAR} ORDER BY id DESC limit 1
+  </select>
 </mapper>

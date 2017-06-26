@@ -49,7 +49,7 @@ public class LoginController {
                 logger.error("参数校验失败:{}", constraintMessage);
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
-            } else if (!messageProcessBiz.checkValidateCode(loginDto.getMessageId(), loginDto.getVerifyCode())) {
+            } else if (!messageProcessBiz.checkValidateCode(loginDto.getPhone(), loginDto.getVerifyCode())) {
                 logger.error("短信验证失败");
                 responseDto.setRetCode(ExceptionEnum.VERIFY_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.VERIFY_INVALID.getErrorMsg());

@@ -58,13 +58,13 @@ public class MessageServiceImpl implements MessageService {
         tblMessageInfoMapper.updateByPrimaryKeySelective(tblMessageInfo);
     }
 
-    public boolean validateTransaction(String messageId, String validateCode) {
-        logger.info("验证码校验 messageId={} validateCode={}", messageId, validateCode);
+    public boolean validateTransaction(String phoneNum, String validateCode) {
+        logger.info("验证码校验 phoneNum={} validateCode={}", phoneNum, validateCode);
 
-        TblMessageInfo tblMessageInfo = tblMessageInfoMapper.selectByMessageId(messageId);
+        TblMessageInfo tblMessageInfo = tblMessageInfoMapper.selectByMessageAddress(phoneNum);
 
         if (tblMessageInfo == null) {
-            logger.error("TblMessageInfo查询为null, messageId={}", messageId);
+            logger.error("TblMessageInfo查询为null, messageId={}", phoneNum);
             return false;
         }
 
