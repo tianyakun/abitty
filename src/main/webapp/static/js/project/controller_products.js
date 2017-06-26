@@ -4,12 +4,12 @@
 
 module.exports = function(ctx, tpl){
 
-    function bindStoreSelect(){
-        $("#J_list").on("click", ".J_item", function(e){
-            var id = $(this).data("id");
-            var idSelector = "#J_json_"+id;
-        })
-    }
+    //function bindStoreSelect(){
+    //    $("#J_list").on("click", ".J_item", function(e){
+    //        var id = $(this).data("id");
+    //        var idSelector = "#J_json_"+id;
+    //    })
+    //}
 
 
     function render(tpl, res){
@@ -26,17 +26,17 @@ module.exports = function(ctx, tpl){
          html = topBarHtml+html;
          $Prime.SPAWrapper("app").html(html);
          window.sessionStorage[StorageKey+"ProductHtml"] = html;
-         bindStoreSelect();
+         //bindStoreSelect();
     }
 
     var StorageKey = ctx.params.id+"_";
     if( window.sessionStorage[StorageKey+"ProductHtml"]){
         $Prime.SPAWrapper("app").html( window.sessionStorage[StorageKey+"ProductHtml"]);
-        bindStoreSelect();
+       // bindStoreSelect();
         return;
     }
 
-    console.log(ctx.path.split("/"));
+
 
     var api = $Config.root + "/product/list/"+ctx.path.split("/")[ctx.path.split("/").length-1];
     $.ajax({

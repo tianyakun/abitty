@@ -21,9 +21,11 @@ module.exports = function(ctx, tpl){
             window.sessionStorage["currentBook"] = JSON.stringify(currentData);
         })
     }
+    console.log();
 
+   
     $.ajax({
-        url: $Config.root + "/product/detail/"+ ctx.path.split("/")[2],
+        url: $Config.root + "/product/detail/"+ ctx.params.id,
         type: "GET",
         data: {
             __: new Date().getTime()
