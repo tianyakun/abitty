@@ -34,7 +34,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy年MM月dd日");
+    private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @RequestMapping(value = "")
     @ResponseBody
