@@ -5,12 +5,11 @@ import com.google.common.base.Preconditions;
 import java.security.DigestException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 /**
  * Created by yak on 17/6/24.
  */
-public class SHA1 {
+public class SHA1Util {
 
     /**
      * sign 安全加密算法
