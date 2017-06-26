@@ -1763,7 +1763,7 @@ module.exports = function(ctx, tpl){
 
     function getAccess(){
         $.ajax({
-            url: $Config.root + "/order/create",
+            url: $Config.root + "/order/confirm",
             type: "GET",
             data: {code : $Prime.getUrlParam("code")},
             beforeSend: function(){}

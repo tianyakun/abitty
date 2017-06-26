@@ -2,7 +2,6 @@ $(function(){
     var Jform = $("#J_login_form"),
         Jphone = Jform.find("input[name='phone']"),
         Jvcode = Jform.find("input[name='vcode']"),
-        JmessageId = window.localStorage['JmessageId'],
         Jcode = $("#J_code"),
         timer = null;
         regPhone = /^1[34578]\d{9}$/;
@@ -31,6 +30,7 @@ $(function(){
             }).done(function(res){
                 if(res.retCode == 000000){
                     var redirect = getUrlParam("redirect");
+                    alert(redirect);
                     if(redirect){
                         location.href = redirect;
                     }else{
@@ -42,6 +42,7 @@ $(function(){
                 }
             });
         }
+        return false;
     });
 
     function checkForm(){
@@ -87,8 +88,6 @@ $(function(){
         }).done(function(res){
             if(res.retCode == 000000){
                 setTimer(_this);
-                JmessageId = res.data.messageId;
-                window.localStorage['JmessageId'] = JmessageId;
             }else{
                 alert(res.retMsg);
             }
