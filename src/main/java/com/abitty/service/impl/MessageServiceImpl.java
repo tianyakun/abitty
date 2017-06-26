@@ -68,8 +68,9 @@ public class MessageServiceImpl implements MessageService {
             return false;
         }
 
-        if (MessageConstants.CodeValidateStatus.NO_VERIFY == tblMessageInfo.getValidateStatus()
-                && validateCode.equals(tblMessageInfo.getVcode())) {
+//        MessageConstants.CodeValidateStatus.NO_VERIFY == tblMessageInfo.getValidateStatus()
+//                &&
+        if (validateCode.equals(tblMessageInfo.getVcode())) {
             tblMessageInfo.setValidateStatus(MessageConstants.CodeValidateStatus.VERIFIED);
             tblMessageInfoMapper.updateByPrimaryKeySelective(tblMessageInfo);
             return true;
