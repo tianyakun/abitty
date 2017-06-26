@@ -8,7 +8,7 @@
     <script>
         $Config = {
             userName: "${uid}",
-            root: "http://www.abitty.com:8080"
+            root: "http://www.abitty.com"
         }
     </script><style>.gray-bg {
     background-color: #f4f4f4;
