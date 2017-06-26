@@ -23,7 +23,7 @@ module.exports = function(ctx, tpl){
     }
     console.log();
 
-   
+
     $.ajax({
         url: $Config.root + "/product/detail/"+ ctx.params.id,
         type: "GET",
