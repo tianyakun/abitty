@@ -19,10 +19,10 @@ module.exports = function(ctx, tpl){
 
 
     function getAccess(){
+        var code = $Prime.getUrlParam("code");
         $.ajax({
-            url: $Config.root + "/order/confirm",
+            url: $Config.root + "/wechat/ticket/"+ code,
             type: "GET",
-            data: {code : $Prime.getUrlParam("code")},
             beforeSend: function(){}
         }).done(function(res){
             if(res.retCode != 000000){
@@ -42,7 +42,7 @@ module.exports = function(ctx, tpl){
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
-                url: $Config.root + "/order/create",
+                url: $Config.root + "/order/confirm",
                 type: "POST",
                 data: {
                     productNo:      currentBook.productNo,

@@ -1762,10 +1762,10 @@ module.exports = function(ctx, tpl){
 
 
     function getAccess(){
+        var code = $Prime.getUrlParam("code");
         $.ajax({
-            url: $Config.root + "/order/confirm",
+            url: $Config.root + "/wechat/ticket/"+ code,
             type: "GET",
-            data: {code : $Prime.getUrlParam("code")},
             beforeSend: function(){}
         }).done(function(res){
             if(res.retCode != 000000){
@@ -1785,7 +1785,7 @@ module.exports = function(ctx, tpl){
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
-                url: $Config.root + "/order/create",
+                url: $Config.root + "/order/confirm",
                 type: "POST",
                 data: {
                     productNo:      currentBook.productNo,
@@ -2413,7 +2413,7 @@ module.exports = "<section id=J_list class=support-wrapper> <section class=theme
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=product-select-wrapper> <div class=page-service-form> <form id=J_form method=POST class=\"page-item-form book-wrapper\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label for=\"\" class=cell-label>定几个月?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_time> {{? it.deliveryType == \"weekly\"}} <option value=1|4>1月(4次)</option> <option value=3|12>3月(12次)</option> <option value=6|24>6月(24次)</option> {{?? it.deliveryType == \"monthly\"}} <option value=1|1>1月(1次)</option> <option value=3|3>3月(3次)</option> <option value=6|6>6月(6次)</option> {{?}} </select> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>每次件数?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_count> <option value=1>1件</option> <option value=2>2件</option> <option value=3>3件</option> </select> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>其他需求：</label> </div> <div class=item-cell-bd> <textarea name=remark id=\"\" cols=30 rows=10></textarea> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>总价：</label> </div> <div class=item-cell-bd> <span id=J_total class=total-price>0</span>元 <input type=hidden name=subQuantity> <input type=hidden name=totalSub> <input type=hidden name=totalAmount> <input type=hidden name=totalQuantity> <input type=hidden name=totalMouth> </div> </div> </li> </ul> </form> </div> </section> <a href=/view/book id=J_select class=foot-fixed-btn>开始订购</a> ";
+module.exports = "<section class=product-select-wrapper> <div class=page-service-form> <form id=J_form method=POST class=\"page-item-form book-wrapper\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label for=\"\" class=cell-label>定几个月?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_time> {{? it.deliveryType == \"weekly\"}} <option value=1|4>1月(4次)</option> <option value=3|12>3月(12次)</option> <option value=6|24>6月(24次)</option> {{?? it.deliveryType == \"monthly\"}} <option value=1|1>1月(1次)</option> <option value=3|3>3月(3次)</option> <option value=6|6>6月(6次)</option> {{?}} </select> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>每次件数?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_count> <option value=1>1件</option> <option value=2>2件</option> <option value=3>3件</option> </select> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>其他需求：</label> </div> <div class=item-cell-bd> <textarea name=remark id=\"\" cols=30 rows=10></textarea> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>总价：</label> </div> <div class=item-cell-bd> <span id=J_total class=total-price>0</span>元 <input type=hidden name=subQuantity> <input type=hidden name=totalSub> <input type=hidden name=totalAmount> <input type=hidden name=totalQuantity> <input type=hidden name=totalMouth> </div> </div> </li> </ul> </form> </div> </section> <a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6567f481349fba16&redirect_uri=http://www.abitty.com/view/book&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect;\" id=J_select class=foot-fixed-btn>开始订购</a> ";
 
 /***/ }),
 /* 26 */
