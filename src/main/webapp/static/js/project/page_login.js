@@ -1,5 +1,4 @@
 $(function(){
-
     var Jform = $("#J_login_form"),
         Jphone = Jform.find("input[name='phone']"),
         Jvcode = Jform.find("input[name='vcode']"),
@@ -12,6 +11,14 @@ $(function(){
             vcode: "请输入验证码",
             serverErr: "服务器发生未知错误,请稍后重试"
         };
+
+
+    function getUrlParam(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return decodeURIComponent(r[2]);
+        return null; //返回参数值
+    }
     Jform.on("submit", function(){
         if(checkForm()){
             $.ajax({
@@ -23,7 +30,7 @@ $(function(){
                 }
             }).done(function(res){
                 if(res.retCode == 000000){
-                    var redirect = $Prime.getUrlParam("redirect");
+                    var redirect = getUrlParam("redirect");
                     if(redirect){
                         location.href = redirect;
                     }else{
