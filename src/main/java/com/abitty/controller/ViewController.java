@@ -19,7 +19,7 @@ public class ViewController {
         return "loginIndex";
     }
 
-    @RequestMapping("/view/*")
+    @RequestMapping("/view/**")
     public String view(Model model, HttpSession httpSession) {
         TblUser tblUser = (TblUser) httpSession.getAttribute("user");
         if (tblUser != null) {
