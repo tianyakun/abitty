@@ -3,6 +3,7 @@ $(function(){
     var Jform = $("#J_login_form"),
         Jphone = Jform.find("input[name='phone']"),
         Jvcode = Jform.find("input[name='vcode']"),
+        JmessageId = window.localStorage['JmessageId'],
         Jcode = $("#J_code"),
         timer = null;
         regPhone = /^1[34578]\d{9}$/;
@@ -22,7 +23,13 @@ $(function(){
                 }
             }).done(function(res){
                 if(res.retCode == 000000){
-                    location.href = "/view/myService"
+                    var redirect = $Prime.getUrlParam("redirect");
+                    if(redirect){
+                        location.href = redirect;
+                    }else{
+                        location.href = "/view/myService"
+                    }
+
                 }else{
                     alert(res.retMsg);
                 }
@@ -59,7 +66,6 @@ $(function(){
 
     Jcode.on("click", function(){
         var _this = $(this);
-
         if(!regPhone.test(Jphone.val())){
             alert(errorMsg.phone);
             return;
@@ -75,6 +81,7 @@ $(function(){
             if(res.retCode == 000000){
                 setTimer(_this);
                 JmessageId = res.data.messageId;
+                window.localStorage['JmessageId'] = JmessageId;
             }else{
                 alert(res.retMsg);
             }

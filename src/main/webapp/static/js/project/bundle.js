@@ -2246,16 +2246,68 @@ module.exports = function(ctx, tpl){
 
 module.exports = function(ctx, tpl){
     $("body").css("background-color", "#f4f4f4");
-    function render(tpl){
 
-        var topBarHtml, html;
+    function render(res, tpl){
+        var topBarHtml, html,optionHtml,
+        optionTpl = [
+            "<option {{? it.item.gender == 'm'}}selected{{?}} value=\"m\" >男</option>",
+            "<option {{? it.item.gender == 'f'}}selected{{?}} value=\"f\" >女</option>",
+            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >未知</option>"
+        ].join("")
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
-        html = topBarHtml +  tpl.user_person;
+        html = $Prime.render(tpl.user_person, res.data);
+        optionHtml = $Prime.render(optionTpl, res.data);
+        html = html.replace(/\[option\]/, optionHtml);
+        html = topBarHtml +  html
         $Prime.SPAWrapper("app").html(html);
 
     }
-    render(tpl);
+
+    function bindUpdate(){
+        $("#J_save").on("click", function(){
+            var _this = $(this);
+            if(_this.hasClass("pending") ) return;
+            $.ajax({
+                url: $Config.root + "/my/account/update",
+                type: "POST",
+                data: {
+                    birthday: $("input[name='birthday']").val(),
+                    gender: $("select[name='gender']").val()
+                },
+                beforeSend: function(){
+                    _this.addClass("pending").text("保存中...");
+                }
+            }).done(function(res){
+                if(res.retCode!=000000){
+                    alert(res.retMsg);
+                    return;
+                }
+                //window.location = window.location;
+
+            }).fail(function(){
+
+            }).always(function(){
+                _this.removeClass("pending").text("保存");
+            });
+        })
+    }
+
+
+
+    $.ajax({
+        url: $Config.root + "/my/account",
+        type: "GET",
+        beforeSend: function(){}
+    }).done(function(res){
+        render(res, tpl);
+        bindUpdate();
+    }).fail(function(){
+    });
+
+
+
+
 }
 
 /***/ }),
@@ -2355,7 +2407,7 @@ module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=support-wrapper> <section class=theme-wrapper> <a href=\"\"> </a> </section> <ul> {{~it.list:item:index}} <li> <a data-id=\"{{=item.catalogNo}}\" class=J_item href=\"/view/supports/{{=item.catalogNo}}?title={{=item.name}}\"> <img src=\"{{=item.icon}}\" alt=\"\"> <p>{{=item.name}}</p> </a> <div id=\"J_json_{{=item.catalogNo}}\" style=display:none>{{=JSON.stringify(item)}}</div> </li> {{~}} </ul> <section class=support-btn-wrapper> <a href=/feedback class=btn>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=support-wrapper> <section class=theme-wrapper> <a href=\"\"> </a> </section> <ul> {{~it.list:item:index}} <li> <a data-id=\"{{=item.catalogNo}}\" class=J_item href=\"/view/supports/{{=item.catalogNo}}?title={{=item.name}}\"> <img src=\"{{=item.icon}}\" alt=\"\"> <p>{{=item.name}}</p> </a> <div id=\"J_json_{{=item.catalogNo}}\" style=display:none>{{=JSON.stringify(item)}}</div> </li> {{~}} </ul> <section class=support-btn-wrapper> <a href=/view/feedback class=btn>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 25 */
@@ -2379,7 +2431,7 @@ module.exports = "<section class=\"user-info page-list\"> <ul> <li class=item-ce
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"user-info user-info-modify page-list\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>账号</label> </div> <div class=item-cell-bd> <p>1388888888</p> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>性别</label> </div> <div class=item-cell-bd> <select name=sex class=ui-select> <option value=1>男</option> <option value=0>女</option> </select> <i class=icon-next></i> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>生日</label> </div> <div class=item-cell-bd> <input class=ui-select type=date value=2015-06-18> <i class=icon-next></i> </div> </div> </li> </ul> <div class=loginout-wrapper> <a href=/save class=btn2>保存</a> </div> </section>";
+module.exports = "<section class=\"user-info user-info-modify page-list\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>账号</label> </div> <div class=item-cell-bd> <p>{{=it.item.uid}}</p> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>性别</label> </div> <div class=item-cell-bd> <select name=gender class=ui-select> [option] </select> <i class=icon-next></i> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>生日</label> </div> <div class=item-cell-bd> <input class=ui-select name=birthday type=date value=\"{{=it.item.birthday}}\"> <i class=icon-next></i> </div> </div> </li> </ul> <div class=loginout-wrapper> <a id=J_save class=btn2>保存</a> </div> </section>";
 
 /***/ }),
 /* 29 */
@@ -2672,7 +2724,7 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-        !$Config.uid ? location.href="/loginIndex" : next();
+        !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
     }
 
     //当前用户订购服务列表
@@ -2778,7 +2830,7 @@ module.exports = function(ctx, tpl){
     }
     console.log();
 
-   
+
     $.ajax({
         url: $Config.root + "/product/detail/"+ ctx.params.id,
         type: "GET",
