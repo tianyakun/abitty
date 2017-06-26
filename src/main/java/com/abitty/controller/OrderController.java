@@ -71,9 +71,6 @@ public class OrderController {
 
             orderProcessBiz.confirmOrder(requestDto, responseDto);
 
-            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
-            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
-
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
