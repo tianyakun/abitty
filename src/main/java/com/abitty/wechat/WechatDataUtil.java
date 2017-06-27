@@ -92,6 +92,8 @@ public class WechatDataUtil {
         try {
             String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap) + "&key=" + WechatConstants.PAY_KEY;
 
+            logger.info("md5签名原串 {}", str);
+
             return MD5Util.MD5Encode(str, WechatConstants.CHARSET).toUpperCase();
         } catch (Exception e) {
             logger.error("sha1签名异常");

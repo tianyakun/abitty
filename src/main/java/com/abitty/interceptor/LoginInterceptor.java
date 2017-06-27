@@ -31,8 +31,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 //        session.setAttribute("callback", callback);
 //        response.sendRedirect(request.getContextPath() + "/loginIndex?callback=" + callback);
-//        response.sendRedirect(request.getContextPath() + "/loginIndex");
-        request.getRequestDispatcher("/loginIndex").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/loginIndex");
+//        request.getRequestDispatcher("/loginIndex").forward(request, response);
         return false;
     }
 
