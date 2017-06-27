@@ -29,8 +29,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         String callback = request.getRequestURL().toString();
         logger.info("用户未登录, 访问拦截 {}", callback);
 
-        session.setAttribute("callback", callback);
-        response.sendRedirect(request.getContextPath() + "/loginIndex?callback=" + callback);
+//        session.setAttribute("callback", callback);
+//        response.sendRedirect(request.getContextPath() + "/loginIndex?callback=" + callback);
+        response.sendRedirect(request.getContextPath() + "/loginIndex");
         return false;
     }
 

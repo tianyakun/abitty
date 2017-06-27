@@ -100,10 +100,12 @@ public class OrderController {
 
                 List<OrderInfoVo> orderInfoVoList = buildOrderInfoVoList(tblOrderInfoList);
 
+                logger.info(orderInfoVoList.toString());
+
                 responseDto.addAttribute("list", orderInfoVoList);
 
-                Map<String, Object> data = Maps.newHashMap();
-                data.put("list", tblOrderInfoList);
+//                Map<String, Object> data = Maps.newHashMap();
+//                data.put("list", tblOrderInfoList);
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorCode());

@@ -71,8 +71,8 @@ public class LoginController {
                 session.setAttribute("uid", tblUser.getUid());
                 session.setAttribute("user", tblUser);
 
-                String callback = (String) session.getAttribute("callback");
-                session.removeAttribute("callback"); // 获取之后移除
+//                String callback = (String) session.getAttribute("callback");
+//                session.removeAttribute("callback"); // 获取之后移除
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
