@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
         <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
         <title>一点生活</title>
         <script>
@@ -17,6 +14,6 @@
         <div id="app" class="wrapper"></div>
         <script src="http://www.abitty.com/static/js/prime/zepto.js"></script>
         <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-        <script src="http://www.abitty.com/static/js/project/bundle.js"></script>
+        <script src="http://www.abitty.com/static/js/project/bundle.js?v=0.1"></script>
     </productBody>
 </html>
