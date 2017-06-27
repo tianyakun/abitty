@@ -122,6 +122,7 @@ module.exports = function(ctx, tpl){
         var totalAmount   = $("input[name='totalAmount']");    //订单总金额
         var totalQuantity = $("input[name='totalQuantity']");  //商品总数
         var totalMouth    = $("input[name='totalMouth']");
+        var serviceAtomCount = $("input[name='serviceAtomCount']");
 
         timeDom.on("change", function(){
             var _this = $(this), _val = _this.val().split('|'), _count = countDom.val();
@@ -132,6 +133,7 @@ module.exports = function(ctx, tpl){
             totalQuantity.val(_count * _val[1]);    //商品总数
             subQuantity.val(_count);                //单次配送数量
             totalMouth.val(_val[0]);
+            serviceAtomCount.val(_val[0]);
         });
 
         countDom.on("change", function(){
@@ -143,6 +145,7 @@ module.exports = function(ctx, tpl){
             subQuantity.val(_val);          //单次配送数量
             totalQuantity.val(_val * time[1]);  //总数
             totalMouth.val(time[0]);
+            serviceAtomCount.val(time[0]);
         });
 
         //初始化触发一次默认价格计算

@@ -5,6 +5,7 @@
 module.exports = function(ctx, tpl){
 
     var access = null;
+    var code;
 
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
@@ -19,7 +20,7 @@ module.exports = function(ctx, tpl){
 
 
     function getAccess(){
-        var code = $Prime.getUrlParam("code");
+        code = $Prime.getUrlParam("code");
         $.ajax({
             url: $Config.root + "/wechat/ticket/"+ code,
             type: "GET",
@@ -45,13 +46,15 @@ module.exports = function(ctx, tpl){
                 url: $Config.root + "/order/confirm",
                 type: "POST",
                 data: {
-                    productNo:      currentBook.productNo,
-                    totalQuantity:  currentBook.totalQuantity,
-                    totalAmount:    currentBook.totalAmount * 100,
-                    deliveryType:   currentBook.deliveryType,
-                    subQuantity:    currentBook.subQuantity,
-                    totalSub:       currentBook.totalSub,
-                    remark:         currentBook.remark,
+                    productNo:        currentBook.productNo,
+                    totalQuantity:    currentBook.totalQuantity,
+                    totalAmount:      currentBook.totalAmount * 100,
+                    deliveryType:     currentBook.deliveryType,
+                    subQuantity:      currentBook.subQuantity,
+                    totalSub:         currentBook.totalSub,
+                    remark:           currentBook.remark,
+                    serviceAtomCount: currentBook.serviceAtomCount,
+                    openidCode:       code,
 
                     receiverName:  "老杨",
                     phoneNumber:   $Config.uid,
