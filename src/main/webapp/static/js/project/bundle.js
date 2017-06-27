@@ -1778,9 +1778,11 @@ module.exports = function(ctx, tpl){
     }
 
     function getAccess(){
-        code = $Prime.getUrlParam("code");
         $.ajax({
-            url: $Config.root + "/wechat/ticket/"+ code,
+            url: $Config.root + "/wechat/ticket",
+            data: {
+                ticketUrl: window.location.href
+            },
             type: "GET",
             beforeSend: function(){}
         }).done(function(res){
@@ -1824,7 +1826,7 @@ module.exports = function(ctx, tpl){
                     totalSub:         currentBook.totalSub,
                     remark:           currentBook.remark,
                     serviceAtomCount: currentBook.serviceAtomCount,
-                    openidCode:       code,
+                    openidCode:       $Prime.getUrlParam("code"),
                     receiverName:  "老杨",
                     phoneNumber:   $Config.uid,
                     addressProvince: "北京",
