@@ -25,7 +25,7 @@ public class WechatConstants {
     public static final String OPEN_ID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token";
     public static final String UNIFIED_ORDER_URL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-    public static final String ABITTY_CODE_URL = "http://www.abitty.com/view/book?state=STATE&code=";
+    public static final String ABITTY_CODE_URL = "http://www.abitty.com/?code=";
 
     public static final String PAY_NOTIFY_URL = "http://www.abitty.com/pay/notify";
 

@@ -13,7 +13,7 @@ public class WechatDataUtilTest {
 
     @Test
     public void testTransMap2XML() throws Exception {
-
+        System.out.println(WechatDataUtil.randomStr());
     }
 
     @Test
@@ -38,4 +38,6 @@ public class WechatDataUtilTest {
         Map<String, String> map = WechatDataUtil.transJson2Map(json);
         System.out.println(map);
     }
+
+
 }

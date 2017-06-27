@@ -72,13 +72,15 @@ public class WechatDataUtil {
     }
 
     public static String randomStr(){
-        return String.valueOf((int)((Math.random()*9+1)*100000));
+//        return String.valueOf((int)((Math.random()*9+1)*100000));
+        return String.valueOf(System.currentTimeMillis()) + String.valueOf((int)((Math.random()*9+1)*100));
     }
 
     public static String sha1Sign(Map<String, String> signMap) {
         try {
             String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap);
 
+            System.out.println(str);
             return SHA1Util.sign(str);
         } catch (Exception e) {
             logger.error("sha1签名异常");
