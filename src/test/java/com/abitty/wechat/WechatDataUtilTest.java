@@ -14,6 +14,8 @@ public class WechatDataUtilTest {
     @Test
     public void testTransMap2XML() throws Exception {
         System.out.println(WechatDataUtil.randomStr());
+
+        System.out.println(System.currentTimeMillis()/1000);
     }
 
     @Test

@@ -55,7 +55,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
 
         //sha1加密
         String noncestr = WechatDataUtil.randomStr();//随机数
-        String timestamp = String.valueOf(System.currentTimeMillis());//时间戳
+        String timestamp = String.valueOf(System.currentTimeMillis()/1000);//时间戳
         String url = WechatConstants.ABITTY_CODE_URL + code + "&state=STATE";
         Map<String, String> signatureMap = Maps.newTreeMap();
 
