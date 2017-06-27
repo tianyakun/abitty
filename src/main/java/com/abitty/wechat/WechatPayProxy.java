@@ -72,6 +72,8 @@ public class WechatPayProxy {
                 return;
             }
 
+            logger.info("微信统一下单返回报文解析结果  responseMap{}", responseMap);
+
 
             if (!"SUCCESS".equals(responseMap.get("return_code"))) {
                 logger.error("微信统一下单失败 return_code={}", responseMap.get("return_code"));

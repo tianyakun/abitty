@@ -18,7 +18,18 @@ public class WechatDataUtilTest {
 
     @Test
     public void testTransXML2Map() throws Exception {
-
+        String xml = "<xml><return_code><![CDATA[SUCCESS]]></return_code>\n" +
+                "<return_msg><![CDATA[OK]]></return_msg>\n" +
+                "<appid><![CDATA[wx6567f481349fba16]]></appid>\n" +
+                "<mch_id><![CDATA[1480988362]]></mch_id>\n" +
+                "<device_info><![CDATA[WEB]]></device_info>\n" +
+                "<nonce_str><![CDATA[5XA3XcYxyZMMdmkv]]></nonce_str>\n" +
+                "<sign><![CDATA[A938742ADCDC22FA9FE58366D6B892A6]]></sign>\n" +
+                "<result_code><![CDATA[SUCCESS]]></result_code>\n" +
+                "<prepay_id><![CDATA[wx2017062723262604e983737c0691131980]]></prepay_id>\n" +
+                "<trade_type><![CDATA[JSAPI]]></trade_type>\n" +
+                "</xml>";
+        System.out.println(WechatDataUtil.transXML2Map(xml));
     }
 
     @Test
