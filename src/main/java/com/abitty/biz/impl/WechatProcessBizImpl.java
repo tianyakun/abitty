@@ -28,8 +28,8 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
     private WechatProxy wechatProxy;
 
     @Override
-    public void getTicket(String code, ResponseDto responseDto) {
-        Preconditions.checkNotNull(code, "code is null");
+    public void getTicket(String ticketUrl, ResponseDto responseDto) {
+        Preconditions.checkNotNull(ticketUrl, "ticketUrl is null");
 
         //获取access_token
         String accessToken = wechatProxy.getAccessToken();
@@ -56,13 +56,13 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
         //sha1加密
         String noncestr = WechatDataUtil.randomStr();//随机数
         String timestamp = String.valueOf(System.currentTimeMillis()/1000);//时间戳
-        String url = WechatConstants.ABITTY_CODE_URL + code + "&state=STATE";
+//        String url = WechatConstants.ABITTY_CODE_URL + ticketUrl + "&state=STATE";
         Map<String, String> signatureMap = Maps.newTreeMap();
 
         signatureMap.put("jsapi_ticket", ticket);
         signatureMap.put("noncestr", noncestr);
         signatureMap.put("timestamp", timestamp);
-        signatureMap.put("url", url);
+        signatureMap.put("url", ticketUrl);
 
         String signature = WechatDataUtil.sha1Sign(signatureMap);
         if (Strings.isNullOrEmpty(signature)) {
