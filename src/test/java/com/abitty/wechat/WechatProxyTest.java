@@ -38,7 +38,7 @@ public class WechatProxyTest extends BaseTest{
     @Test
     public void testPackageForJsPay() throws Exception {
         Map<String, String> data = Maps.newTreeMap();
-        data.put("appid", WechatConstants.APP_ID);
+        data.put("appId", WechatConstants.APP_ID);
         data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));
         data.put("nonceStr", WechatDataUtil.randomStr());
         data.put("package", "prepay_id=" + "xxxxxx");

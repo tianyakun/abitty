@@ -104,7 +104,7 @@ public class WechatProxy {
 
     public void packageForJsPay(TblOrderInfo tblOrderInfo, ResponseDto responseDto) {
         Map<String, String> data = Maps.newTreeMap();
-        data.put("appid",WechatConstants.APP_ID);
+        data.put("appId",WechatConstants.APP_ID);
         data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));
         data.put("nonceStr", WechatDataUtil.randomStr());
         data.put("package", "prepay_id=" + tblOrderInfo.getPayReturnId());
