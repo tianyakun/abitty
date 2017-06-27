@@ -21,7 +21,7 @@ module.exports = function(ctx, tpl){
         WeixinJSBridge.invoke(
             "getBrandWCPayRequest",
             {
-                appId: access.appid,
+                appId: access.appId,
                 timeStamp: data.timeStamp,
                 nonceStr: data.nonceStr,
                 package: data.package,
@@ -52,7 +52,7 @@ module.exports = function(ctx, tpl){
             //微信配置
             wx.config({
                 debug: true,
-                appId:  res.data.appid,
+                appId:  res.data.appId,
                 timestamp:  res.data.timestamp,
                 nonceStr:  res.data.noncestr,
                 signature: res.data.signature,
