@@ -17,7 +17,22 @@ module.exports = function(ctx, tpl){
         $Prime.SPAWrapper("app").html(html);
     }
 
-
+    function payCall(data){
+        WeixinJSBridge.invoke(
+            "getBrandWCPayRequest",
+            {
+                appId: code.appid,
+                timeStamp: data.timeStamp,
+                nonceStr: data.nonceStr,
+                package: "prepay_id="+data.package,
+                signType: data.signType,
+                paySign: data.paySign
+            },
+            function(r){
+                if(r.err_msg == "get_brand_wcpay_request:ok" ) {}
+            }
+        );
+    }
 
     function getAccess(){
         code = $Prime.getUrlParam("code");
@@ -32,6 +47,18 @@ module.exports = function(ctx, tpl){
             }
 
             access = res.data;
+            //微信配置
+            wx.config({
+                debug: true,
+                appId:  res.data.appid,
+                timestamp:  res.data.timestamp,
+                nonceStr:  res.data.noncestr,
+                signature: res.data.signature,
+                jsApiList: [
+                    'chooseWXPay'
+                ]
+            });
+
 
         }).fail(function(){
             alert("服务器发生未知错误,请稍后重试");
@@ -55,7 +82,6 @@ module.exports = function(ctx, tpl){
                     remark:           currentBook.remark,
                     serviceAtomCount: currentBook.serviceAtomCount,
                     openidCode:       code,
-
                     receiverName:  "老杨",
                     phoneNumber:   $Config.uid,
                     addressProvince: "北京",
@@ -69,7 +95,15 @@ module.exports = function(ctx, tpl){
                 }
             })
             .done(function(res){
-
+                if(res.retCode!=000000){
+                    alert(res.retMsg);
+                    return;
+                }
+                if(typeof WeixinJSBridge == 'undefined'){
+                    document.addEventListener('WeixinJSBridgeReady', payCall, false);
+                }else{
+                    payCall(res.data);
+                }
             })
             .always(function(){
                 _this.removeClass("pending");

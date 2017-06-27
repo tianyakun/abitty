@@ -99,6 +99,7 @@ module.exports = function(ctx, tpl){
         $("#J_select").on("click", function(){
             var params = $("#J_form").serialize();
             params = formDataToJson(params);
+            console.log(params.serviceAtomCount);
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             currentBook = $.extend(currentBook, params);
             window.sessionStorage.currentBook = JSON.stringify(currentBook);
@@ -123,6 +124,7 @@ module.exports = function(ctx, tpl){
         var totalQuantity = $("input[name='totalQuantity']");  //商品总数
         var totalMouth    = $("input[name='totalMouth']");
         var serviceAtomCount = $("input[name='serviceAtomCount']");
+
 
         timeDom.on("change", function(){
             var _this = $(this), _val = _this.val().split('|'), _count = countDom.val();
