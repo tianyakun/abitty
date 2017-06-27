@@ -64,7 +64,7 @@ public class WechatPayProxy {
                 return;
             }
 
-            Map<String, String> responseMap = WechatDataUtil.transXML2Map(requestXml);
+            Map<String, String> responseMap = WechatDataUtil.transXML2Map(responseXml);
             if (MapUtils.isEmpty(responseMap)) {
                 logger.error("微信统一下单返回报文解析异常");
                 tblOrderInfo.setErrorCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
@@ -73,7 +73,6 @@ public class WechatPayProxy {
             }
 
             logger.info("微信统一下单返回报文解析结果  responseMap{}", responseMap);
-
 
             if (!"SUCCESS".equals(responseMap.get("return_code"))) {
                 logger.error("微信统一下单失败 return_code={}", responseMap.get("return_code"));
