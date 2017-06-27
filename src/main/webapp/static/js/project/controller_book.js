@@ -46,14 +46,14 @@ module.exports = function(ctx, tpl){
                 return;
             }
 
-            access = res.data.jsapi_ticket;
+            access = res.data;
             //微信配置
             wx.config({
                 debug: true,
-                appId:  res.data.jsapi_ticket.appid,
-                timestamp:  res.data.jsapi_ticket.timestamp,
-                nonceStr:  res.data.jsapi_ticket.noncestr,
-                signature: res.data.jsapi_ticket.signature,
+                appId:  res.data.appid,
+                timestamp:  res.data.timestamp,
+                nonceStr:  res.data.noncestr,
+                signature: res.data.signature,
                 jsApiList: [
                     'chooseWXPay'
                 ]
