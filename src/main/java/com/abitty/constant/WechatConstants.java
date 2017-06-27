@@ -27,7 +27,7 @@ public class WechatConstants {
 
     public static final String ABITTY_CODE_URL = "http://www.abitty.com/?state=STATE&code=";
 
-    public static final String PAY_NOTIFY_URL = "http://www.abitty.com:8080/pay/notify";
+    public static final String PAY_NOTIFY_URL = "http://www.abitty.com/pay/notify";
 
 
 }
