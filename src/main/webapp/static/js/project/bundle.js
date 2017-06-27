@@ -1767,7 +1767,7 @@ module.exports = function(ctx, tpl){
                 appId: access.appid,
                 timeStamp: data.timeStamp,
                 nonceStr: data.nonceStr,
-                package: "prepay_id="+data.package,
+                package: data.package,
                 signType: data.signType,
                 paySign: data.paySign
             },
