@@ -1764,7 +1764,7 @@ module.exports = function(ctx, tpl){
         WeixinJSBridge.invoke(
             "getBrandWCPayRequest",
             {
-                appId: code.appid,
+                appId: access.appid,
                 timeStamp: data.timeStamp,
                 nonceStr: data.nonceStr,
                 package: "prepay_id="+data.package,
