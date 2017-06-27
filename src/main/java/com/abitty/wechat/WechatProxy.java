@@ -107,7 +107,7 @@ public class WechatProxy {
         data.put("appid",WechatConstants.APP_ID);
         data.put("timeStamp", String.valueOf(System.currentTimeMillis()/1000));
         data.put("nonceStr", WechatDataUtil.randomStr());
-        data.put("package=prepay_id", tblOrderInfo.getPayReturnId());
+        data.put("package", "prepay_id=" + tblOrderInfo.getPayReturnId());
         data.put("signType", "MD5");
         data.put("paySign", WechatDataUtil.md5Sign(data).toUpperCase());
 
