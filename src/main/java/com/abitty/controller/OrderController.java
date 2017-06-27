@@ -112,6 +112,7 @@ public class OrderController {
             }
 
         } catch (Exception e) {
+            logger.error("");
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
         }
