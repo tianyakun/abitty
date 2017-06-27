@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta charset="utf-8">
     <title>一点生活</title>
-    <link rel="stylesheet" href="http://47.93.123.19/static/css/common.css">
+    <link rel="stylesheet" href="http://47.93.123.19:8080/static/css/common.css">
     <script>
         $Config = {
             userName: "${uid}",
