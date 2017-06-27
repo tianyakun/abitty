@@ -80,7 +80,7 @@ public class WechatDataUtil {
         try {
             String str = Joiner.on("&").withKeyValueSeparator("=").join(signMap);
 
-            logger.info("sha1签名原字符串 str={}", str);
+            logger.info("sha1签名原串 {}", str);
             return SHA1Util.sign(str);
         } catch (Exception e) {
             logger.error("sha1签名异常");

@@ -75,7 +75,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
         responseDto.addAttribute("jsapi_ticket", ticket);
         responseDto.addAttribute("noncestr", noncestr);
         responseDto.addAttribute("timestamp", timestamp);
-        responseDto.addAttribute("signature", signature);
+        responseDto.addAttribute("signature", signature.toLowerCase());
         responseDto.addAttribute("appid", WechatConstants.APP_ID);
 
         responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
