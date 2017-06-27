@@ -84,7 +84,7 @@ public class WechatPayProxy {
             // 以下字段在 return_code为 SUCCESS的时候有返回
             //验签 todo
 
-            if (!"SUCCESS".equals("result_code")) {
+            if (!"SUCCESS".equals(responseMap.get("result_code"))) {
                 logger.error("微信统一下单失败 result_code={}", responseMap.get("result_code"));
                 tblOrderInfo.setErrorCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
                 tblOrderInfo.setErrorMsg(responseMap.get("result_code"));
