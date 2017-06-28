@@ -287,6 +287,7 @@
     .page-item-form ul .v-code-wrapper {
       position: absolute;
       right: 0;
+      top: 0;
       height: 100%;
       width: 7.5rem;
     }
