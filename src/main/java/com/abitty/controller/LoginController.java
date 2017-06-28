@@ -86,7 +86,7 @@ public class LoginController {
         return responseDto;
     }
 
-    @RequestMapping(value = "/loginout", method = RequestMethod.POST)
+    @RequestMapping(value = "/loginout")
     @ResponseBody
     public ResponseDto logout(HttpServletRequest httpServletRequest) {
         logger.info("用户退出请求");
