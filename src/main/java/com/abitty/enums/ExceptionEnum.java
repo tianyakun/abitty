@@ -21,6 +21,7 @@ public enum ExceptionEnum {
     ACCESS_TOKEN_INVALID("100006", "ACCESS_TOKEN_INVALID", "获取微信access_token失败"),
     JSAPI_TICKET_INVALID("100007", "JSAPI_TICKET_INVALID", "获取微信jsapi_ticket失败"),
     SIGN_INVALID("100008", "SIGN_INVALID", "获取微信jsapi_ticket失败"),
+    NOT_LOGIN("100009", "NOT_LOGIN", "用户未登录"),
 
 
     SYSTEM_ERROR("999999", "SYSTEM_ERROR", "系统错误");
