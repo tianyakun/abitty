@@ -601,16 +601,6 @@
       height: 0.9rem;
       width: 0.9rem;
       margin-right: 8px;
-      border: 1px solid #9ea997;
-      vertical-align: middle;
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      -o-border-radius: 50%;
-      -ms-border-radius: 50%;
-      border-radius: 50%;
-    }
-    .agreement-cells input[type="checkbox"]:checked {
-      background: #9ea997;
     }
     .agreement-cells:after {
       display: none;
