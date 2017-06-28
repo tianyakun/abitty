@@ -30,7 +30,30 @@ public class PayController {
 
     @RequestMapping(value = "/notify")
     public ResponseEntity notify(HttpServletRequest request) {
-        Map<String, String> notifyMap = transformToMap(request.getParameterMap());
+
+        String inputLine;
+        String notityXml = "";
+
+        try {
+            while ((inputLine = request.getReader().readLine()) != null) {
+                notityXml += inputLine;
+            }
+            request.getReader().close();
+        } catch (Exception e) {
+            logger.error("微信支付结果通知 xml获取失败", e);
+            return new ResponseEntity<String>("UNKNOWN_EXCEPTION", null, HttpStatus.MOVED_TEMPORARILY);
+        }
+
+        if (Strings.isNullOrEmpty(notityXml)) {
+            logger.error("微信支付结果通知 xml为空");
+            return new ResponseEntity<String>("UNKNOWN_EXCEPTION", null, HttpStatus.MOVED_TEMPORARILY);
+        }
+
+
+//        Map<String, String> notifyMap = transformToMap(request.getParameterMap());
+        Map<String, String> notifyMap = Maps.newHashMap();
+        notifyMap.put("content", notityXml);
+
         logger.info("支付结果通知 {}", notifyMap);
 
         try {
