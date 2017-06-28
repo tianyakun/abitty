@@ -87,7 +87,7 @@ public class LoginController {
         return responseDto;
     }
 
-    @RequestMapping(value = "/loginout")
+    @RequestMapping(value = "/logout")
     @ResponseBody
     public void logout(HttpServletRequest request, HttpServletResponse response) {
 
