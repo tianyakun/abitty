@@ -112,7 +112,7 @@ public class OrderController {
             }
 
         } catch (Exception e) {
-            logger.error("");
+            logger.error("获取订单列表异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
         }
