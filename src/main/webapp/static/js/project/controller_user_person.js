@@ -54,7 +54,9 @@ module.exports = function(ctx, tpl){
         type: "GET",
         beforeSend: function(){}
     }).done(function(res){
-        $Prime.isAccess(res);
+        if($Prime.isAccess(res)){
+            return;
+        }
         if(res.retCode!=000000){
             alert(res.retMsg);
             return;

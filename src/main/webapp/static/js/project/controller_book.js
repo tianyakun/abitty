@@ -44,7 +44,9 @@ module.exports = function(ctx, tpl){
             beforeSend: function(){}
         }).done(function(res){
 
-            $Prime.isAccess(res);
+            if($Prime.isAccess(res)){
+                return;
+            }
 
             if(res.retCode != 000000){
                 alert(res.retMsg);
@@ -99,7 +101,9 @@ module.exports = function(ctx, tpl){
             })
             .done(function(res){
 
-                $Prime.isAccess(res);
+                if($Prime.isAccess(res)){
+                    return;
+                }
                 if(res.retCode!=000000){
                     alert(res.retMsg);
                     return;
