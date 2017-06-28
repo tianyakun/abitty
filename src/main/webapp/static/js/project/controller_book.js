@@ -43,11 +43,13 @@ module.exports = function(ctx, tpl){
             type: "GET",
             beforeSend: function(){}
         }).done(function(res){
+
+            $Prime.isAccess(res);
+
             if(res.retCode != 000000){
                 alert(res.retMsg);
                 return;
             }
-
             access = res.data;
             //微信配置
             wx.config({
@@ -97,10 +99,13 @@ module.exports = function(ctx, tpl){
                 }
             })
             .done(function(res){
+
+                $Prime.isAccess(res);
                 if(res.retCode!=000000){
                     alert(res.retMsg);
                     return;
                 }
+
                 if(typeof WeixinJSBridge == 'undefined'){
                     document.addEventListener('WeixinJSBridgeReady', payCall, false);
                 }else{

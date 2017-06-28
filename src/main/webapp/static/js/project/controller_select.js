@@ -182,8 +182,7 @@ module.exports = function(ctx, tpl){
         currentBook = JSON.parse(currentBook);
 
         var html = $Prime.render(tpl.select, currentBook);
-        var title  = $Prime.getUrlParam("title");
-        $Config = $.extend($Config, {back: true, title: title})
+        $Config = $.extend($Config, {back: true, title: "一点生活"})
         var topBarHtml = $Prime.render(tpl.topBar, $Config);
         var pageTip = $Prime.render(tpl.pageTip, {pageTip: "填写需求"});
         html = topBarHtml + pageTip + html;

@@ -15,5 +15,16 @@ module.exports = function(ctx, tpl){
         window.sessionStorage.UserHtml = html;
 
     }
+
+    //function bind(){
+    //    $("#J_login_out").on("click", function(){
+    //        var _this = $(this);
+    //        $.ajax({
+    //            url: $Config.root + "/logout",
+    //            t
+    //        });
+    //    })
+    //}
+
     render(tpl);
 }
