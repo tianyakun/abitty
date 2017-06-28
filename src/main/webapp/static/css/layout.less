@@ -243,6 +243,7 @@ em{
     .v-code-wrapper{
       position: absolute;
       right: 0;
+      top: 0;
       height: 100%;
       width: 150/@base;
 
@@ -251,11 +252,16 @@ em{
       padding: 0 12/@base;
       .vcode{
         color: @color;
-        font-size: 30/@base;
+        font-size: 26/@base;
         border-left: 1px solid @color;
         display: block;
         height: 100%;
+        text-align: center;
+       // padding: 24/@base 0;
+        box-sizing: border-box;
+        vertical-align: middle;
         .boxflex();
+        justify-content:center;
         //&:after{
         //  content: " ";
         //  position: absolute;

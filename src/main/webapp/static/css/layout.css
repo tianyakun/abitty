@@ -274,6 +274,7 @@ em {
 .page-item-form ul .v-code-wrapper {
   position: absolute;
   right: 0;
+  top: 0;
   height: 100%;
   width: 7.5rem;
 }
@@ -284,16 +285,20 @@ em {
 .login-form ul li .vcode,
 .page-item-form ul li .vcode {
   color: #9ea997;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border-left: 1px solid #9ea997;
   display: block;
   height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  vertical-align: middle;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
+  justify-content: center;
 }
 .login-form ul li:last-child {
   padding: 1.9rem 0 0;

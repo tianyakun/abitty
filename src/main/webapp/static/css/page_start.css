@@ -274,6 +274,7 @@ em {
 .page-item-form ul .v-code-wrapper {
   position: absolute;
   right: 0;
+  top: 0;
   height: 100%;
   width: 7.5rem;
 }
@@ -284,16 +285,20 @@ em {
 .login-form ul li .vcode,
 .page-item-form ul li .vcode {
   color: #9ea997;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border-left: 1px solid #9ea997;
   display: block;
   height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  vertical-align: middle;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
+  justify-content: center;
 }
 .login-form ul li:last-child {
   padding: 1.9rem 0 0;
@@ -569,12 +574,12 @@ em {
   margin-bottom: 1.8rem;
 }
 .start-page {
-  background: url("http://192.168.1.121:8080/static/img/start_bg.jpg") no-repeat 0 0;
+  background: url("http://127.0.0.1:8080/static/img/start_bg.jpg") no-repeat 0 0;
   background-size: contain;
   min-height: 50.4rem;
 }
 .start-btn {
-  background: url("http://192.168.1.121:8080/static/img/start_btn.png") no-repeat 0 0;
+  background: url("http://127.0.0.1:8080/static/img/start_btn.png") no-repeat 0 0;
   width: 18rem;
   height: 4rem;
   background-color: #946dad;
@@ -604,7 +609,7 @@ em {
   display: block;
   width: 6.8rem;
   height: 6.7rem;
-  background: url("http://192.168.1.121:8080/static/img/service_page_eye.png") no-repeat 0 0;
+  background: url("http://127.0.0.1:8080/static/img/service_page_eye.png") no-repeat 0 0;
   background-size: contain;
   margin: 6rem auto 1.1rem;
 }

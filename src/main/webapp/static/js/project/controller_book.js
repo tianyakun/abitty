@@ -53,7 +53,6 @@ module.exports = function(ctx, tpl){
             access = res.data;
             //微信配置
             wx.config({
-                debug: true,
                 appId:  res.data.appid,
                 timestamp:  res.data.timestamp,
                 nonceStr:  res.data.noncestr,
