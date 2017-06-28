@@ -79,7 +79,7 @@ module.exports = function(ctx, tpl){
                 data: {
                     productNo:        currentBook.productNo,
                     totalQuantity:    currentBook.totalQuantity,
-                    totalAmount:      currentBook.totalAmount * 100,
+                    totalAmount:      currentBook.totalAmount,
                     deliveryType:     currentBook.deliveryType,
                     subQuantity:      currentBook.subQuantity,
                     totalSub:         currentBook.totalSub,
