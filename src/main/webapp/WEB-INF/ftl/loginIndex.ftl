@@ -598,10 +598,9 @@
       padding-top: 3.6rem;
     }
     .agreement-cells input[type="checkbox"] {
-      -webkit-appearance: none;
-      appearance: none;
       height: 0.9rem;
       width: 0.9rem;
+      margin-right: 8px;
       border: 1px solid #9ea997;
       vertical-align: middle;
       -webkit-border-radius: 50%;
