@@ -1722,11 +1722,11 @@ module.exports = {
         var b = false;
         if(res.retCode == 100009){
             var redirect = window.location.href;
-            window.location.href = "/loginIndex?redirect="+redirect;
+            //window.location.href = "/loginIndex?redirect="+redirect;
             b = true;
             console.log('登陆失效...');
         }
-        return b;
+       // return b;
     },
     getUrlAllParam: function(){
         var obj = {};
@@ -2316,11 +2316,6 @@ module.exports = function(ctx, tpl){
 module.exports = function(ctx, tpl){
 
     function render(tpl){
-        if( window.sessionStorage.UserHtml){
-            $Prime.SPAWrapper("app").html( window.sessionStorage.UserHtml);
-            return;
-        }
-
         var topBarHtml, html;
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
@@ -2843,7 +2838,7 @@ $(function(){
     }
 
     //当前用户订购服务列表
-    page('/view/myService', isLogin, function(ctx){
+    page('/view/myService', function(ctx){
         __webpack_require__(10)(ctx, tpl);
         setBg("transparent");
     })
@@ -2883,7 +2878,7 @@ $(function(){
     })
 
     //服务需求反馈
-    page('/view/feedback', isLogin, function(ctx){
+    page('/view/feedback', function(ctx){
         __webpack_require__(9)(ctx,tpl);
         setBg("transparent");
     });
@@ -2895,7 +2890,7 @@ $(function(){
     });
 
 
-    page('/view/user/person', isLogin, function(ctx){
+    page('/view/user/person', function(ctx){
         __webpack_require__(15)(ctx, tpl);
         setBg("#f4f4f4");
     });

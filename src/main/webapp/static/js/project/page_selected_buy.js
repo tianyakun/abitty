@@ -40,7 +40,7 @@ $(function(){
     }
 
     //当前用户订购服务列表
-    page('/view/myService', isLogin, function(ctx){
+    page('/view/myService', function(ctx){
         require('./controller_my_service')(ctx, tpl);
         setBg("transparent");
     })
@@ -80,7 +80,7 @@ $(function(){
     })
 
     //服务需求反馈
-    page('/view/feedback', isLogin, function(ctx){
+    page('/view/feedback', function(ctx){
         require('./controller_feedback')(ctx,tpl);
         setBg("transparent");
     });
@@ -92,7 +92,7 @@ $(function(){
     });
 
 
-    page('/view/user/person', isLogin, function(ctx){
+    page('/view/user/person', function(ctx){
         require('./controller_user_person')(ctx, tpl);
         setBg("#f4f4f4");
     });
