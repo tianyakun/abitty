@@ -239,6 +239,8 @@ em {
 .item-list .item-bd h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
+  padding: 0 4px;
+  line-height: 22px;
   color: #000;
 }
 .item-list .item-bd span:first-child {

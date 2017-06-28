@@ -1,7 +1,6 @@
 module.exports = function(ctx, tpl){
 
     function render(tpl){
-        $("body").css("background-color", "#f4f4f4");
         if( window.sessionStorage.UserHtml){
             $Prime.SPAWrapper("app").html( window.sessionStorage.UserHtml);
             return;
@@ -15,6 +14,8 @@ module.exports = function(ctx, tpl){
         window.sessionStorage.UserHtml = html;
 
     }
+
+
 
     //function bind(){
     //    $("#J_login_out").on("click", function(){

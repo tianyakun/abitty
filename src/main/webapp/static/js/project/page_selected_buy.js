@@ -30,6 +30,9 @@ $(function(){
     }
     tpl = $.extend(tpl,includes);
 
+    function setBg(color){
+        $("body").css("background-color", color);
+    }
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
@@ -39,16 +42,19 @@ $(function(){
     //当前用户订购服务列表
     page('/view/myService', isLogin, function(ctx){
         require('./controller_my_service')(ctx, tpl);
+        setBg("transparent");
     })
 
     //当前用户订购服务详情
     page('/view/myService/:id', isLogin, function(ctx){
         require('./controller_my_service_detail')(ctx, tpl);
+        setBg("transparent");
     })
 
     //APP服务列表 EX: 纸巾,酸奶
     page('/view/supports', function(ctx){
         require('./controller_support')(ctx, tpl);
+        setBg("transparent");
     })
 
     //服务产品列表 EX: A纸巾,B纸巾
@@ -58,31 +64,37 @@ $(function(){
 
     page('/view/products/:id', function(ctx){
         require('./controller_products_detail')(ctx, tpl);
+        setBg("transparent");
     });
 
     //服务需求填写
     page('/view/select', isLogin, function(ctx){
         require('./controller_select')(ctx, tpl);
+        setBg("transparent");
     })
 
     //服务下单
     page('/view/book', isLogin, function(ctx){
         require('./controller_book')(ctx, tpl);
+        setBg("transparent");
     })
 
     //服务需求反馈
     page('/view/feedback', isLogin, function(ctx){
         require('./controller_feedback')(ctx,tpl);
+        setBg("transparent");
     });
 
 
     page('/view/user', isLogin, function(ctx){
         require('./controller_user')(ctx, tpl);
+        setBg("#f4f4f4");
     });
 
 
     page('/view/user/person', isLogin, function(ctx){
         require('./controller_user_person')(ctx, tpl);
+        setBg("#f4f4f4");
     });
 
     page();

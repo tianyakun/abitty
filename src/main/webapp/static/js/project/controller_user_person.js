@@ -1,5 +1,4 @@
 module.exports = function(ctx, tpl){
-    $("body").css("background-color", "#f4f4f4");
 
     function render(res, tpl){
         var topBarHtml, html,optionHtml,

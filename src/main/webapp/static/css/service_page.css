@@ -239,6 +239,8 @@ em {
 .item-list .item-bd h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
+  padding: 0 4px;
+  line-height: 22px;
   color: #000;
 }
 .item-list .item-bd span:first-child {
@@ -833,8 +835,11 @@ em {
   word-break: break-all;
 }
 .book-wrapper .cell-label {
-  width: 8.25rem;
+  width: 7.25rem;
   display: block;
+}
+.book-wrapper .total-price {
+  font-size: 1.5rem;
 }
 .order-result ul li {
   margin-bottom: 0;

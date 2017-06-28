@@ -24,7 +24,7 @@ module.exports = function(ctx, tpl){
             $.ajax({
                 url: $Config.root + "/feedback",
                 type: "POST",
-                content: ipt.val(),
+                data: {content: ipt.val()},
                 beforeSend: function(){
                     _this.addClass("pending");
                 }
