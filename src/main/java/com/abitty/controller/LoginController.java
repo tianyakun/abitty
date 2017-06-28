@@ -91,17 +91,16 @@ public class LoginController {
     @ResponseBody
     public void logout(HttpServletRequest request, HttpServletResponse response) {
 
-        logger.info("用户退出请求");
-
         try {
 
             HttpSession session = request.getSession();
 
             session.removeAttribute("user");
 
-            logger.info("用户退出,跳转至首页");
+            logger.info("用户退出,跳转至商城首页");
 
-            request.getRequestDispatcher("/view/supports").forward(request, response);//转发到登录界面
+            response.sendRedirect("/view/supports");
+//            request.getRequestDispatcher("/view/supports").forward(request, response);//转发到登录界面
 
         } catch (Exception e) {
             logger.error("用户退出异常", e);
