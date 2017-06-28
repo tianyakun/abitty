@@ -86,4 +86,28 @@ public class LoginController {
         return responseDto;
     }
 
+    @RequestMapping(value = "/loginout", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseDto logout(HttpServletRequest httpServletRequest) {
+        logger.info("用户退出请求");
+
+        ResponseDto responseDto = new ResponseDto();
+
+        try {
+            HttpSession session = httpServletRequest.getSession();
+
+            session.removeAttribute("user");
+
+            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+
+        } catch (Exception e) {
+            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+        }
+
+        logger.info("用户退出返回 responseDto={}", responseDto);
+        return responseDto;
+    }
+
 }
