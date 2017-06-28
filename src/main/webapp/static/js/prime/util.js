@@ -17,11 +17,11 @@ module.exports = {
         var b = false;
         if(res.retCode == 100009){
             var redirect = window.location.href;
-            //window.location.href = "/loginIndex?redirect="+redirect;
+            window.location.href = "/loginIndex?redirect="+redirect;
             b = true;
             console.log('登陆失效...');
         }
-       // return b;
+        return b;
     },
     getUrlAllParam: function(){
         var obj = {};
