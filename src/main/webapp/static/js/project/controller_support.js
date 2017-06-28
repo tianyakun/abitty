@@ -9,11 +9,6 @@ module.exports = function(ctx, tpl){
             var id = $(this).data("id");
         })
     }
-    if( window.sessionStorage.SupportsHtml){
-        $Prime.SPAWrapper("app").html( window.sessionStorage.SupportsHtml);
-        bindStoreSelect();
-        return;
-    }
     function render(tpl, res){
         res = typeof res == "string"?JSON.parse(res):res;
         if(res.retCode != 000000){
@@ -27,7 +22,7 @@ module.exports = function(ctx, tpl){
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = topBarHtml+html + tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
-        window.sessionStorage.SupportsHtml = html;
+
         bindStoreSelect();
     }
 

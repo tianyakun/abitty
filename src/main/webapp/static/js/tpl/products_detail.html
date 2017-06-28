@@ -16,5 +16,5 @@
             <img width="100%" src="{{=it.item.detail}}" alt="">
         </li>
     </ul>
-    <a id="J_start_book" href="/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}" class="foot-fixed-btn">立即订购</a>
+    <a id="J_start_book" onclick="page('/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}')" class="foot-fixed-btn">立即订购</a>
 </section>

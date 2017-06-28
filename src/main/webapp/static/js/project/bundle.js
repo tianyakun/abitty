@@ -2014,12 +2014,7 @@ module.exports = function(ctx, tpl){
 
 module.exports = function(ctx, tpl){
 
-    //function bindStoreSelect(){
-    //    $("#J_list").on("click", ".J_item", function(e){
-    //        var id = $(this).data("id");
-    //        var idSelector = "#J_json_"+id;
-    //    })
-    //}
+
 
 
     function render(tpl, res){
@@ -2035,15 +2030,7 @@ module.exports = function(ctx, tpl){
          topBarHtml = $Prime.render(tpl.topBar, $Config);
          html = topBarHtml+html;
          $Prime.SPAWrapper("app").html(html);
-         window.sessionStorage[StorageKey+"ProductHtml"] = html;
-         //bindStoreSelect();
-    }
 
-    var StorageKey = ctx.params.id+"_";
-    if( window.sessionStorage[StorageKey+"ProductHtml"]){
-        $Prime.SPAWrapper("app").html( window.sessionStorage[StorageKey+"ProductHtml"]);
-       // bindStoreSelect();
-        return;
     }
 
 
@@ -2275,11 +2262,6 @@ module.exports = function(ctx, tpl){
             var id = $(this).data("id");
         })
     }
-    if( window.sessionStorage.SupportsHtml){
-        $Prime.SPAWrapper("app").html( window.sessionStorage.SupportsHtml);
-        bindStoreSelect();
-        return;
-    }
     function render(tpl, res){
         res = typeof res == "string"?JSON.parse(res):res;
         if(res.retCode != 000000){
@@ -2293,7 +2275,7 @@ module.exports = function(ctx, tpl){
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = topBarHtml+html + tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
-        window.sessionStorage.SupportsHtml = html;
+
         bindStoreSelect();
     }
 
@@ -2508,13 +2490,13 @@ module.exports = "<section class=\"slider-wrapper item-list order-result gray-bg
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a href=\"/view/products/{{=item.productNo}}\" data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/feedback>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a onclick='page(\"/view/products/{{=item.productNo}}\")' data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/feedback>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=support-wrapper> <section class=theme-wrapper> <a href=\"\"> </a> </section> <ul> {{~it.list:item:index}} <li> <a data-id=\"{{=item.catalogNo}}\" class=J_item href=\"/view/supports/{{=item.catalogNo}}?title={{=item.name}}\"> <img src=\"{{=item.icon}}\" alt=\"\"> <p>{{=item.name}}</p> </a> <div id=\"J_json_{{=item.catalogNo}}\" style=display:none>{{=JSON.stringify(item)}}</div> </li> {{~}} </ul> <section class=support-btn-wrapper> <a href=/view/feedback class=btn>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=support-wrapper> <section class=theme-wrapper> <a href=\"\"> </a> </section> <ul> {{~it.list:item:index}} <li> <a data-id=\"{{=item.catalogNo}}\" onclick='page(\"/view/supports/{{=item.catalogNo}}?title={{=item.name}}\")' class=J_item> <img src=\"{{=item.icon}}\" alt=\"\"> <p>{{=item.name}}</p> </a> <div id=\"J_json_{{=item.catalogNo}}\" style=display:none>{{=JSON.stringify(item)}}</div> </li> {{~}} </ul> <section class=support-btn-wrapper> <a href=/view/feedback class=btn>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 25 */
@@ -2526,13 +2508,13 @@ module.exports = "<section class=product-select-wrapper> <div class=page-service
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a href=/view/user class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
+module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a onclick='page(\"/view/user\")' class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a href=/view/user/person> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> <div class=loginout-wrapper> <form action=/logout method=get> <button class=btn2 style=\"background:0 0\">退出</button> </form> </div> </section>";
+module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a onclick='page(\"/view/user/person\")'> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> <div class=loginout-wrapper> <form action=/logout method=get> <button class=btn2 style=\"background:0 0\">退出</button> </form> </div> </section>";
 
 /***/ }),
 /* 28 */
@@ -2971,7 +2953,7 @@ module.exports = function(ctx, tpl){
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book href=\"/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\" class=foot-fixed-btn>立即订购</a> </section>";
+module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book onclick='page(\"/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\")' class=foot-fixed-btn>立即订购</a> </section>";
 
 /***/ })
 /******/ ]);
