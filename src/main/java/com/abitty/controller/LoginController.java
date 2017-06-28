@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -88,26 +89,24 @@ public class LoginController {
 
     @RequestMapping(value = "/loginout")
     @ResponseBody
-    public ResponseDto logout(HttpServletRequest httpServletRequest) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+
         logger.info("用户退出请求");
 
-        ResponseDto responseDto = new ResponseDto();
-
         try {
-            HttpSession session = httpServletRequest.getSession();
+
+            HttpSession session = request.getSession();
 
             session.removeAttribute("user");
 
-            responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
-            responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            logger.info("用户退出,跳转至首页");
+
+            request.getRequestDispatcher("/view/supports").forward(request, response);//转发到登录界面
 
         } catch (Exception e) {
-            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            logger.error("用户退出异常", e);
         }
 
-        logger.info("用户退出返回 responseDto={}", responseDto);
-        return responseDto;
     }
 
 }

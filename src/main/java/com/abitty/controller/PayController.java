@@ -3,6 +3,7 @@ package com.abitty.controller;
 import com.abitty.biz.PayNotifyBiz;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Map;
 
 /**
@@ -31,18 +34,7 @@ public class PayController {
     @RequestMapping(value = "/notify")
     public ResponseEntity notify(HttpServletRequest request) {
 
-        String inputLine;
-        String notityXml = "";
-
-        try {
-            while ((inputLine = request.getReader().readLine()) != null) {
-                notityXml += inputLine;
-            }
-            request.getReader().close();
-        } catch (Exception e) {
-            logger.error("微信支付结果通知 xml获取失败", e);
-            return new ResponseEntity<String>("UNKNOWN_EXCEPTION", null, HttpStatus.MOVED_TEMPORARILY);
-        }
+        String notityXml = getRequestBody(request);
 
         if (Strings.isNullOrEmpty(notityXml)) {
             logger.error("微信支付结果通知 xml为空");
@@ -91,6 +83,19 @@ public class PayController {
             }
         }
         return result;
+    }
+
+    private String getRequestBody(HttpServletRequest httpServletRequest) {
+        Reader reader = null;
+        try {
+            reader = httpServletRequest.getReader();
+            return IOUtils.toString(reader);
+        } catch (IOException e) {
+            logger.error("getRequestBody error: ", e);
+            return null;
+        } finally {
+            IOUtils.closeQuietly(reader);
+        }
     }
 
 }
