@@ -22,4 +22,6 @@ public interface TblOrderInfoMapper {
     List<TblOrderInfo> selectByUid(String uid);
 
     TblOrderInfo selectByPayId(String payId);
+
+    List<TblOrderInfo> selectSuccessOrderByUid(String uid);
 }

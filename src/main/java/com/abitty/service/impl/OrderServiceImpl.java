@@ -144,4 +144,9 @@ public class OrderServiceImpl implements OrderService{
     public TblOrderInfo getByPayId(String payId) {
         return tblOrderInfoMapper.selectByPayId(payId);
     }
+
+    @Override
+    public List<TblOrderInfo> getSuccessOrderByUid(String uid) {
+        return tblOrderInfoMapper.selectSuccessOrderByUid(uid);
+    }
 }

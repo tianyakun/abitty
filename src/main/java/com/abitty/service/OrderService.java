@@ -24,4 +24,5 @@ public interface OrderService {
 
     boolean paySuccess(TblOrderInfo tblOrderInfo);
 
+    List<TblOrderInfo> getSuccessOrderByUid(String uid);
 }

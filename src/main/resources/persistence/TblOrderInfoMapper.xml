@@ -321,4 +321,11 @@
     from tbl_order_info
     where pay_id = #{payId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectSuccessOrderByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_order_info
+    where uid = #{uid,jdbcType=VARCHAR} AND status IN (1, 2, 3)
+  </select>
 </mapper>

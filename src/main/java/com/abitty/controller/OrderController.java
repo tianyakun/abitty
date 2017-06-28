@@ -96,7 +96,7 @@ public class OrderController {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorCode());
             } else {
-                List<TblOrderInfo> tblOrderInfoList = orderService.getAllByUid(uid);
+                List<TblOrderInfo> tblOrderInfoList = orderService.getSuccessOrderByUid(uid);
 
                 List<OrderInfoVo> orderInfoVoList = buildOrderInfoVoList(tblOrderInfoList);
 
