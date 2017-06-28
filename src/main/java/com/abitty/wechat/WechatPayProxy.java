@@ -44,8 +44,7 @@ public class WechatPayProxy {
             String nonceStr = WechatDataUtil.randomStr();
             data.put("nonce_str", nonceStr);
             data.put("out_trade_no", tblOrderInfo.getPayId());
-//            data.put("total_fee", String.valueOf((int)tblOrderInfo.getTotalAmount().doubleValue() * 100));
-            data.put("total_fee", String.valueOf((int)tblOrderInfo.getTotalAmount().doubleValue()));//todo
+            data.put("total_fee", String.valueOf((int)tblOrderInfo.getTotalAmount().doubleValue() * 100));//元to分
             data.put("notify_url", WechatConstants.PAY_NOTIFY_URL);
             data.put("trade_type", WechatConstants.TRADE_TYPE);
             data.put("spbill_create_ip", tblOrderInfo.getIp());
@@ -107,13 +106,13 @@ public class WechatPayProxy {
         logger.info("接收到微信异步回调数据:{}",xml);
 
         Map<String,String> map=WechatDataUtil.transXML2Map(xml);
-        if ("SUCCESS".equals(map.get("return_code"))) {
+        if (!"SUCCESS".equals(map.get("return_code"))) {
             logger.error("微信支付回调返回错误信息{}", map.get("return_msg"));
             return null;
         }
         //验签 todo
 
-        if ("SUCCESS".equals(map.get("result_code"))) {
+        if (!"SUCCESS".equals(map.get("result_code"))) {
             logger.error("微信支付回调参数result_code={},err_code={},err_code_des={}", new Object[]{map.get("result_code"),map.get("err_code"), map.get("err_code_des")});
             return null;
         }
