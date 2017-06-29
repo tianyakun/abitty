@@ -425,13 +425,45 @@ content=用户任何输入（1024个字符以内） //非空
     "data": {}
 }
 ```
-## 14.用户退出登录
+## 14.登录用户退出
 地址:	/logout    
-方式:	get/post（普通web请求，非ajax）    
+方式:	get/post（普通web请求，非ajax请求）    
 请求参数：无    
 返回参数：无
 ```
-跳转到商品类别列表页/view/supports
+效果：用户退出，跳转到商品类别列表页/view/supports
+```
+## 15.获取活动页banner列表
+地址:	/activity/list    
+
+方式:	get/post    
+
+请求参数：
+```
+无
+```
+返回参数：
+```
+{
+    "retCode": "000000",
+    "retMsg": "000000",
+    "data": {
+        "list": [
+            {
+                "activityNo": "test1498746307787",
+                "description": "test1498746307787",
+                "icon": "test1498746307787",
+                "redirectUrl": "test1498746307787"
+            },
+            {
+                "activityNo": "test1498746312106",
+                "description": "test1498746312106",
+                "icon": "test1498746312106",
+                "redirectUrl": "test1498746312106"
+            }
+        ]
+    }
+}
 ```
 
 
