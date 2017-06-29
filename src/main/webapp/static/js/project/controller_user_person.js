@@ -1,5 +1,4 @@
 module.exports = function(ctx, tpl){
-    $("body").css("background-color", "#f4f4f4");
 
     function render(res, tpl){
         var topBarHtml, html,optionHtml,
@@ -33,11 +32,11 @@ module.exports = function(ctx, tpl){
                     _this.addClass("pending").text("保存中...");
                 }
             }).done(function(res){
+                $Prime.isAccess(res);
                 if(res.retCode!=000000){
                     alert(res.retMsg);
                     return;
                 }
-                //window.location = window.location;
 
             }).fail(function(){
 
@@ -54,6 +53,14 @@ module.exports = function(ctx, tpl){
         type: "GET",
         beforeSend: function(){}
     }).done(function(res){
+        if($Prime.isAccess(res)){
+            return;
+        }
+        if(res.retCode!=000000){
+            alert(res.retMsg);
+            return;
+        }
+
         render(res, tpl);
         bindUpdate();
     }).fail(function(){

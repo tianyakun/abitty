@@ -1718,6 +1718,16 @@ module.exports = {
         if (r != null) return decodeURIComponent(r[2]);
         return null; //返回参数值
     },
+    isAccess: function(res){
+        var b = false;
+        if(res.retCode == 100009){
+            var redirect = window.location.href;
+            window.location.href = "/loginIndex?redirect="+redirect;
+            b = true;
+            console.log('登陆失效...');
+        }
+        return b;
+    },
     getUrlAllParam: function(){
         var obj = {};
         var r = window.location.search.substr(1);
@@ -1752,7 +1762,7 @@ module.exports = function(ctx, tpl){
 
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
-        $Config = $.extend($Config, {back: true, title: data.name});
+        $Config = $.extend($Config, {back: true, title: "一点生活"});
         console.log(data);
         var html = $Prime.render(tpl.products.detail, data);
         var topBarHtml = $Prime.render(tpl.topBar, $Config);
@@ -1786,15 +1796,18 @@ module.exports = function(ctx, tpl){
             type: "GET",
             beforeSend: function(){}
         }).done(function(res){
+
+            if($Prime.isAccess(res)){
+                return;
+            }
+
             if(res.retCode != 000000){
                 alert(res.retMsg);
                 return;
             }
-
             access = res.data;
             //微信配置
             wx.config({
-                debug: true,
                 appId:  res.data.appid,
                 timestamp:  res.data.timestamp,
                 nonceStr:  res.data.noncestr,
@@ -1820,7 +1833,7 @@ module.exports = function(ctx, tpl){
                 data: {
                     productNo:        currentBook.productNo,
                     totalQuantity:    currentBook.totalQuantity,
-                    totalAmount:      currentBook.totalAmount * 100,
+                    totalAmount:      currentBook.totalAmount,
                     deliveryType:     currentBook.deliveryType,
                     subQuantity:      currentBook.subQuantity,
                     totalSub:         currentBook.totalSub,
@@ -1840,10 +1853,15 @@ module.exports = function(ctx, tpl){
                 }
             })
             .done(function(res){
+
+                if($Prime.isAccess(res)){
+                    return;
+                }
                 if(res.retCode!=000000){
                     alert(res.retMsg);
                     return;
                 }
+
                 if(typeof WeixinJSBridge == 'undefined'){
                     document.addEventListener('WeixinJSBridgeReady', payCall, false);
                 }else{
@@ -1873,6 +1891,7 @@ module.exports = function(ctx, tpl){
 module.exports = function(ctx, tpl){
     if( window.sessionStorage.feedBackHtml){
         $Prime.SPAWrapper("app").html( window.sessionStorage.feedBackHtml);
+        bind();
         return;
     }
 
@@ -1883,7 +1902,37 @@ module.exports = function(ctx, tpl){
         window.sessionStorage.feedBackHtml = html;
     }
 
+    function bind(){
+        var ipt = $("input[name='feedBackUrl']");
+        $("#J_save").on("click", function(){
+            var _this = $(this);
+            if(_this.hasClass("pending")) return;
+            if(!ipt.val()) return;
+            if(ipt.val().length>1024){
+                alert("字数太多啦");
+            }
+            $.ajax({
+                url: $Config.root + "/feedback",
+                type: "POST",
+                data: {content: ipt.val()},
+                beforeSend: function(){
+                    _this.addClass("pending");
+                }
+            }).done(function(res){
+                if(res.retCode != 000000){
+                    alert(res.retMsg);
+                    return;
+                }
+                alert("我们已收到您的需求,我们会加紧准备.");
+                window.location.href = "/view/supports"
+            }).always(function(){
+                _this.removeClass("pending");
+            })
+        });
+    }
+
     render(tpl);
+    bind();
 }
 
 /***/ }),
@@ -1892,12 +1941,6 @@ module.exports = function(ctx, tpl){
 
 module.exports = function(ctx, tpl){
     function render(tpl, res){
-        res = typeof res == "string"?JSON.parse(res):res;
-        if(res.retCode != 000000){
-            alert(res.retMsg);
-            return;
-        }
-
         var html = $Prime.render(tpl.myService, res.data);
         if(res.data.list.length != 0){
             $Config = $.extend($Config, {back: false, title: ""});
@@ -1945,6 +1988,13 @@ module.exports = function(ctx, tpl){
 
         }
     }).done(function(res){
+        if($Prime.isAccess(res)){
+            return;
+        }
+        if(res.retCode != 000000){
+            alert(res.retMsg);
+            return;
+        }
         render(tpl, res);
     }).fail(function(){
 
@@ -1964,12 +2014,7 @@ module.exports = function(ctx, tpl){
 
 module.exports = function(ctx, tpl){
 
-    //function bindStoreSelect(){
-    //    $("#J_list").on("click", ".J_item", function(e){
-    //        var id = $(this).data("id");
-    //        var idSelector = "#J_json_"+id;
-    //    })
-    //}
+
 
 
     function render(tpl, res){
@@ -1985,15 +2030,7 @@ module.exports = function(ctx, tpl){
          topBarHtml = $Prime.render(tpl.topBar, $Config);
          html = topBarHtml+html;
          $Prime.SPAWrapper("app").html(html);
-         window.sessionStorage[StorageKey+"ProductHtml"] = html;
-         //bindStoreSelect();
-    }
 
-    var StorageKey = ctx.params.id+"_";
-    if( window.sessionStorage[StorageKey+"ProductHtml"]){
-        $Prime.SPAWrapper("app").html( window.sessionStorage[StorageKey+"ProductHtml"]);
-       // bindStoreSelect();
-        return;
     }
 
 
@@ -2198,8 +2235,7 @@ module.exports = function(ctx, tpl){
         currentBook = JSON.parse(currentBook);
 
         var html = $Prime.render(tpl.select, currentBook);
-        var title  = $Prime.getUrlParam("title");
-        $Config = $.extend($Config, {back: true, title: title})
+        $Config = $.extend($Config, {back: true, title: "一点生活"})
         var topBarHtml = $Prime.render(tpl.topBar, $Config);
         var pageTip = $Prime.render(tpl.pageTip, {pageTip: "填写需求"});
         html = topBarHtml + pageTip + html;
@@ -2226,11 +2262,6 @@ module.exports = function(ctx, tpl){
             var id = $(this).data("id");
         })
     }
-    if( window.sessionStorage.SupportsHtml){
-        $Prime.SPAWrapper("app").html( window.sessionStorage.SupportsHtml);
-        bindStoreSelect();
-        return;
-    }
     function render(tpl, res){
         res = typeof res == "string"?JSON.parse(res):res;
         if(res.retCode != 000000){
@@ -2244,7 +2275,7 @@ module.exports = function(ctx, tpl){
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = topBarHtml+html + tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
-        window.sessionStorage.SupportsHtml = html;
+
         bindStoreSelect();
     }
 
@@ -2267,12 +2298,6 @@ module.exports = function(ctx, tpl){
 module.exports = function(ctx, tpl){
 
     function render(tpl){
-        $("body").css("background-color", "#f4f4f4");
-        if( window.sessionStorage.UserHtml){
-            $Prime.SPAWrapper("app").html( window.sessionStorage.UserHtml);
-            return;
-        }
-
         var topBarHtml, html;
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
@@ -2281,6 +2306,19 @@ module.exports = function(ctx, tpl){
         window.sessionStorage.UserHtml = html;
 
     }
+
+
+
+    //function bind(){
+    //    $("#J_login_out").on("click", function(){
+    //        var _this = $(this);
+    //        $.ajax({
+    //            url: $Config.root + "/logout",
+    //            t
+    //        });
+    //    })
+    //}
+
     render(tpl);
 }
 
@@ -2289,7 +2327,6 @@ module.exports = function(ctx, tpl){
 /***/ (function(module, exports) {
 
 module.exports = function(ctx, tpl){
-    $("body").css("background-color", "#f4f4f4");
 
     function render(res, tpl){
         var topBarHtml, html,optionHtml,
@@ -2323,11 +2360,11 @@ module.exports = function(ctx, tpl){
                     _this.addClass("pending").text("保存中...");
                 }
             }).done(function(res){
+                $Prime.isAccess(res);
                 if(res.retCode!=000000){
                     alert(res.retMsg);
                     return;
                 }
-                //window.location = window.location;
 
             }).fail(function(){
 
@@ -2344,6 +2381,14 @@ module.exports = function(ctx, tpl){
         type: "GET",
         beforeSend: function(){}
     }).done(function(res){
+        if($Prime.isAccess(res)){
+            return;
+        }
+        if(res.retCode!=000000){
+            alert(res.retMsg);
+            return;
+        }
+
         render(res, tpl);
         bindUpdate();
     }).fail(function(){
@@ -2412,7 +2457,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".gray-bg {\n  background-color: #f4f4f4;\n}\n.icon-back {\n  background: url(" + __webpack_require__(0) + ") no-repeat 0 0;\n  background-size: contain;\n  width: 1.4rem;\n  height: 1.6rem;\n  display: block;\n}\n.icon-user {\n  background: url(" + __webpack_require__(3) + ") no-repeat 0 0;\n  background-size: contain;\n}\n.cf:after {\n  content: ' ';\n  display: block;\n  overflow: hidden;\n  visibility: hidden;\n  width: 0;\n  height: 0;\n}\na {\n  text-decoration: none;\n}\nem {\n  font-style: normal;\n}\n.cf:after {\n  clear: both;\n}\n.btn,\n.btn2 {\n  color: #9ea997;\n  display: block;\n  border: 1px solid #9ea997;\n  font-size: 1.5rem;\n  text-align: center;\n  margin: 0 auto;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.btn:active,\n.btn2:active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.btn {\n  width: 17.9rem;\n  height: 3.9rem;\n  line-height: 3.9rem;\n}\n.btn2 {\n  width: 15.8rem;\n  height: 3.3rem;\n  line-height: 3.3rem;\n}\n.btn-active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.ui-input {\n  width: 100%;\n  border: 0;\n  outline: 0;\n  -webkit-appearance: none;\n  background-color: transparent;\n  color: inherit;\n  font-size: 1.5rem;\n  height: 1.5rem;\n}\n.ui-select {\n  width: 100%;\n  border: 0;\n  outline: 0;\n  -webkit-appearance: none;\n  background-color: transparent;\n  color: inherit;\n  font-size: 1.5rem;\n}\n.add-icon {\n  width: 6rem;\n  height: 6rem;\n  line-height: 6rem;\n  text-align: center;\n  background-color: #fff;\n  position: fixed;\n  right: 1.3rem;\n  top: 33.3rem;\n  font-size: 30px;\n  -webkit-box-shadow: 0 0 18px rgba(0, 0, 0, 0.5);\n  box-shadow: 0 0 18px rgba(0, 0, 0, 0.5);\n  -webkit-border-radius: 50%;\n  -moz-border-radius: 50%;\n  -o-border-radius: 50%;\n  -ms-border-radius: 50%;\n  border-radius: 50%;\n  -webkit-touch-callout: none;\n  /*系统默认菜单被禁用*/\n  -webkit-user-select: none;\n  /*webkit浏览器*/\n  -moz-user-select: none;\n  /*火狐*/\n  user-select: none;\n}\n.add-icon a {\n  color: #9ea997;\n  display: block;\n  height: 100%;\n  width: 100%;\n}\n.add-icon:active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.sb-btn {\n  border: none;\n  width: 100%;\n  color: #fff;\n  background-color: #9ea997;\n  display: block;\n  height: 4rem;\n  line-height: 4rem;\n  font-size: 1.5rem;\n  text-align: center;\n  margin: 0 auto;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.sb-btn:active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.item-cells {\n  position: relative;\n}\n.item-cells:after,\n.item-cells:first-child:before {\n  content: \" \";\n  position: absolute;\n  left: 0;\n  right: 0;\n  height: 1px;\n  color: #e5e5e5;\n  -webkit-transform-origin: 0 100%;\n  transform-origin: 0 100%;\n  -webkit-transform: scaleY(0.5);\n  transform: scaleY(0.5);\n  z-index: 2;\n}\n.item-cells:before {\n  top: -1px;\n  border-top: 1px solid #9ea997;\n}\n.item-cells:after {\n  bottom: 0;\n  border-bottom: 1px solid #9ea997;\n}\n.item-cell {\n  padding: 1.2rem 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.item-cell .item-cell-bd {\n  overflow: hidden;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  flex: 1;\n}\n.cell-label {\n  color: #666;\n  font-size: 1.5rem;\n}\n.top-bar {\n  background-color: #fff;\n  height: 4rem;\n  position: relative;\n  box-sizing: border-box;\n  padding: 0 1rem;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.top-bar .top-bar-item {\n  text-align: center;\n}\n.top-bar .top-bar-tit {\n  font-size: 1.6rem;\n  margin: 0 auto;\n}\n.top-bar .back,\n.top-bar .user-item {\n  position: absolute;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n.top-bar .back {\n  left: 1rem;\n}\n.top-bar .user-item {\n  right: 1rem;\n  padding-left: 1.3rem;\n  font-size: 1.3rem;\n  color: #000;\n  text-decoration: none;\n}\n.item-list ul li {\n  margin-bottom: 0.85rem;\n}\n.item-list ul li a:not(.btn) {\n  border-top: 1px solid #fff;\n  background-color: #fff;\n  display: block;\n  text-decoration: none;\n}\n.item-list .item-hd img {\n  width: 100%;\n  display: block;\n}\n.item-list .item-bd {\n  padding: 1.7rem 0 0.9rem 0;\n  border-bottom: 1px solid #e8e9ea;\n  text-align: center;\n}\n.item-list .item-bd h3 {\n  font-size: 1.8rem;\n  margin-bottom: 1rem;\n  color: #000;\n}\n.item-list .item-bd span:first-child {\n  color: #eb4f4e;\n  font-size: 2rem;\n}\n.item-list .item-ft {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.item-list .item-ft span {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  flex: 1;\n  height: 3.4rem;\n  line-height: 3.4rem;\n  color: #9ea997;\n  font-size: 1.4rem;\n  text-align: center;\n}\n.item-list .item-ft span:first-child {\n  border-right: 1px solid #e8e9ea;\n}\n.login-form,\n.page-item-form {\n  padding: 0 1rem;\n}\n.login-form ul .v-code-wrapper,\n.page-item-form ul .v-code-wrapper {\n  position: absolute;\n  right: 0;\n  height: 100%;\n  width: 7.5rem;\n}\n.login-form ul li,\n.page-item-form ul li {\n  padding: 0 0.6rem;\n}\n.login-form ul li .vcode,\n.page-item-form ul li .vcode {\n  color: #9ea997;\n  font-size: 1.5rem;\n  border-left: 1px solid #9ea997;\n  display: block;\n  height: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.login-form ul li:last-child {\n  padding: 1.9rem 0 0;\n}\n.user-select-wrapper {\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: row;\n  height: 3rem;\n  line-height: 3rem;\n  font-size: 1.5rem;\n  width: 10.9rem;\n  position: relative;\n}\n.user-select-wrapper:after {\n  content: \" \";\n  width: 200%;\n  height: 200%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: -1;\n  border: 1px solid #9ea997;\n  -webkit-transform: scale(0.5);\n  transform: scale(0.5);\n  -webkit-transform-origin: 0 0;\n  transform-origin: 0 0;\n  box-sizing: border-box;\n  -webkit-border-radius: 8px;\n  -moz-border-radius: 8px;\n  -o-border-radius: 8px;\n  -ms-border-radius: 8px;\n  border-radius: 8px;\n}\n.user-select-wrapper .user-select-control-btn {\n  width: 2.9rem;\n  text-align: center;\n}\n.user-select-wrapper .user-select-result {\n  width: 5rem;\n  border-left: 1px solid #9ea997;\n  border-right: 1px solid #9ea997;\n  text-align: center;\n}\n.user-checkbox-wrapper {\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.user-checkbox-wrapper span.user-checkbox {\n  padding: 0 1.5rem;\n  height: 3rem;\n  line-height: 3rem;\n  margin-bottom: 0.9rem;\n  font-size: 1.4rem;\n  position: relative;\n}\n.user-checkbox-wrapper span.user-checkbox:after {\n  content: \" \";\n  width: 200%;\n  height: 200%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  border: 1px solid #9ea997;\n  -webkit-transform: scale(0.5);\n  transform: scale(0.5);\n  -webkit-transform-origin: 0 0;\n  transform-origin: 0 0;\n  box-sizing: border-box;\n  -webkit-border-radius: 8px;\n  -moz-border-radius: 8px;\n  -o-border-radius: 8px;\n  -ms-border-radius: 8px;\n  border-radius: 8px;\n}\n.user-checkbox-wrapper span.user-checkbox-selected {\n  background-color: #9ea997;\n  color: #fff;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.user-checkbox-wrapper-only-row {\n  justify-content: flex-start;\n}\n.user-checkbox-wrapper-only-row span.user-checkbox {\n  margin-right: 0.9rem;\n  margin-bottom: 0;\n}\n.has-foot-btn {\n  padding-bottom: 4.9rem;\n}\n.foot-fixed-btn {\n  border: none;\n  height: 4.9rem;\n  line-height: 4.9rem;\n  text-align: center;\n  color: #fff;\n  background-color: #9ea997;\n  width: 100%;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  font-size: 1.8rem;\n}\n.swipe {\n  overflow: hidden;\n  visibility: hidden;\n  position: relative;\n}\n.swipe-wrap {\n  overflow: hidden;\n  position: relative;\n}\n.swipe-wrap > div {\n  float: left;\n  width: 100%;\n  position: relative;\n}\n.has-bottom-fixed {\n  padding-bottom: 5.1rem;\n}\n.buttom-fixed {\n  position: fixed;\n  width: 100%;\n  left: 0;\n  bottom: 0;\n}\n.flex-row {\n  display: -webkit-flex;\n  display: flex;\n}\n.buttom-control-wrap {\n  height: 5.1rem;\n  line-height: 5.1rem;\n  border-top: 1px solid #dcdcdc;\n}\n.flex-row a,\n.flex-row span {\n  -webkit-box-flex: 1;\n  box-flex: 1;\n  width: 100%;\n  text-align: center;\n}\n.flex-row span {\n  background-color: #fff;\n}\n.flex-row a {\n  background-color: #9ea997;\n  color: #fff;\n  font-size: 1.6rem;\n}\n.buttom-control-wrap span {\n  font-size: 2rem;\n  color: #eb4f4e;\n}\n.buttom-control-wrap span label {\n  font-size: 1.4rem;\n  color: #9ea997;\n}\n.support-wrapper {\n  background: #fff;\n}\n.progress_wrapper {\n  box-sizing: border-box;\n  padding-left: 0.8rem;\n  padding-top: 1.2rem;\n  background-color: rgba(255, 255, 255, 0.6);\n  height: 4.7rem;\n  width: 23.5rem;\n  margin-left: -11.75rem;\n}\n.progress_wrapper .progress_bar {\n  width: 20rem;\n  height: 0.6rem;\n  background-color: #fff;\n  margin-bottom: 0.8rem;\n  -webkit-border-radius: 0.6rem;\n  -moz-border-radius: 0.6rem;\n  -o-border-radius: 0.6rem;\n  -ms-border-radius: 0.6rem;\n  border-radius: 0.6rem;\n  overflow: hidden;\n}\n.progress_wrapper .progress_bar .progress_current {\n  background-color: #ff595f;\n  height: 100%;\n  width: 0;\n}\n.progress_wrapper .left_over {\n  font-size: 1.2rem;\n  color: #000;\n}\n.count-action-wrapper {\n  height: 8rem;\n  background-color: rgba(255, 255, 255, 0.6);\n  width: 100%;\n  box-sizing: border-box;\n  padding-top: 1.3rem;\n  text-align: center;\n}\n.count-action-wrapper .btn {\n  margin-bottom: 0.8rem;\n}\n.count-action-wrapper p {\n  font-size: 1rem;\n  color: #333;\n}\n.item-service-list {\n  padding-top: 1rem;\n}\n.item-service-list ul li {\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  margin-bottom: 1rem;\n  padding: 1rem;\n  background-color: #fff;\n}\n.item-service-list .item-hd {\n  position: relative;\n}\n.item-service-list .item-hd .progress_wrapper {\n  position: absolute;\n  left: 50%;\n  bottom: 0.8rem;\n}\n.item-service-list .item-hd .count-action-wrapper {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n}\n.item-service-list .item-bd {\n  border: none;\n}\n.item-service-list .item-bd p {\n  text-align: center;\n}\n.item-service-list .item-bd p em {\n  color: #9ea997;\n  padding: 0 0.6rem;\n  font-size: 1.2rem;\n}\n.product-list,\n.page-list {\n  padding-top: 0.9rem;\n}\n.product-list ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.product-list ul li {\n  box-sizing: border-box;\n  width: 50%;\n}\n.product-list ul li:nth-child(odd) {\n  padding-right: 0.5rem;\n}\n.product-list ul li:nth-child(even) {\n  padding-left: 0.5rem;\n}\n.theme-wrapper {\n  margin-bottom: 1.8rem;\n}\n.pro-page {\n  background-color: #f4f4f4;\n}\n.page-tip {\n  height: 4rem;\n  line-height: 4rem;\n  background-color: #f4f4f4;\n}\n.page-tip .page-tip-inner {\n  text-align: center;\n  position: relative;\n  padding: 0 1rem;\n}\n.page-tip .page-tip-inner:before {\n  content: \" \";\n  position: absolute;\n  left: 0;\n  right: 0;\n  color: #e5e5e5;\n  -webkit-transform-origin: 0 100%;\n  transform-origin: 0 100%;\n  -webkit-transform: scaleY(0.5);\n  transform: scaleY(0.5);\n  z-index: 2;\n  margin: 0 1rem;\n}\n.page-tip .page-tip-inner:before {\n  top: 50%;\n  border-top: 1px solid #d2daca;\n}\n.page-tip h5 {\n  text-align: center;\n  font-size: 1.4rem;\n  color: #9ea997;\n  display: inline-block;\n  position: relative;\n  z-index: 4;\n  background-color: #f4f4f4;\n  padding: 0 1.1rem;\n}\n.item-user-repy {\n  padding: 2.4rem 0 2.3rem 0;\n  background-color: #fff;\n}\n.page-item-form ul li:first-child:before {\n  display: none;\n}\n.start-service {\n  padding-top: 3.6rem;\n}\n.start-service .slogen {\n  margin-bottom: 9.3rem;\n}\n.start-service .slogen-eye-icon {\n  display: block;\n  width: 6.8rem;\n  height: 6.7rem;\n  background: url(\"http://192.168.1.101:8080/static/img/service_page_eye.png\") no-repeat 0 0;\n  background-size: contain;\n  margin: 6rem auto 1.1rem;\n}\n.start-service h2 {\n  color: #9ea997;\n  font-size: 1.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem;\n}\n.start-service h3 {\n  color: #666;\n  font-size: 1.2rem;\n  text-align: center;\n}\n.page-item-form ul li label.select-tag {\n  display: block;\n  height: 4.2rem;\n  line-height: 4.2rem;\n  font-size: 1.4rem;\n  color: #9ea997;\n}\n.page-item-form ul .none-border:after {\n  display: none;\n}\n.slider-wrapper {\n  padding-bottom: 1rem;\n}\n.slider-wrapper ul li {\n  background-color: #fff;\n}\n.support-wrapper h3 {\n  font-size: 1.5rem;\n  color: #333;\n  padding: 2.1rem 1.6rem 1.5rem 1.6rem;\n}\n.support-wrapper ul {\n  overflow: hidden;\n}\n.support-wrapper ul li img {\n  width: 2.7rem;\n  height: 3rem;\n  touch-action: none;\n}\n.support-wrapper ul li {\n  float: left;\n  width: 25%;\n  text-align: center;\n  margin-bottom: 2.7rem;\n}\n.support-wrapper ul li a {\n  display: block;\n}\n.support-wrapper ul li p {\n  font-size: 1.4rem;\n  padding-top: 0.8rem;\n  color: #999;\n}\n.support-btn-wrapper {\n  padding-top: 2rem;\n}\n.feed-back-wrapper {\n  box-sizing: border-box;\n  padding: 6rem 1rem 0;\n}\n.feed-back-wrapper .feedback-icon-wrapper {\n  margin-bottom: 2.2rem;\n}\n.feed-back-wrapper .feedback-icon-wrapper .feed-back-icon {\n  background: url(\"http://192.168.1.101:8080/static/img/feed_back.png\") no-repeat 0 0;\n  display: block;\n  width: 9.2rem;\n  height: 8.75rem;\n  background-size: contain;\n  margin: 0 auto;\n}\n.feed-back-wrapper input[type='text'] {\n  color: #c2c2c2;\n  border: 1px solid #9ea997;\n  padding: 1.2rem 0;\n  font-size: 1.4rem;\n  text-indent: 1em;\n  width: 100%;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.select-result {\n  padding: 0 1rem;\n}\n.select-result .book-info {\n  font-size: 1.2rem;\n  color: #666;\n}\n.select-result .book-info li {\n  height: 3.3rem;\n  line-height: 3.3rem;\n  border-bottom: 1px dashed #9ea997;\n}\n.user-info-modify ul li {\n  padding: 0 1rem;\n}\n.user-info-modify .text-label {\n  float: left;\n  color: #666;\n}\n.user-info ul a {\n  display: block;\n  color: #000;\n  padding: 0 1rem;\n}\n.user-info .item-cells {\n  background-color: #fff;\n}\n.user-info .item-cells:after {\n  border-color: #dcdcdc;\n}\n.user-info .item-cells:first-child:before {\n  display: none;\n}\n.user-info .item-cells p {\n  font-size: 1.5rem;\n  color: #999;\n}\n.user-info .text-label {\n  font-size: 1.4rem;\n  padding-left: 1.8rem;\n}\n.user-info .icon-user-info {\n  float: left;\n  background: url(" + __webpack_require__(30) + ") no-repeat 0 0;\n  background-size: contain;\n}\n.user-info .icon-next {\n  background: url(" + __webpack_require__(0) + ") no-repeat left 0;\n  background-size: contain;\n  position: absolute;\n  right: 1rem;\n  top: 50%;\n  margin-top: -0.75rem;\n  height: 1.5rem;\n  width: 1.4rem;\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.loginout-wrapper {\n  position: absolute;\n  left: 0;\n  bottom: 5.8rem;\n  width: 100%;\n}\n.buttom-height {\n  padding-bottom: 5rem;\n}\n.bottom-tab {\n  background-color: #fff;\n  border-top: 1px solid #9ea997;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  height: 2.5rem;\n  width: 100%;\n}\n.bottom-tab a {\n  color: #595C60;\n  font-size: 12px;\n  flex: 1;\n  text-align: center;\n}\n.bottom-tab a:first-child {\n  border-right: 1px solid #9ea997;\n}\n.bottom-tab a:last-child {\n  border-left: 1px solid #9ea997;\n}\n.ui-select {\n  -webkit-appearance: none;\n  border: 0;\n  outline: 0;\n  background-color: transparent;\n  width: 100%;\n  font-size: inherit;\n  position: relative;\n  z-index: 1;\n  font-size: 1.5rem;\n}\n.ui-label {\n  color: #666;\n  display: block;\n  font-size: 1.5rem;\n  width: 5.3rem;\n  word-wrap: break-word;\n  word-break: break-all;\n}\n.book-wrapper .cell-label {\n  width: 8.25rem;\n  display: block;\n}\n.order-result ul li {\n  margin-bottom: 0;\n}\n.order-result .item-bd {\n  border-bottom: none;\n}\n.order-result ul .order-info {\n  padding: 0 1rem;\n}\n.order-result ul .order-info .item-bd {\n  padding: 0;\n}\n.order-result ul .order-info p {\n  border-top: 1px dashed #dcdcdc;\n  color: #666;\n  font-size: 1.4rem;\n  text-align: left;\n  height: 3.4rem;\n  line-height: 3.4rem;\n}\n", ""]);
+exports.push([module.i, ".gray-bg {\n  background-color: #f4f4f4;\n}\n.icon-back {\n  background: url(" + __webpack_require__(0) + ") no-repeat 0 0;\n  background-size: contain;\n  width: 1.4rem;\n  height: 1.6rem;\n  display: block;\n}\n.icon-user {\n  background: url(" + __webpack_require__(3) + ") no-repeat 0 0;\n  background-size: contain;\n}\n.cf:after {\n  content: ' ';\n  display: block;\n  overflow: hidden;\n  visibility: hidden;\n  width: 0;\n  height: 0;\n}\na {\n  text-decoration: none;\n}\nem {\n  font-style: normal;\n}\n.cf:after {\n  clear: both;\n}\n.btn,\n.btn2 {\n  color: #9ea997;\n  display: block;\n  border: 1px solid #9ea997;\n  font-size: 1.5rem;\n  text-align: center;\n  margin: 0 auto;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.btn:active,\n.btn2:active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.btn {\n  width: 17.9rem;\n  height: 3.9rem;\n  line-height: 3.9rem;\n}\n.btn2 {\n  width: 15.8rem;\n  height: 3.3rem;\n  line-height: 3.3rem;\n}\n.btn-active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.ui-input {\n  width: 100%;\n  border: 0;\n  outline: 0;\n  -webkit-appearance: none;\n  background-color: transparent;\n  color: inherit;\n  font-size: 1.5rem;\n  height: 1.5rem;\n}\n.ui-select {\n  width: 100%;\n  border: 0;\n  outline: 0;\n  -webkit-appearance: none;\n  background-color: transparent;\n  color: inherit;\n  font-size: 1.5rem;\n}\n.add-icon {\n  width: 6rem;\n  height: 6rem;\n  line-height: 6rem;\n  text-align: center;\n  background-color: #fff;\n  position: fixed;\n  right: 1.3rem;\n  top: 33.3rem;\n  font-size: 30px;\n  -webkit-box-shadow: 0 0 18px rgba(0, 0, 0, 0.5);\n  box-shadow: 0 0 18px rgba(0, 0, 0, 0.5);\n  -webkit-border-radius: 50%;\n  -moz-border-radius: 50%;\n  -o-border-radius: 50%;\n  -ms-border-radius: 50%;\n  border-radius: 50%;\n  -webkit-touch-callout: none;\n  /*系统默认菜单被禁用*/\n  -webkit-user-select: none;\n  /*webkit浏览器*/\n  -moz-user-select: none;\n  /*火狐*/\n  user-select: none;\n}\n.add-icon a {\n  color: #9ea997;\n  display: block;\n  height: 100%;\n  width: 100%;\n}\n.add-icon:active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.sb-btn {\n  border: none;\n  width: 100%;\n  color: #fff;\n  background-color: #9ea997;\n  display: block;\n  height: 4rem;\n  line-height: 4rem;\n  font-size: 1.5rem;\n  text-align: center;\n  margin: 0 auto;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.sb-btn:active {\n  background-color: #9ea997;\n  color: #fff;\n}\n.item-cells {\n  position: relative;\n}\n.item-cells:after,\n.item-cells:first-child:before {\n  content: \" \";\n  position: absolute;\n  left: 0;\n  right: 0;\n  height: 1px;\n  color: #e5e5e5;\n  -webkit-transform-origin: 0 100%;\n  transform-origin: 0 100%;\n  -webkit-transform: scaleY(0.5);\n  transform: scaleY(0.5);\n  z-index: 2;\n}\n.item-cells:before {\n  top: -1px;\n  border-top: 1px solid #9ea997;\n}\n.item-cells:after {\n  bottom: 0;\n  border-bottom: 1px solid #9ea997;\n}\n.item-cell {\n  padding: 1.2rem 0;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.item-cell .item-cell-bd {\n  overflow: hidden;\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  flex: 1;\n}\n.cell-label {\n  color: #666;\n  font-size: 1.5rem;\n}\n.top-bar {\n  background-color: #fff;\n  height: 4rem;\n  position: relative;\n  box-sizing: border-box;\n  padding: 0 1rem;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.top-bar .top-bar-item {\n  text-align: center;\n}\n.top-bar .top-bar-tit {\n  font-size: 1.6rem;\n  margin: 0 auto;\n}\n.top-bar .back,\n.top-bar .user-item {\n  position: absolute;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n.top-bar .back {\n  left: 1rem;\n}\n.top-bar .user-item {\n  right: 1rem;\n  padding-left: 1.3rem;\n  font-size: 1.3rem;\n  color: #000;\n  text-decoration: none;\n}\n.item-list ul li {\n  margin-bottom: 0.85rem;\n}\n.item-list ul li a:not(.btn) {\n  border-top: 1px solid #fff;\n  background-color: #fff;\n  display: block;\n  text-decoration: none;\n}\n.item-list .item-hd img {\n  width: 100%;\n  display: block;\n}\n.item-list .item-bd {\n  padding: 1.7rem 0 0.9rem 0;\n  border-bottom: 1px solid #e8e9ea;\n  text-align: center;\n}\n.item-list .item-bd h3 {\n  font-size: 1.8rem;\n  margin-bottom: 1rem;\n  padding: 0 4px;\n  line-height: 22px;\n  color: #000;\n}\n.item-list .item-bd span:first-child {\n  color: #eb4f4e;\n  font-size: 2rem;\n}\n.item-list .item-ft {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n}\n.item-list .item-ft span {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  flex: 1;\n  height: 3.4rem;\n  line-height: 3.4rem;\n  color: #9ea997;\n  font-size: 1.4rem;\n  text-align: center;\n}\n.item-list .item-ft span:first-child {\n  border-right: 1px solid #e8e9ea;\n}\n.login-form,\n.page-item-form {\n  padding: 0 1rem;\n}\n.login-form ul .v-code-wrapper,\n.page-item-form ul .v-code-wrapper {\n  position: absolute;\n  right: 0;\n  top: 0;\n  height: 100%;\n  width: 7.5rem;\n}\n.login-form ul li,\n.page-item-form ul li {\n  padding: 0 0.6rem;\n}\n.login-form ul li .vcode,\n.page-item-form ul li .vcode {\n  color: #9ea997;\n  font-size: 1.3rem;\n  border-left: 1px solid #9ea997;\n  display: block;\n  height: 100%;\n  text-align: center;\n  box-sizing: border-box;\n  vertical-align: middle;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n  justify-content: center;\n}\n.login-form ul li:last-child {\n  padding: 1.9rem 0 0;\n}\n.user-select-wrapper {\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: row;\n  height: 3rem;\n  line-height: 3rem;\n  font-size: 1.5rem;\n  width: 10.9rem;\n  position: relative;\n}\n.user-select-wrapper:after {\n  content: \" \";\n  width: 200%;\n  height: 200%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: -1;\n  border: 1px solid #9ea997;\n  -webkit-transform: scale(0.5);\n  transform: scale(0.5);\n  -webkit-transform-origin: 0 0;\n  transform-origin: 0 0;\n  box-sizing: border-box;\n  -webkit-border-radius: 8px;\n  -moz-border-radius: 8px;\n  -o-border-radius: 8px;\n  -ms-border-radius: 8px;\n  border-radius: 8px;\n}\n.user-select-wrapper .user-select-control-btn {\n  width: 2.9rem;\n  text-align: center;\n}\n.user-select-wrapper .user-select-result {\n  width: 5rem;\n  border-left: 1px solid #9ea997;\n  border-right: 1px solid #9ea997;\n  text-align: center;\n}\n.user-checkbox-wrapper {\n  display: -webkit-flex;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.user-checkbox-wrapper span.user-checkbox {\n  padding: 0 1.5rem;\n  height: 3rem;\n  line-height: 3rem;\n  margin-bottom: 0.9rem;\n  font-size: 1.4rem;\n  position: relative;\n}\n.user-checkbox-wrapper span.user-checkbox:after {\n  content: \" \";\n  width: 200%;\n  height: 200%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  border: 1px solid #9ea997;\n  -webkit-transform: scale(0.5);\n  transform: scale(0.5);\n  -webkit-transform-origin: 0 0;\n  transform-origin: 0 0;\n  box-sizing: border-box;\n  -webkit-border-radius: 8px;\n  -moz-border-radius: 8px;\n  -o-border-radius: 8px;\n  -ms-border-radius: 8px;\n  border-radius: 8px;\n}\n.user-checkbox-wrapper span.user-checkbox-selected {\n  background-color: #9ea997;\n  color: #fff;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.user-checkbox-wrapper-only-row {\n  justify-content: flex-start;\n}\n.user-checkbox-wrapper-only-row span.user-checkbox {\n  margin-right: 0.9rem;\n  margin-bottom: 0;\n}\n.has-foot-btn {\n  padding-bottom: 4.9rem;\n}\n.foot-fixed-btn {\n  border: none;\n  height: 4.9rem;\n  line-height: 4.9rem;\n  text-align: center;\n  color: #fff;\n  background-color: #9ea997;\n  width: 100%;\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  font-size: 1.8rem;\n}\n.swipe {\n  overflow: hidden;\n  visibility: hidden;\n  position: relative;\n}\n.swipe-wrap {\n  overflow: hidden;\n  position: relative;\n}\n.swipe-wrap > div {\n  float: left;\n  width: 100%;\n  position: relative;\n}\n.has-bottom-fixed {\n  padding-bottom: 5.1rem;\n}\n.buttom-fixed {\n  position: fixed;\n  width: 100%;\n  left: 0;\n  bottom: 0;\n}\n.flex-row {\n  display: -webkit-flex;\n  display: flex;\n}\n.buttom-control-wrap {\n  height: 5.1rem;\n  line-height: 5.1rem;\n  border-top: 1px solid #dcdcdc;\n}\n.flex-row a,\n.flex-row span {\n  -webkit-box-flex: 1;\n  box-flex: 1;\n  width: 100%;\n  text-align: center;\n}\n.flex-row span {\n  background-color: #fff;\n}\n.flex-row a {\n  background-color: #9ea997;\n  color: #fff;\n  font-size: 1.6rem;\n}\n.buttom-control-wrap span {\n  font-size: 2rem;\n  color: #eb4f4e;\n}\n.buttom-control-wrap span label {\n  font-size: 1.4rem;\n  color: #9ea997;\n}\n.support-wrapper {\n  background: #fff;\n}\n.progress_wrapper {\n  box-sizing: border-box;\n  padding-left: 0.8rem;\n  padding-top: 1.2rem;\n  background-color: rgba(255, 255, 255, 0.6);\n  height: 4.7rem;\n  width: 23.5rem;\n  margin-left: -11.75rem;\n}\n.progress_wrapper .progress_bar {\n  width: 20rem;\n  height: 0.6rem;\n  background-color: #fff;\n  margin-bottom: 0.8rem;\n  -webkit-border-radius: 0.6rem;\n  -moz-border-radius: 0.6rem;\n  -o-border-radius: 0.6rem;\n  -ms-border-radius: 0.6rem;\n  border-radius: 0.6rem;\n  overflow: hidden;\n}\n.progress_wrapper .progress_bar .progress_current {\n  background-color: #ff595f;\n  height: 100%;\n  width: 0;\n}\n.progress_wrapper .left_over {\n  font-size: 1.2rem;\n  color: #000;\n}\n.count-action-wrapper {\n  height: 8rem;\n  background-color: rgba(255, 255, 255, 0.6);\n  width: 100%;\n  box-sizing: border-box;\n  padding-top: 1.3rem;\n  text-align: center;\n}\n.count-action-wrapper .btn {\n  margin-bottom: 0.8rem;\n}\n.count-action-wrapper p {\n  font-size: 1rem;\n  color: #333;\n}\n.item-service-list {\n  padding-top: 1rem;\n}\n.item-service-list ul li {\n  box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  margin-bottom: 1rem;\n  padding: 1rem;\n  background-color: #fff;\n}\n.item-service-list .item-hd {\n  position: relative;\n}\n.item-service-list .item-hd .progress_wrapper {\n  position: absolute;\n  left: 50%;\n  bottom: 0.8rem;\n}\n.item-service-list .item-hd .count-action-wrapper {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n}\n.item-service-list .item-bd {\n  border: none;\n}\n.item-service-list .item-bd p {\n  text-align: center;\n}\n.item-service-list .item-bd p em {\n  color: #9ea997;\n  padding: 0 0.6rem;\n  font-size: 1.2rem;\n}\n.product-list,\n.page-list {\n  padding-top: 0.9rem;\n}\n.product-list ul {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.product-list ul li {\n  box-sizing: border-box;\n  width: 50%;\n}\n.product-list ul li:nth-child(odd) {\n  padding-right: 0.5rem;\n}\n.product-list ul li:nth-child(even) {\n  padding-left: 0.5rem;\n}\n.theme-wrapper {\n  margin-bottom: 1.8rem;\n}\n.pro-page {\n  background-color: #f4f4f4;\n}\n.page-tip {\n  height: 4rem;\n  line-height: 4rem;\n  background-color: #f4f4f4;\n}\n.page-tip .page-tip-inner {\n  text-align: center;\n  position: relative;\n  padding: 0 1rem;\n}\n.page-tip .page-tip-inner:before {\n  content: \" \";\n  position: absolute;\n  left: 0;\n  right: 0;\n  color: #e5e5e5;\n  -webkit-transform-origin: 0 100%;\n  transform-origin: 0 100%;\n  -webkit-transform: scaleY(0.5);\n  transform: scaleY(0.5);\n  z-index: 2;\n  margin: 0 1rem;\n}\n.page-tip .page-tip-inner:before {\n  top: 50%;\n  border-top: 1px solid #d2daca;\n}\n.page-tip h5 {\n  text-align: center;\n  font-size: 1.4rem;\n  color: #9ea997;\n  display: inline-block;\n  position: relative;\n  z-index: 4;\n  background-color: #f4f4f4;\n  padding: 0 1.1rem;\n}\n.item-user-repy {\n  padding: 2.4rem 0 2.3rem 0;\n  background-color: #fff;\n}\n.page-item-form ul li:first-child:before {\n  display: none;\n}\n.start-service {\n  padding-top: 3.6rem;\n}\n.start-service .slogen {\n  margin-bottom: 9.3rem;\n}\n.start-service .slogen-eye-icon {\n  display: block;\n  width: 6.8rem;\n  height: 6.7rem;\n  background: url(\"http://127.0.0.1:8080/static/img/service_page_eye.png\") no-repeat 0 0;\n  background-size: contain;\n  margin: 6rem auto 1.1rem;\n}\n.start-service h2 {\n  color: #9ea997;\n  font-size: 1.5rem;\n  text-align: center;\n  margin-bottom: 0.5rem;\n}\n.start-service h3 {\n  color: #666;\n  font-size: 1.2rem;\n  text-align: center;\n}\n.page-item-form ul li label.select-tag {\n  display: block;\n  height: 4.2rem;\n  line-height: 4.2rem;\n  font-size: 1.4rem;\n  color: #9ea997;\n}\n.page-item-form ul .none-border:after {\n  display: none;\n}\n.slider-wrapper {\n  padding-bottom: 1rem;\n}\n.slider-wrapper ul li {\n  background-color: #fff;\n}\n.support-wrapper h3 {\n  font-size: 1.5rem;\n  color: #333;\n  padding: 2.1rem 1.6rem 1.5rem 1.6rem;\n}\n.support-wrapper ul {\n  overflow: hidden;\n}\n.support-wrapper ul li img {\n  width: 2.7rem;\n  height: 3rem;\n  touch-action: none;\n}\n.support-wrapper ul li {\n  float: left;\n  width: 25%;\n  text-align: center;\n  margin-bottom: 2.7rem;\n}\n.support-wrapper ul li a {\n  display: block;\n}\n.support-wrapper ul li p {\n  font-size: 1.4rem;\n  padding-top: 0.8rem;\n  color: #999;\n}\n.support-btn-wrapper {\n  padding-top: 2rem;\n}\n.feed-back-wrapper {\n  box-sizing: border-box;\n  padding: 6rem 1rem 0;\n}\n.feed-back-wrapper .feedback-icon-wrapper {\n  margin-bottom: 2.2rem;\n}\n.feed-back-wrapper .feedback-icon-wrapper .feed-back-icon {\n  background: url(\"http://127.0.0.1:8080/static/img/feed_back.png\") no-repeat 0 0;\n  display: block;\n  width: 9.2rem;\n  height: 8.75rem;\n  background-size: contain;\n  margin: 0 auto;\n}\n.feed-back-wrapper input[type='text'] {\n  color: #c2c2c2;\n  border: 1px solid #9ea997;\n  padding: 1.2rem 0;\n  font-size: 1.4rem;\n  text-indent: 1em;\n  width: 100%;\n  -webkit-border-radius: 4px;\n  -moz-border-radius: 4px;\n  -o-border-radius: 4px;\n  -ms-border-radius: 4px;\n  border-radius: 4px;\n}\n.select-result {\n  padding: 0 1rem;\n}\n.select-result .book-info {\n  font-size: 1.2rem;\n  color: #666;\n}\n.select-result .book-info li {\n  height: 3.3rem;\n  line-height: 3.3rem;\n  border-bottom: 1px dashed #9ea997;\n}\n.user-info-modify ul li {\n  padding: 0 1rem;\n}\n.user-info-modify .text-label {\n  float: left;\n  color: #666;\n}\n.user-info ul a {\n  display: block;\n  color: #000;\n  padding: 0 1rem;\n}\n.user-info .item-cells {\n  background-color: #fff;\n}\n.user-info .item-cells:after {\n  border-color: #dcdcdc;\n}\n.user-info .item-cells:first-child:before {\n  display: none;\n}\n.user-info .item-cells p {\n  font-size: 1.5rem;\n  color: #999;\n}\n.user-info .text-label {\n  font-size: 1.4rem;\n  padding-left: 1.8rem;\n}\n.user-info .icon-user-info {\n  float: left;\n  background: url(" + __webpack_require__(30) + ") no-repeat 0 0;\n  background-size: contain;\n}\n.user-info .icon-next {\n  background: url(" + __webpack_require__(0) + ") no-repeat left 0;\n  background-size: contain;\n  position: absolute;\n  right: 1rem;\n  top: 50%;\n  margin-top: -0.75rem;\n  height: 1.5rem;\n  width: 1.4rem;\n  -webkit-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.loginout-wrapper {\n  position: absolute;\n  left: 0;\n  bottom: 5.8rem;\n  width: 100%;\n}\n.buttom-height {\n  padding-bottom: 5rem;\n}\n.bottom-tab {\n  background-color: #fff;\n  border-top: 1px solid #9ea997;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n  align-items: center;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  height: 2.5rem;\n  width: 100%;\n}\n.bottom-tab a {\n  color: #595C60;\n  font-size: 12px;\n  flex: 1;\n  text-align: center;\n}\n.bottom-tab a:first-child {\n  border-right: 1px solid #9ea997;\n}\n.bottom-tab a:last-child {\n  border-left: 1px solid #9ea997;\n}\n.ui-select {\n  -webkit-appearance: none;\n  border: 0;\n  outline: 0;\n  background-color: transparent;\n  width: 100%;\n  font-size: inherit;\n  position: relative;\n  z-index: 1;\n  font-size: 1.5rem;\n}\n.ui-label {\n  color: #666;\n  display: block;\n  font-size: 1.5rem;\n  width: 5.3rem;\n  word-wrap: break-word;\n  word-break: break-all;\n}\n.book-wrapper .cell-label {\n  width: 7.25rem;\n  display: block;\n}\n.book-wrapper .total-price {\n  font-size: 1.5rem;\n}\n.order-result ul li {\n  margin-bottom: 0;\n}\n.order-result .item-bd {\n  border-bottom: none;\n}\n.order-result ul .order-info {\n  padding: 0 1rem;\n}\n.order-result ul .order-info .item-bd {\n  padding: 0;\n}\n.order-result ul .order-info p {\n  border-top: 1px dashed #dcdcdc;\n  color: #666;\n  font-size: 1.4rem;\n  text-align: left;\n  height: 3.4rem;\n  line-height: 3.4rem;\n}\n", ""]);
 
 // exports
 
@@ -2421,7 +2466,7 @@ exports.push([module.i, ".gray-bg {\n  background-color: #f4f4f4;\n}\n.icon-back
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=feed-back-wrapper> <div class=feedback-icon-wrapper> <i class=feed-back-icon></i> </div> <form action=\"\"> <input type=text name=feedBackUrl placeholder=请告诉我您想要的商品或链接> <div class=item-user-repy> <a class=btn>提交需求</a> </div> </form> </section>";
+module.exports = "<section class=feed-back-wrapper> <div class=feedback-icon-wrapper> <i class=feed-back-icon></i> </div> <form action=\"\"> <input type=text name=feedBackUrl placeholder=请告诉我您想要的商品或链接> <div class=item-user-repy> <a id=J_save class=btn>提交需求</a> </div> </form> </section>";
 
 /***/ }),
 /* 20 */
@@ -2445,37 +2490,37 @@ module.exports = "<section class=\"slider-wrapper item-list order-result gray-bg
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a href=\"/view/products/{{=item.productNo}}?title={{=item.name}}\" data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/feedback>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a onclick='page(\"/view/products/{{=item.productNo}}\")' data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/feedback>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=support-wrapper> <section class=theme-wrapper> <a href=\"\"> </a> </section> <ul> {{~it.list:item:index}} <li> <a data-id=\"{{=item.catalogNo}}\" class=J_item href=\"/view/supports/{{=item.catalogNo}}?title={{=item.name}}\"> <img src=\"{{=item.icon}}\" alt=\"\"> <p>{{=item.name}}</p> </a> <div id=\"J_json_{{=item.catalogNo}}\" style=display:none>{{=JSON.stringify(item)}}</div> </li> {{~}} </ul> <section class=support-btn-wrapper> <a href=/view/feedback class=btn>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=support-wrapper> <section class=theme-wrapper> <a href=\"\"> </a> </section> <ul> {{~it.list:item:index}} <li> <a data-id=\"{{=item.catalogNo}}\" onclick='page(\"/view/supports/{{=item.catalogNo}}?title={{=item.name}}\")' class=J_item> <img src=\"{{=item.icon}}\" alt=\"\"> <p>{{=item.name}}</p> </a> <div id=\"J_json_{{=item.catalogNo}}\" style=display:none>{{=JSON.stringify(item)}}</div> </li> {{~}} </ul> <section class=support-btn-wrapper> <a href=/view/feedback class=btn>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=product-select-wrapper> <div class=page-service-form> <form id=J_form method=POST class=\"page-item-form book-wrapper\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label for=\"\" class=cell-label>定几个月?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_time> {{? it.deliveryType == \"weekly\"}} <option value=1|4>1月(4次)</option> <option value=3|12>3月(12次)</option> <option value=6|24>6月(24次)</option> {{?? it.deliveryType == \"monthly\"}} <option value=1|1>1月(1次)</option> <option value=3|3>3月(3次)</option> <option value=6|6>6月(6次)</option> {{?}} </select> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>每次件数?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_count> <option value=1>1件</option> <option value=2>2件</option> <option value=3>3件</option> </select> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>其他需求：</label> </div> <div class=item-cell-bd> <textarea name=remark id=\"\" cols=30 rows=10></textarea> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>总价：</label> </div> <div class=item-cell-bd> <span id=J_total class=total-price>0</span>元 <input type=hidden name=subQuantity> <input type=hidden name=totalSub> <input type=hidden name=totalAmount> <input type=hidden name=totalQuantity> <input type=hidden name=totalMouth> <input type=hidden name=serviceAtomCount> </div> </div> </li> </ul> </form> </div> </section> <a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6567f481349fba16&redirect_uri=http://www.abitty.com/view/book&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect;\" id=J_select class=foot-fixed-btn>开始订购</a> ";
+module.exports = "<section class=product-select-wrapper> <div class=page-service-form> <form id=J_form method=POST class=\"page-item-form book-wrapper\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label for=\"\" class=cell-label>定几个月?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_time> {{? it.deliveryType == \"weekly\"}} <option value=1|4>1月(4次)</option> <option value=3|12>3月(12次)</option> <option value=6|24>6月(24次)</option> {{?? it.deliveryType == \"monthly\"}} <option value=1|1>1月(1次)</option> <option value=3|3>3月(3次)</option> <option value=6|6>6月(6次)</option> {{?}} </select> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>每次件数?</label> </div> <div class=item-cell-bd> <select name=\"\" class=ui-select id=J_count> <option value=1>1件</option> <option value=2>2件</option> <option value=3>3件</option> </select> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>其他需求：</label> </div> <div class=item-cell-bd> <textarea name=remark id=\"\" cols=30 rows=10></textarea> </div> </div> </li> <li class=\"item-cells last-child-sub-wrapper\"> <div class=item-cell> <div class=item-cell-hd> <label class=cell-label>总价：</label> </div> <div class=item-cell-bd> <p class=total-price><span id=J_total>0</span>元</p> <input type=hidden name=subQuantity> <input type=hidden name=totalSub> <input type=hidden name=totalAmount> <input type=hidden name=totalQuantity> <input type=hidden name=totalMouth> <input type=hidden name=serviceAtomCount> </div> </div> </li> </ul> </form> </div> </section> <a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6567f481349fba16&redirect_uri=http://www.abitty.com/view/book&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect;\" id=J_select class=foot-fixed-btn>开始订购</a> ";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a href=/view/user class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
+module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a onclick='page(\"/view/user\")' class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"user-info page-list\"> <ul> <li class=item-cells> <a href=/view/user/person> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> <div class=loginout-wrapper> <a href=/loginout class=btn2>退出</a> </div> </section>";
+module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a onclick='page(\"/view/user/person\")'> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> <div class=loginout-wrapper> <form action=/logout method=get> <button class=btn2 style=\"background:0 0\">退出</button> </form> </div> </section>";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"user-info user-info-modify page-list\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>账号</label> </div> <div class=item-cell-bd> <p>{{=it.item.uid}}</p> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>性别</label> </div> <div class=item-cell-bd> <select name=gender class=ui-select> [option] </select> <i class=icon-next></i> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>生日</label> </div> <div class=item-cell-bd> <input class=ui-select name=birthday type=date value=\"{{=it.item.birthday}}\"> <i class=icon-next></i> </div> </div> </li> </ul> <div class=loginout-wrapper> <a id=J_save class=btn2>保存</a> </div> </section>";
+module.exports = "<section id=J_user_info class=\"user-info user-info-modify page-list\"> <ul> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>账号</label> </div> <div class=item-cell-bd> <p>{{=it.item.uid}}</p> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>性别</label> </div> <div class=item-cell-bd> <select name=gender class=ui-select> [option] </select> <i class=icon-next></i> </div> </div> </li> <li class=item-cells> <div class=item-cell> <div class=item-cell-hd> <label class=ui-label>生日</label> </div> <div class=item-cell-bd> <input class=ui-select name=birthday type=date value=\"{{=it.item.birthday}}\"> <i class=icon-next></i> </div> </div> </li> </ul> <div class=loginout-wrapper> <a id=J_save class=btn2>保存</a> </div> </section>";
 
 /***/ }),
 /* 29 */
@@ -2765,6 +2810,9 @@ $(function(){
     }
     tpl = $.extend(tpl,includes);
 
+    function setBg(color){
+        $("body").css("background-color", color);
+    }
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
@@ -2772,18 +2820,21 @@ $(function(){
     }
 
     //当前用户订购服务列表
-    page('/view/myService', isLogin, function(ctx){
+    page('/view/myService', function(ctx){
         __webpack_require__(10)(ctx, tpl);
+        setBg("transparent");
     })
 
     //当前用户订购服务详情
     page('/view/myService/:id', isLogin, function(ctx){
         __webpack_require__(34)(ctx, tpl);
+        setBg("transparent");
     })
 
     //APP服务列表 EX: 纸巾,酸奶
     page('/view/supports', function(ctx){
         __webpack_require__(13)(ctx, tpl);
+        setBg("transparent");
     })
 
     //服务产品列表 EX: A纸巾,B纸巾
@@ -2793,31 +2844,37 @@ $(function(){
 
     page('/view/products/:id', function(ctx){
         __webpack_require__(36)(ctx, tpl);
+        setBg("transparent");
     });
 
     //服务需求填写
     page('/view/select', isLogin, function(ctx){
         __webpack_require__(12)(ctx, tpl);
+        setBg("transparent");
     })
 
     //服务下单
     page('/view/book', isLogin, function(ctx){
         __webpack_require__(8)(ctx, tpl);
+        setBg("transparent");
     })
 
     //服务需求反馈
-    page('/view/feedback', isLogin, function(ctx){
+    page('/view/feedback', function(ctx){
         __webpack_require__(9)(ctx,tpl);
+        setBg("transparent");
     });
 
 
     page('/view/user', isLogin, function(ctx){
         __webpack_require__(14)(ctx, tpl);
+        setBg("#f4f4f4");
     });
 
 
-    page('/view/user/person', isLogin, function(ctx){
+    page('/view/user/person', function(ctx){
         __webpack_require__(15)(ctx, tpl);
+        setBg("#f4f4f4");
     });
 
     page();
@@ -2896,7 +2953,7 @@ module.exports = function(ctx, tpl){
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book href=\"/view/select?title={{=$Prime.getUrlParam('title')}}&deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\" class=foot-fixed-btn>立即订购</a> </section>";
+module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book onclick='page(\"/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\")' class=foot-fixed-btn>立即订购</a> </section>";
 
 /***/ })
 /******/ ]);

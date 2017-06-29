@@ -9,7 +9,7 @@ module.exports = function(ctx, tpl){
 
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
-        $Config = $.extend($Config, {back: true, title: data.name});
+        $Config = $.extend($Config, {back: true, title: "一点生活"});
         console.log(data);
         var html = $Prime.render(tpl.products.detail, data);
         var topBarHtml = $Prime.render(tpl.topBar, $Config);
@@ -43,15 +43,18 @@ module.exports = function(ctx, tpl){
             type: "GET",
             beforeSend: function(){}
         }).done(function(res){
+
+            if($Prime.isAccess(res)){
+                return;
+            }
+
             if(res.retCode != 000000){
                 alert(res.retMsg);
                 return;
             }
-
             access = res.data;
             //微信配置
             wx.config({
-                debug: true,
                 appId:  res.data.appid,
                 timestamp:  res.data.timestamp,
                 nonceStr:  res.data.noncestr,
@@ -77,7 +80,7 @@ module.exports = function(ctx, tpl){
                 data: {
                     productNo:        currentBook.productNo,
                     totalQuantity:    currentBook.totalQuantity,
-                    totalAmount:      currentBook.totalAmount * 100,
+                    totalAmount:      currentBook.totalAmount,
                     deliveryType:     currentBook.deliveryType,
                     subQuantity:      currentBook.subQuantity,
                     totalSub:         currentBook.totalSub,
@@ -97,10 +100,15 @@ module.exports = function(ctx, tpl){
                 }
             })
             .done(function(res){
+
+                if($Prime.isAccess(res)){
+                    return;
+                }
                 if(res.retCode!=000000){
                     alert(res.retMsg);
                     return;
                 }
+
                 if(typeof WeixinJSBridge == 'undefined'){
                     document.addEventListener('WeixinJSBridgeReady', payCall, false);
                 }else{

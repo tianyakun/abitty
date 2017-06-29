@@ -239,6 +239,8 @@ em {
 .item-list .item-bd h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
+  padding: 0 4px;
+  line-height: 22px;
   color: #000;
 }
 .item-list .item-bd span:first-child {
@@ -274,6 +276,7 @@ em {
 .page-item-form ul .v-code-wrapper {
   position: absolute;
   right: 0;
+  top: 0;
   height: 100%;
   width: 7.5rem;
 }
@@ -284,16 +287,20 @@ em {
 .login-form ul li .vcode,
 .page-item-form ul li .vcode {
   color: #9ea997;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border-left: 1px solid #9ea997;
   display: block;
   height: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  vertical-align: middle;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
   align-items: center;
+  justify-content: center;
 }
 .login-form ul li:last-child {
   padding: 1.9rem 0 0;
@@ -625,7 +632,7 @@ em {
   display: block;
   width: 6.8rem;
   height: 6.7rem;
-  background: url("http://192.168.1.121:8080/static/img/service_page_eye.png") no-repeat 0 0;
+  background: url("http://127.0.0.1:8080/static/img/service_page_eye.png") no-repeat 0 0;
   background-size: contain;
   margin: 6rem auto 1.1rem;
 }
@@ -694,7 +701,7 @@ em {
   margin-bottom: 2.2rem;
 }
 .feed-back-wrapper .feedback-icon-wrapper .feed-back-icon {
-  background: url("http://192.168.1.121:8080/static/img/feed_back.png") no-repeat 0 0;
+  background: url("http://127.0.0.1:8080/static/img/feed_back.png") no-repeat 0 0;
   display: block;
   width: 9.2rem;
   height: 8.75rem;
@@ -828,8 +835,11 @@ em {
   word-break: break-all;
 }
 .book-wrapper .cell-label {
-  width: 8.25rem;
+  width: 7.25rem;
   display: block;
+}
+.book-wrapper .total-price {
+  font-size: 1.5rem;
 }
 .order-result ul li {
   margin-bottom: 0;

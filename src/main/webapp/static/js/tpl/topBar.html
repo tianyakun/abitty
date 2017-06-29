@@ -1,7 +1,7 @@
-<section class="top-bar">
+<section id="J_top_bar" class="top-bar">
     <!--{{? it.back}}-->
     <!--<a href="javascript:history.back();" class="back icon-back"> </a>-->
     <!--{{?}}-->
     <h1 class="top-bar-item top-bar-tit">{{=it.title}}</h1>
-    <a href="/view/user" class="user-item icon-user">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a>
+    <a onclick="page('/view/user')" class="user-item icon-user">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a>
 </section>

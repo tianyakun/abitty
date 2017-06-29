@@ -30,7 +30,6 @@ $(function(){
             }).done(function(res){
                 if(res.retCode == 000000){
                     var redirect = getUrlParam("redirect");
-                    alert(redirect);
                     if(redirect){
                         location.href = redirect;
                     }else{

@@ -4,12 +4,7 @@
 
 module.exports = function(ctx, tpl){
 
-    //function bindStoreSelect(){
-    //    $("#J_list").on("click", ".J_item", function(e){
-    //        var id = $(this).data("id");
-    //        var idSelector = "#J_json_"+id;
-    //    })
-    //}
+
 
 
     function render(tpl, res){
@@ -25,15 +20,7 @@ module.exports = function(ctx, tpl){
          topBarHtml = $Prime.render(tpl.topBar, $Config);
          html = topBarHtml+html;
          $Prime.SPAWrapper("app").html(html);
-         window.sessionStorage[StorageKey+"ProductHtml"] = html;
-         //bindStoreSelect();
-    }
 
-    var StorageKey = ctx.params.id+"_";
-    if( window.sessionStorage[StorageKey+"ProductHtml"]){
-        $Prime.SPAWrapper("app").html( window.sessionStorage[StorageKey+"ProductHtml"]);
-       // bindStoreSelect();
-        return;
     }
 
 

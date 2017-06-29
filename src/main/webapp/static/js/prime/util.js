@@ -13,6 +13,16 @@ module.exports = {
         if (r != null) return decodeURIComponent(r[2]);
         return null; //返回参数值
     },
+    isAccess: function(res){
+        var b = false;
+        if(res.retCode == 100009){
+            var redirect = window.location.href;
+            window.location.href = "/loginIndex?redirect="+redirect;
+            b = true;
+            console.log('登陆失效...');
+        }
+        return b;
+    },
     getUrlAllParam: function(){
         var obj = {};
         var r = window.location.search.substr(1);

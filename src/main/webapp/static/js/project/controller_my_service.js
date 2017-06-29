@@ -1,11 +1,5 @@
 module.exports = function(ctx, tpl){
     function render(tpl, res){
-        res = typeof res == "string"?JSON.parse(res):res;
-        if(res.retCode != 000000){
-            alert(res.retMsg);
-            return;
-        }
-
         var html = $Prime.render(tpl.myService, res.data);
         if(res.data.list.length != 0){
             $Config = $.extend($Config, {back: false, title: ""});
@@ -53,6 +47,13 @@ module.exports = function(ctx, tpl){
 
         }
     }).done(function(res){
+        if($Prime.isAccess(res)){
+            return;
+        }
+        if(res.retCode != 000000){
+            alert(res.retMsg);
+            return;
+        }
         render(tpl, res);
     }).fail(function(){
 
