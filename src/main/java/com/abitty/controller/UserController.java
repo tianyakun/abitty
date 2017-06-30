@@ -62,6 +62,7 @@ public class UserController {
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
 
         } catch (Exception e) {
+            logger.error("查看用户信息异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
