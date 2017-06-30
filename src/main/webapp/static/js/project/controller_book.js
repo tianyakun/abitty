@@ -68,6 +68,25 @@ module.exports = function(ctx, tpl){
             alert("服务器发生未知错误,请稍后重试");
         })
     }
+
+
+    function bindGetAdress(){
+        $("#J_get_adress").on("click", function(){
+            wx.openAddress({
+                success: function(res){
+                    $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
+                    $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.phoneNumber);
+                    $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
+                    $("input[name='addressProvince']").val(res.provinceName);
+                    $("input[name='addressCity']").val(res.cityName);
+                    $("input[name='addressArea']").val(res.countryName);
+                    $("#J_detailInfo").text(re.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
+                    $("#J_postalCode").text(re.postalCode); $("input[name='postcode']").val(res.postalCode);
+                }
+            });
+        })
+    }
+
     function bindCreateOrder(){
         $("#J_pay").on("click", function(){
             var _this = $(this);
@@ -86,13 +105,13 @@ module.exports = function(ctx, tpl){
                     remark:           currentBook.remark,
                     serviceAtomCount: currentBook.serviceAtomCount,
                     openidCode:       $Prime.getUrlParam("code"),
-                    receiverName:  "老杨",
-                    phoneNumber:   $Config.uid,
-                    addressProvince: "北京",
-                    addressCity:   "北京市",
-                    addressArea:   "昌平区",
-                    addressDetail: "龙域中路融泽嘉园1号院",
-                    postcode:      "102200"
+                    receiverName:     $("input[name='receiverName']").val(),
+                    phoneNumber:      $("input[name='phoneNumber']").val(),
+                    addressProvince:  $("input[name='addressProvince']").val(),
+                    addressCity:      $("input[name='addressCity']").val(),
+                    addressArea:      $("input[name='addressArea']").val(),
+                    addressDetail:    $("input[name='addressDetail']").val(),
+                    postcode:         $("input[name='postcode']")
                 },
                 beforeSend: function(){
                     _this.addClass("pending");

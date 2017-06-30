@@ -1823,6 +1823,25 @@ module.exports = function(ctx, tpl){
             alert("服务器发生未知错误,请稍后重试");
         })
     }
+
+
+    function bindGetAdress(){
+        $("#J_get_adress").on("click", function(){
+            wx.openAddress({
+                success: function(res){
+                    $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
+                    $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.phoneNumber);
+                    $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
+                    $("input[name='addressProvince']").val(res.provinceName);
+                    $("input[name='addressCity']").val(res.cityName);
+                    $("input[name='addressArea']").val(res.countryName);
+                    $("#J_detailInfo").text(re.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
+                    $("#J_postalCode").text(re.postalCode); $("input[name='postcode']").val(res.postalCode);
+                }
+            });
+        })
+    }
+
     function bindCreateOrder(){
         $("#J_pay").on("click", function(){
             var _this = $(this);
@@ -1841,13 +1860,13 @@ module.exports = function(ctx, tpl){
                     remark:           currentBook.remark,
                     serviceAtomCount: currentBook.serviceAtomCount,
                     openidCode:       $Prime.getUrlParam("code"),
-                    receiverName:  "老杨",
-                    phoneNumber:   $Config.uid,
-                    addressProvince: "北京",
-                    addressCity:   "北京市",
-                    addressArea:   "昌平区",
-                    addressDetail: "龙域中路融泽嘉园1号院",
-                    postcode:      "102200"
+                    receiverName:     $("input[name='receiverName']").val(),
+                    phoneNumber:      $("input[name='phoneNumber']").val(),
+                    addressProvince:  $("input[name='addressProvince']").val(),
+                    addressCity:      $("input[name='addressCity']").val(),
+                    addressArea:      $("input[name='addressArea']").val(),
+                    addressDetail:    $("input[name='addressDetail']").val(),
+                    postcode:         $("input[name='postcode']")
                 },
                 beforeSend: function(){
                     _this.addClass("pending");
@@ -2476,7 +2495,7 @@ module.exports = "<section class=pro-page> <div class=page-tip> <div class=page-
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"slider-wrapper item-list order-result gray-bg\"> <ul> <li> <div class=item-hd> <div><img src=\"{{=it.icon}}\"/></div> </div> <div class=item-bd> <h3>{{=it.name}}</h3> <p> <span>¥{{=it.totalAmount}}</span> </p> </div> </li> <li class=order-info> <div class=item-bd> <p>定几个月: {{=it.totalMouth}}个月(4次)</p> <p>每次件数: {{=it.subQuantity}}件</p> <p>备注: {{=it.remark}}</p> </div> </li> </ul> </section> <section class=\"product-des select-result has-bottom-fixed\"> <section class=book-contact> </section> </section> <section class=\"buttom-fixed buttom-control-wrap flex-row\"> <span><label>总价:</label> ¥{{= it.totalAmount}}</span> <a id=J_pay>马上下单</a> </section> ";
+module.exports = "<section class=\"slider-wrapper item-list order-result gray-bg\"> <ul> <li> <div class=item-hd> <div><img src=\"{{=it.icon}}\"/></div> </div> <div class=item-bd> <h3>{{=it.name}}</h3> <p> <span>¥{{=it.totalAmount}}</span> </p> </div> </li> <li class=order-info> <div class=item-bd> <p>定几个月: {{=it.totalMouth}}个月(4次)</p> <p>每次件数: {{=it.subQuantity}}件</p> <p>备注: {{=it.remark}}</p> </div> </li> <li class=set-adress> <div class=item-bd> <p>联系人: <span id=J_userName></span></p> <p>手机号码: <span id=J_telNumber></span></p> <p>收获地区: <span id=J_recive_adress></span></p> <p>详细地址: <span id=J_detailInfo></span></p> <p>右边: <span id=J_postalCode></span></p> </div> <div class=item-bd> <p id=J_get_adress>收获人信息+</p> <div class=user-adress-wrapper>phoneNumber <input type=hidden name=receiverName> <input type=hidden name=phoneNumber> <input type=hidden name=addressProvince> <input type=hidden name=addressCity> <input type=hidden name=addressArea> <input type=hidden name=addressDetail> <input type=text name=postcode> </div> </div> </li> </ul> </section> <section class=\"buttom-fixed buttom-control-wrap flex-row\"> <span><label>总价:</label> ¥{{= it.totalAmount}}</span> <a id=J_pay>马上下单</a> </section> ";
 
 /***/ }),
 /* 23 */
@@ -2962,7 +2981,7 @@ module.exports = function(ctx, tpl){
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book href=\"/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\" class=foot-fixed-btn>立即订购</a> </section>";
+module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.detail}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> </p> </div> </li> <li> {{~ it.item.images: item: index}} <img src=\"{{=item}}\"/> {{~}} </li> </ul> <a id=J_start_book href=\"/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\" class=foot-fixed-btn>立即订购</a> </section>";
 
 /***/ }),
 /* 39 */

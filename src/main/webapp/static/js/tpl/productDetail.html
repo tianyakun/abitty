@@ -11,86 +11,43 @@
                 </p>
             </div>
         </li>
-        <li class="order-info">
+        <li class="order-info" >
             <div class="item-bd">
                 <p>定几个月: {{=it.totalMouth}}个月(4次)</p>
                 <p>每次件数: {{=it.subQuantity}}件</p>
                 <p>备注: {{=it.remark}}</p>
             </div>
         </li>
+        <li class="set-adress">
+            <!--phoneNumber:   $Config.uid,-->
+            <!--addressProvince: "北京",-->
+            <!--addressCity:   "北京市",-->
+            <!--addressArea:   "昌平区",-->
+            <!--addressDetail: "龙域中路融泽嘉园1号院",-->
+            <!--postcode:      "102200"-->
+            <div class="item-bd">
+                <p>联系人: <span id="J_userName"></span></p>
+                <p>手机号码: <span id="J_telNumber"></span></p>
+                <p>收获地区: <span id="J_recive_adress"></span></p>
+                <p>详细地址: <span id="J_detailInfo"></span></p>
+                <p>右边: <span id="J_postalCode"></span></p>
+            </div>
+            <div class="item-bd">
+                <p id="J_get_adress">收获人信息+</p>
+                <div class="user-adress-wrapper">phoneNumber
+                    <input type="hidden" name="receiverName">
+                    <input type="hidden" name="phoneNumber">
+                    <input type="hidden" name="addressProvince" >
+                    <input type="hidden" name="addressCity" >
+                    <input type="hidden" name="addressArea" >
+                    <input type="hidden" name="addressDetail" >
+                    <input type="text" name="postcode" >
+                </div>
+            </div>
+        </li>
     </ul>
 </section>
-<section class="product-des select-result has-bottom-fixed">
-    <section class="book-contact">
 
-            <!--<ul>-->
-                <!--<li>-->
-                    <!--<label for="">使用新地址</label>-->
-                    <!--<input type="radio" name="address" >-->
-                <!--</li>-->
-                <!--<li>-->
-                    <!--<label for="">使用新地址</label>-->
-                    <!--<input type="radio" name="address">-->
-                <!--</li>-->
-            <!--</ul>-->
-            <!--<form action="">-->
-                <!--<ul>-->
-                    <!--<li class="item-cells">-->
-                        <!--<div class="item-cell">-->
-                            <!--<div class="item-cell-bd">-->
-                                <!--<input type="text" placeholder="姓名"  class="ui-input">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li class="item-cells">-->
-                        <!--<div class="item-cell">-->
-                            <!--<div class="item-cell-bd">-->
-                                <!--<input type="text" placeholder="电话"  class="ui-input">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li class="item-cells">-->
-                        <!--<div class="item-cell">-->
-                            <!--<div class="item-cell-bd">-->
-                                <!--<select class="ui-select" name="province" id="">-->
-                                    <!--<option value="">请选择省</option>-->
-                                    <!--<option value="">北京</option>-->
-                                    <!--<option value="">上海</option>-->
-                                    <!--<option value="">天津</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li class="item-cells">-->
-                        <!--<div class="item-cell">-->
-                            <!--<div class="item-cell-bd">-->
-                                <!--<select class="ui-select" name="province" id="">-->
-                                    <!--<option value="">请选择市</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li class="item-cells">-->
-                        <!--<div class="item-cell">-->
-                            <!--<div class="item-cell-bd">-->
-                                <!--<select class="ui-select" name="province" id="">-->
-                                    <!--<option value="">请选择区</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li class="item-cells">-->
-                        <!--<div class="item-cell">-->
-                            <!--<div class="item-cell-bd">-->
-                                <!--<input type="text" placeholder="详细地址"  class="ui-input">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</form>-->
-
-    </section>
-</section>
 <!--<section class="product-des has-bottom-fixed">-->
 <!--<img src="{{=it.des}}" width="100%" />-->
 <!--</section>-->

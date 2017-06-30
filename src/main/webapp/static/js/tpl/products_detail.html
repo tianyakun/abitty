@@ -2,18 +2,19 @@
     <ul>
         <li>
             <div class="item-hd">
-                <img src="{{=it.item.icon}}" alt="">
+                <img src="{{=it.item.detail}}" alt="">
             </div>
             <div class="item-bd">
                 <h3>{{=it.item.name}}</h3>
                 <p>
                     <span>{{=it.item.price}}</span>
-                    <span>{{=it.item.nowPrice}}</span>
                 </p>
             </div>
         </li>
         <li>
-            <img width="100%" src="{{=it.item.detail}}" alt="">
+            {{~ it.item.images: item: index}}
+                <img src="{{=item}}" />
+            {{~}}
         </li>
     </ul>
     <a id="J_start_book" href="/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}" class="foot-fixed-btn">立即订购</a>
