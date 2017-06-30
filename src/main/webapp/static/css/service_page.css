@@ -822,14 +822,17 @@ em {
   position: fixed;
   left: 0;
   bottom: 0;
-  height: 2.5rem;
+  height: 4.25rem;
   width: 100%;
 }
 .bottom-tab a {
+  box-sizing: border-box;
+  padding-top: 0.6rem;
   color: #595C60;
   font-size: 12px;
   flex: 1;
   text-align: center;
+  height: 100%;
 }
 .bottom-tab a:first-child {
   border-right: 1px solid #9ea997;
@@ -882,4 +885,23 @@ em {
   text-align: left;
   height: 3.4rem;
   line-height: 3.4rem;
+}
+.tab-service-icon,
+.tab-supports-icon,
+.tab-user-icon {
+  display: block;
+  width: 1.9rem;
+  height: 1.9rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 auto 0.3rem;
+}
+.tab-service-icon {
+  background-image: url('../img/my.png');
+}
+.tab-supports-icon {
+  background-image: url('../img/fenlei.png');
+}
+.tab-user-icon {
+  background-image: url('../img/me.png');
 }
