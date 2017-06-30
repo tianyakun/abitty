@@ -69,11 +69,12 @@ public class LoginController {
                 }
 
                 HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("uid", tblUser.getUid());
                 session.setAttribute("user", tblUser);
 
 //                String callback = (String) session.getAttribute("callback");
 //                session.removeAttribute("callback"); // 获取之后移除
+
+                logger.info("用户登录成功 user={}", session.getAttribute("user"));
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
