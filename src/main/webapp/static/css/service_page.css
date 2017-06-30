@@ -909,3 +909,7 @@ em {
 .tab-user-icon {
   background-image: url('../img/me.png');
 }
+.set-adress .item-bd p {
+  text-align: left;
+  padding: 0 1rem;
+}
