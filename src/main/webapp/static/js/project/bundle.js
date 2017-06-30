@@ -2962,7 +2962,7 @@ module.exports = function(ctx, tpl){
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book href=\"'/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}'\" class=foot-fixed-btn>立即订购</a> </section>";
+module.exports = "<section class=\"item-list has-foot-btn item-service-list\" style=background-color:#f4f4f4> <ul> <li> <div class=item-hd> <img src=\"{{=it.item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=it.item.name}}</h3> <p> <span>{{=it.item.price}}</span> <span>{{=it.item.nowPrice}}</span> </p> </div> </li> <li> <img width=100% src=\"{{=it.item.detail}}\" alt=\"\"> </li> </ul> <a id=J_start_book href=\"/view/select?deliveryType={{=it.item.deliveryType}}&PN={{=it.item.productNo}}\" class=foot-fixed-btn>立即订购</a> </section>";
 
 /***/ }),
 /* 39 */
