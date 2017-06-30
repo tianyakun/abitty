@@ -64,6 +64,8 @@ module.exports = function(ctx, tpl){
                 ]
             });
 
+            bindGetAdress();
+
 
         }).fail(function(){
             alert("服务器发生未知错误,请稍后重试");
@@ -147,7 +149,7 @@ module.exports = function(ctx, tpl){
     getAccess();
 
 
-    bindGetAdress();
+
 
 
 
