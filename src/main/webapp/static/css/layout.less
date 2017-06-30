@@ -1,5 +1,37 @@
 @import "var.less";
 @import "layout.less";
+@import "./meta/logo.less";
+
+//login
+.start-service, .buy-service{
+  padding-top: 72/@base;
+}
+.agreement-cells{
+  input[type="checkbox"]{
+    //-webkit-appearance: none;
+    //        appearance: none;
+    //height: 18/@base;
+    //width: 18/@base;
+    margin-right: 8px;
+    //border: 1px solid @color;
+    vertical-align: middle;
+    //.radius(50%);
+    //&:checked{
+    //  background: @color;
+    //}
+  }
+  &:after{
+    display: none;
+  }
+  label{
+    font-size: 28/@base;
+
+    color: #333;
+  }
+}
+
+
+
 .cf:after {
   content: '\0020';
   display: block;

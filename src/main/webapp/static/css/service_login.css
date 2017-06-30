@@ -12,6 +12,21 @@
   background: url("../img/user.png") no-repeat 0 0;
   background-size: contain;
 }
+.start-service,
+.buy-service {
+  padding-top: 3.6rem;
+}
+.agreement-cells input[type="checkbox"] {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.agreement-cells:after {
+  display: none;
+}
+.agreement-cells label {
+  font-size: 1.4rem;
+  color: #333;
+}
 .cf:after {
   content: '\0020';
   display: block;

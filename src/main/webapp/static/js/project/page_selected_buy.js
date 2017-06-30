@@ -26,7 +26,8 @@ $(function(){
         "select": getTpl("select.html"),
         "feedBack": getTpl('feedback.html'),
         "user": getTpl('user.html'),
-        "user_person": getTpl('user_person.html')
+        "user_person": getTpl('user_person.html'),
+        "login": getTpl('login.html')
     }
     tpl = $.extend(tpl,includes);
 
@@ -39,6 +40,13 @@ $(function(){
        // !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
         next();
     }
+
+
+    page('/view/login', function(ctx){
+        $Prime.SPAWrapper("app").html("");
+        require('./controller_my_login')(ctx, tpl);
+        setBg("transparent");
+    });
 
     //当前用户订购服务列表
     page('/view/myService', function(ctx){
