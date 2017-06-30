@@ -2807,6 +2807,7 @@ $(function(){
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
        // !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
+        next();
     }
 
     //当前用户订购服务列表
