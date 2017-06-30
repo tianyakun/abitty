@@ -1763,7 +1763,6 @@ module.exports = function(ctx, tpl){
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
         $Config = $.extend($Config, {back: true, title: "一点生活"});
-        console.log(data);
         var html = $Prime.render(tpl.products.detail, data);
         var topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = topBarHtml+html;
@@ -2821,12 +2820,14 @@ $(function(){
 
     //当前用户订购服务列表
     page('/view/myService', function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(10)(ctx, tpl);
         setBg("transparent");
     })
 
     //当前用户订购服务详情
     page('/view/myService/:id', isLogin, function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(34)(ctx, tpl);
         setBg("transparent");
     })
@@ -2839,6 +2840,7 @@ $(function(){
 
     //服务产品列表 EX: A纸巾,B纸巾
     page('/view/supports/:id', function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(11)(ctx, tpl);
     })
 
@@ -2849,30 +2851,35 @@ $(function(){
 
     //服务需求填写
     page('/view/select', isLogin, function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(12)(ctx, tpl);
         setBg("transparent");
     })
 
     //服务下单
     page('/view/book', isLogin, function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(8)(ctx, tpl);
         setBg("transparent");
     })
 
     //服务需求反馈
     page('/view/feedback', function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(9)(ctx,tpl);
         setBg("transparent");
     });
 
 
     page('/view/user', isLogin, function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(14)(ctx, tpl);
         setBg("#f4f4f4");
     });
 
 
     page('/view/user/person', function(ctx){
+        $Prime.SPAWrapper("app").html("");
         __webpack_require__(15)(ctx, tpl);
         setBg("#f4f4f4");
     });
