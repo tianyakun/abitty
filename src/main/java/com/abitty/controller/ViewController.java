@@ -18,15 +18,15 @@ public class ViewController {
 
     private final static Logger logger = LoggerFactory.getLogger(ViewController.class);
 
-    @RequestMapping("/loginIndex")
-    public String loginIndex(Model model, final HttpServletRequest request) {
-
-        String requestUri = request.getRequestURI();
-        logger.info("登录请求 requestUri={}", requestUri);
-
-        model.addAttribute("uid", "");
-        return "loginIndex";
-    }
+//    @RequestMapping("/loginIndex")
+//    public String loginIndex(Model model, final HttpServletRequest request) {
+//
+//        String requestUri = request.getRequestURI();
+//        logger.info("登录请求 requestUri={}", requestUri);
+//
+//        model.addAttribute("uid", "");
+//        return "loginIndex";
+//    }
 
     @RequestMapping("/view/**")
     public String view(Model model, HttpSession httpSession, final HttpServletRequest request) {
