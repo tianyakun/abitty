@@ -53,7 +53,7 @@ public class UserController {
             if (tblUser.getBirthday() == null) {
                 vo.setBirthday("");
             } else {
-                vo.setBirthday(DATE_FORMAT.format(vo.getBirthday()));
+                vo.setBirthday(DATE_FORMAT.format(tblUser.getBirthday()));
             }
 
             responseDto.addAttribute("item", vo);
