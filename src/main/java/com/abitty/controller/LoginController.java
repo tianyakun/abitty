@@ -70,6 +70,7 @@ public class LoginController {
 
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("user", tblUser);
+                session.setAttribute("uid", tblUser.getUid());
 
 //                String callback = (String) session.getAttribute("callback");
 //                session.removeAttribute("callback"); // 获取之后移除
@@ -97,6 +98,7 @@ public class LoginController {
             HttpSession session = request.getSession();
 
             session.removeAttribute("user");
+            session.removeAttribute("uid");
 
             logger.info("用户退出,跳转至商城首页");
 
