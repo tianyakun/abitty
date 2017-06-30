@@ -90,6 +90,7 @@ module.exports = function(ctx, tpl){
     function bindCreateOrder(){
         $("#J_pay").on("click", function(){
             var _this = $(this);
+            if(!$("input[name='addressProvince']").val()) alert("请填写收货人信息");
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
