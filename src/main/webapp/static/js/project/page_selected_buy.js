@@ -56,7 +56,7 @@ $(function(){
     })
 
     //当前用户订购服务详情
-    page('/view/myService/:id', isLogin, function(ctx){
+    page('/view/myService/:id', function(ctx){
         $Prime.SPAWrapper("app").html("");
         require('./controller_my_service_detail')(ctx, tpl);
         setBg("transparent");
@@ -80,14 +80,14 @@ $(function(){
     });
 
     //服务需求填写
-    page('/view/select', isLogin, function(ctx){
+    page('/view/select', function(ctx){
         $Prime.SPAWrapper("app").html("");
         require('./controller_select')(ctx, tpl);
         setBg("transparent");
     })
 
     //服务下单
-    page('/view/book', isLogin, function(ctx){
+    page('/view/book', function(ctx){
         $Prime.SPAWrapper("app").html("");
         require('./controller_book')(ctx, tpl);
         setBg("transparent");
@@ -101,7 +101,7 @@ $(function(){
     });
 
 
-    page('/view/user', isLogin, function(ctx){
+    page('/view/user', function(ctx){
         $Prime.SPAWrapper("app").html("");
         require('./controller_user')(ctx, tpl);
         setBg("#f4f4f4");

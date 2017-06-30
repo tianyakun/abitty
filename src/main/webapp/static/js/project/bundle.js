@@ -2828,7 +2828,7 @@ $(function(){
     })
 
     //当前用户订购服务详情
-    page('/view/myService/:id', isLogin, function(ctx){
+    page('/view/myService/:id', function(ctx){
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(34)(ctx, tpl);
         setBg("transparent");
@@ -2852,14 +2852,14 @@ $(function(){
     });
 
     //服务需求填写
-    page('/view/select', isLogin, function(ctx){
+    page('/view/select', function(ctx){
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(12)(ctx, tpl);
         setBg("transparent");
     })
 
     //服务下单
-    page('/view/book', isLogin, function(ctx){
+    page('/view/book', function(ctx){
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(8)(ctx, tpl);
         setBg("transparent");
@@ -2873,7 +2873,7 @@ $(function(){
     });
 
 
-    page('/view/user', isLogin, function(ctx){
+    page('/view/user', function(ctx){
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(14)(ctx, tpl);
         setBg("#f4f4f4");
