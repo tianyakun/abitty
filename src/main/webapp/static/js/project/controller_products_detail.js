@@ -21,7 +21,7 @@ module.exports = function(ctx, tpl){
             window.sessionStorage["currentBook"] = JSON.stringify(currentData);
         })
     }
-    
+
 
 
     $.ajax({
