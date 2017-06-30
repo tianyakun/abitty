@@ -2,6 +2,7 @@ package com.abitty.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by yak on 17/6/17.
@@ -26,7 +27,7 @@ public class ProductVo {
 
     private String detail;
 
-    private String images;
+    private List<String> images;
 
     public String getProductNo() {
         return productNo;
@@ -92,11 +93,11 @@ public class ProductVo {
         this.detail = detail;
     }
 
-    public String getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(String images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 

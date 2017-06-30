@@ -6,6 +6,7 @@ import com.abitty.enums.ExceptionEnum;
 import com.abitty.service.ProductService;
 import com.abitty.vo.ProductVo;
 import com.google.common.base.Function;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,6 +30,8 @@ import java.util.List;
 public class ProductController {
 
     private final static Logger logger = LoggerFactory.getLogger(ProductController.class);
+
+    private final static Splitter SPLITTER = Splitter.on(",").omitEmptyStrings().trimResults();
 
     @Autowired
     private ProductService productService;
@@ -85,7 +90,12 @@ public class ProductController {
             vo.setDeliveryType(input.getDeliveryType());
             vo.setIcon(input.getIcon());
             vo.setDetail(input.getDetail());
-            vo.setImages(input.getImages());
+            if (Strings.isNullOrEmpty(input.getImages())) {
+                vo.setImages(new ArrayList<String>());
+            } else {
+//                vo.setImages(input.getImages().split(","));
+                vo.setImages(Lists.newArrayList(SPLITTER.split(input.getImages())));
+            }
             return vo;
         }
         return null;
