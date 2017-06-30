@@ -59,9 +59,12 @@ module.exports = function(ctx, tpl){
                 nonceStr:  res.data.noncestr,
                 signature: res.data.signature,
                 jsApiList: [
-                    'chooseWXPay'
+                    'chooseWXPay',
+                    'openAddress'
                 ]
             });
+
+            bindGetAdress();
 
 
         }).fail(function(){
@@ -145,7 +148,10 @@ module.exports = function(ctx, tpl){
     //微信开发权限获取
     getAccess();
 
-    bindGetAdress();
+
+
+
+
 
     bindCreateOrder();
 
