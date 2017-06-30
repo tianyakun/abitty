@@ -20,9 +20,11 @@
             <!--</div>-->
         <!--</li>-->
     </ul>
-    <div class="loginout-wrapper">
-        <form action="/logout" method="get">
-            <button class="btn2" style="background: none;">退出</button>
-        </form>
-    </div>
+    {{? it.uid}}
+        <div class="loginout-wrapper">
+            <form action="/logout" method="get">
+                <button class="btn2" style="background: none;">退出</button>
+            </form>
+        </div>
+    {{?}}
 </section>
