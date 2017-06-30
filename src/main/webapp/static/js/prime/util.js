@@ -14,6 +14,7 @@ module.exports = {
         return null; //返回参数值
     },
     isAccess: function(res){
+        console.log(typeof res);
         var b = false;
         if(res.retCode == 100009){
             var redirect = window.location.href;
