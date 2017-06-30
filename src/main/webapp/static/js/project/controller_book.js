@@ -145,6 +145,8 @@ module.exports = function(ctx, tpl){
     //微信开发权限获取
     getAccess();
 
+    bindGetAdress();
+
     bindCreateOrder();
 
 
