@@ -1763,7 +1763,6 @@ module.exports = function(ctx, tpl){
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
         $Config = $.extend($Config, {back: true, title: "一点生活"});
-        console.log(data);
         var html = $Prime.render(tpl.products.detail, data);
         var topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = topBarHtml+html;

@@ -33,7 +33,7 @@ $(function(){
                     if(redirect){
                         location.href = redirect;
                     }else{
-                        location.href = "/view/myService"
+                        location.href = "/view/supports"
                     }
 
                 }else{
