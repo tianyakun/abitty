@@ -65,5 +65,9 @@ public final class BankUtils {
     public static BigDecimal toYuan(BigDecimal centvalue) {
         return centvalue.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
+
+    public static void main(String[] args) {
+        System.out.println(yuantoCent(new BigDecimal("0.01")));
+    }
 }
 

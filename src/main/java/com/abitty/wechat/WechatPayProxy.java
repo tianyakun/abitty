@@ -44,7 +44,8 @@ public class WechatPayProxy {
             String nonceStr = WechatDataUtil.randomStr();
             data.put("nonce_str", nonceStr);
             data.put("out_trade_no", tblOrderInfo.getPayId());
-            data.put("total_fee", String.valueOf((int)tblOrderInfo.getTotalAmount().doubleValue() * 100));//元to分
+//            data.put("total_fee", String.valueOf((int)tblOrderInfo.getTotalAmount().doubleValue() * 100));//元to分
+            data.put("total_fee", BankUtils.yuantoCent(tblOrderInfo.getTotalAmount()));//元to分
             data.put("notify_url", WechatConstants.PAY_NOTIFY_URL);
             data.put("trade_type", WechatConstants.TRADE_TYPE);
             data.put("spbill_create_ip", tblOrderInfo.getIp());
