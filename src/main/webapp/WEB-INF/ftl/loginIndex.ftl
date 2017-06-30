@@ -655,6 +655,6 @@
     </section>
 </section>
 <script src="http://www.abitty.com/static/js/prime/zepto.js"></script>
-<script src="http://www.abitty.com/static/js/project/page_login.js"></script>
+<script src="http://www.abitty.com/static/js/project/page_login.js?v=0.1"></script>
 </body>
 </html>
