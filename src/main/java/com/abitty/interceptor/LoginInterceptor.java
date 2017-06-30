@@ -50,7 +50,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             PrintWriter writer = null;
             response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=utf-8");
+            response.setContentType("application/json; charset=utf-8");
             try {
                 writer = response.getWriter();
                 ResponseDto responseDto = new ResponseDto();
