@@ -1724,7 +1724,7 @@ module.exports = {
         if(res.retCode == 100009){
             var redirect = window.location.href;
            // window.location.href = "/loginIndex?redirect="+redirect;
-            page.redirect("/loginIndex?redirect="+redirect);
+            page.redirect("/view/login?redirect="+redirect);
             b = true;
             console.log('登陆失效...');
         }
