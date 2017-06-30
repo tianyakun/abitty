@@ -840,6 +840,10 @@ em {
 .bottom-tab a:last-child {
   border-left: 1px solid #9ea997;
 }
+.bottom-tab a p {
+  -webkit-transform: scale(0.83333333);
+  transform: scale(0.83333333);
+}
 .ui-select {
   -webkit-appearance: none;
   border: 0;
