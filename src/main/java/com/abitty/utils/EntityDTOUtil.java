@@ -52,6 +52,8 @@ public class EntityDTOUtil {
     public static TblAddress OrderConfirmRequestDtoToTblAddress(OrderConfirmRequestDto requestDto) {
         TblAddress tblAddress = new TblAddress();
         tblAddress.setUid(requestDto.getUid());
+        tblAddress.setRecName(requestDto.getReceiverName());
+        tblAddress.setPhone(requestDto.getPhoneNumber());
         tblAddress.setProvince(requestDto.getAddressProvince());
         tblAddress.setCity(requestDto.getAddressCity());
         tblAddress.setArea(requestDto.getAddressArea());
