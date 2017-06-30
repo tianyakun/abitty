@@ -2500,7 +2500,7 @@ module.exports = "<section class=product-select-wrapper> <div class=page-service
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a {{? it.uid}}href=/view/user {{??}}href=/loginIndex {{?}} class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
+module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a {{? it.uid}}href=/view/user {{??}}href=/view/login {{?}} class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
 
 /***/ }),
 /* 27 */
@@ -3010,7 +3010,7 @@ module.exports = function(ctx, tpl){
                     if(redirect){
                         location.href = redirect;
                     }else{
-                        location.href = "/view/supports"
+                        page.redirect("/view/supports");
                     }
 
                 }else{

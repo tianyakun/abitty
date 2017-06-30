@@ -40,7 +40,7 @@ module.exports = function(ctx, tpl){
                     if(redirect){
                         location.href = redirect;
                     }else{
-                        location.href = "/view/supports"
+                        page.redirect("/view/supports");
                     }
 
                 }else{
