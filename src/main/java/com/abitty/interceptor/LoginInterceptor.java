@@ -65,8 +65,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                 IOUtils.closeQuietly(writer);
             }
         }else{
-            logger.info("用户未登录,普通请求拦截,跳转至登录页面!");
-            request.getRequestDispatcher("/loginIndex").forward(request, response);//转发到登录界面
+            logger.info("用户未登录,普通请求拦截,跳转至登录页!");
+            request.getRequestDispatcher("/view/login").forward(request, response);//转发到登录界面
         }
         return false;
     }
