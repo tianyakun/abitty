@@ -37,8 +37,7 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-       // !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
-        next();
+       !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
     }
 
 
@@ -90,7 +89,7 @@ $(function(){
     page('/view/book', function(ctx){
         $Prime.SPAWrapper("app").html("");
         require('./controller_book')(ctx, tpl);
-        setBg("transparent");
+        setBg("#f4f4f4");
     })
 
     //服务需求反馈

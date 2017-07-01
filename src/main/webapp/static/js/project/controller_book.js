@@ -52,6 +52,7 @@ module.exports = function(ctx, tpl){
                 return;
             }
             access = res.data;
+
             //微信配置
             wx.config({
                 appId:  res.data.appid,
@@ -64,7 +65,7 @@ module.exports = function(ctx, tpl){
                 ]
             });
 
-            bindGetAdress();
+            //bindGetAdress();
 
 
         }).fail(function(){
@@ -73,27 +74,38 @@ module.exports = function(ctx, tpl){
     }
 
 
-    function bindGetAdress(){
-        $("#J_get_adress").on("click", function(){
-            wx.openAddress({
-                success: function(res){
-                    $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
-                    $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.phoneNumber);
-                    $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
-                    $("input[name='addressProvince']").val(res.provinceName);
-                    $("input[name='addressCity']").val(res.cityName);
-                    $("input[name='addressArea']").val(res.countryName);
-                    $("#J_detailInfo").text(re.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
-                    $("#J_postalCode").text(re.postalCode); $("input[name='postcode']").val(res.postalCode);
-                }
-            });
-        })
+    function bindGetAdress(wx){
+        wx.ready(function(){
+            $("#J_get_adress").on("click", function(){
+                wx.openAddress({
+                    success: function(res){
+
+                        $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
+                        $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.telNumber);
+                        $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
+                        $("input[name='addressProvince']").val(res.provinceName);
+                        $("input[name='addressCity']").val(res.cityName);
+                        $("input[name='addressArea']").val(res.countryName);
+                        $("#J_detailInfo").text(res.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
+                        $("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+
+
+                    }
+                });
+            })
+        });
+
     }
 
     function bindCreateOrder(){
+
         $("#J_pay").on("click", function(){
+
             var _this = $(this);
-            if(!$("input[name='addressProvince']").val()) alert("请填写收货人信息");
+            //if(!$("input[name='addressProvince']").val()){
+            //    alert("请填写收货人信息");
+            //    return;
+            //}
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
@@ -115,7 +127,7 @@ module.exports = function(ctx, tpl){
                     addressCity:      $("input[name='addressCity']").val(),
                     addressArea:      $("input[name='addressArea']").val(),
                     addressDetail:    $("input[name='addressDetail']").val(),
-                    postcode:         $("input[name='postcode']")
+                    postcode:         $("input[name='postcode']").val()
                 },
                 beforeSend: function(){
                     _this.addClass("pending");
@@ -148,9 +160,10 @@ module.exports = function(ctx, tpl){
     //微信开发权限获取
     getAccess();
 
+    wx.ready(function(){
+        bindGetAdress(wx);
 
-
-
+    });
 
 
     bindCreateOrder();
