@@ -1829,7 +1829,7 @@ module.exports = function(ctx, tpl){
     }
 
 
-    function bindGetAdress(){
+    function bindGetAdress(wx){
         wx.ready(function(){
             $("#J_get_adress").on("click", function(){
                 wx.openAddress({
@@ -1850,6 +1850,7 @@ module.exports = function(ctx, tpl){
     }
 
     function bindCreateOrder(){
+
         $("#J_pay").on("click", function(){
             var _this = $(this);
             if(!$("input[name='addressProvince']").val()) alert("请填写收货人信息");
@@ -1909,14 +1910,15 @@ module.exports = function(ctx, tpl){
 
 
     wx.ready(function(){
-        wx.checkJsApi({
-            jsApiList: [
-                "openAddress"
-            ],
-            success:function(res){
-                console.log(JSON.stringify(res), '###权限校验');
-            }
-        });
+        bindGetAdress(wx);
+        //wx.checkJsApi({
+        //    jsApiList: [
+        //        "openAddress"
+        //    ],
+        //    success:function(res){
+        //        console.log(JSON.stringify(res), '###权限校验');
+        //    }
+        //});
     });
 
 
