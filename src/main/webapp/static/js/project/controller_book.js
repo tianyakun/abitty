@@ -88,6 +88,8 @@ module.exports = function(ctx, tpl){
                         $("input[name='addressArea']").val(res.countryName);
                         $("#J_detailInfo").text(res.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
                         $("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+
+
                     }
                 });
             })
@@ -98,11 +100,12 @@ module.exports = function(ctx, tpl){
     function bindCreateOrder(){
 
         $("#J_pay").on("click", function(){
+
             var _this = $(this);
-            if(!$("input[name='addressProvince']").val()){
-                alert("请填写收货人信息");
-                return;
-            }
+            //if(!$("input[name='addressProvince']").val()){
+            //    alert("请填写收货人信息");
+            //    return;
+            //}
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
