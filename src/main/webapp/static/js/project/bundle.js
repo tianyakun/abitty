@@ -2850,7 +2850,11 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-       !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
+        if(!$Config.uid){
+            page.redirect("/view/login?redirect="+ window.location);
+        }else{
+            next();
+        }
     }
 
 
@@ -2892,14 +2896,15 @@ $(function(){
     });
 
     //服务需求填写
-    page('/view/select', function(ctx){
+    page('/view/select', isLogin,  function(ctx){
+
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(12)(ctx, tpl);
         setBg("transparent");
     })
 
     //服务下单
-    page('/view/book', function(ctx){
+    page('/view/book',  function(ctx){
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(8)(ctx, tpl);
         setBg("#f4f4f4");
