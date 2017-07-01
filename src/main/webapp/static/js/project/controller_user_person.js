@@ -12,7 +12,7 @@ module.exports = function(ctx, tpl){
         html = $Prime.render(tpl.user_person, res.data);
         optionHtml = $Prime.render(optionTpl, res.data);
         html = html.replace(/\[option\]/, optionHtml);
-        html = topBarHtml +  html
+        html = topBarHtml +  html +  tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
 
     }

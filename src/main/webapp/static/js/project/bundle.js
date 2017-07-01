@@ -2343,7 +2343,7 @@ module.exports = function(ctx, tpl){
         var topBarHtml, html;
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
-        html = topBarHtml + $Prime.render(tpl.user, $Config);
+        html = topBarHtml + $Prime.render(tpl.user, $Config) +  tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
     }
 
@@ -2380,7 +2380,7 @@ module.exports = function(ctx, tpl){
         html = $Prime.render(tpl.user_person, res.data);
         optionHtml = $Prime.render(optionTpl, res.data);
         html = html.replace(/\[option\]/, optionHtml);
-        html = topBarHtml +  html
+        html = topBarHtml +  html +  tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
 
     }
@@ -2513,7 +2513,7 @@ module.exports = "<section class=feed-back-wrapper> <div class=feedback-icon-wra
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "{{? it.list.length}} <section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> {{~it.list:item:index}} <li> <div class=item-hd> <img src=\"{{=item.productIcon}}\" alt=\"\"> {{? item.status == 1}} {{? item.progress==\"100%\"}} <div class=count-action-wrapper> <a id=J_book href=/view/select data-order=\"{{=item.orderNo}}\" class=\"btn btn-active\">再次订购</a> <textarea style=display:none id=\"J_{{=item.orderNo}}\">{{= JSON.stringify(item)}}</textarea> </div> {{??}} <div class=progress_wrapper> <p class=left_over>距离下次配送: {{=item.intervalDays}}天</p> </div> {{?}} {{?}} <div class=progress_wrapper> <p class=left_over>距离下次配送: {{=item.intervalDays}}天</p> </div> </div> <div class=item-bd> <h3>{{=item.productName}}</h3> <p> <em>{{=item.finishSub + 1}}/{{=item.totalSub}}</em> <em>状态: {{? item.nextSubStatus == 0 || item.nextSubStatus == 1}} 备货中 {{?? item.nextSubStatus == 2}} 已发货 {{?? item.nextSubStatus == 3}} 已签收 {{?}} </em> </p> </div> </li> {{~}} </ul> </section> {{??}} <section class=start-service> <h1 class=logo></h1> <div class=slogen><i class=slogen-eye-icon></i> <h2>尚无服务</h2> <h3>赶紧来享受一点生活吧</h3> </div><a class=btn href=/view/supports>添加服务</a> </section> {{?}} ";
+module.exports = "{{? it.list.length}} <section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> {{~it.list:item:index}} <li> <div class=item-hd> <img src=\"{{=item.productIcon}}\" alt=\"\"> <div class=progress_wrapper> <p class=left_over>距离下次配送: {{=item.intervalDays}}天</p> </div> </div> <div class=item-bd> <h3>{{=item.productName}}</h3> <p> <em>{{=item.finishSub + 1}}/{{=item.totalSub}}</em> <em>状态: {{? item.nextSubStatus == 0 || item.nextSubStatus == 1}} 第{{=item.finishSub + 1}}次备货中 {{?? item.nextSubStatus == 2}} 第{{=item.finishSub + 1}}次已发货 {{?? item.nextSubStatus == 3}} 第{{=item.finishSub + 1}}次已签收 {{?}} </em> </p> </div> </li> {{~}} </ul> </section> {{??}} <section class=start-service> <h1 class=logo></h1> <div class=slogen><i class=slogen-eye-icon></i> <h2>尚无服务</h2> <h3>赶紧来享受一点生活吧</h3> </div><a class=btn href=/view/supports>添加服务</a> </section> {{?}} ";
 
 /***/ }),
 /* 21 */

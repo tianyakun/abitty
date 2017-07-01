@@ -5,22 +5,22 @@
                 <li>
                     <div class="item-hd">
                         <img src="{{=item.productIcon}}" alt="">
-                        {{? item.status == 1}}
-                            {{? item.progress=="100%"}}
-                                <div class="count-action-wrapper">
-                                    <a id="J_book" href="/view/select" data-order="{{=item.orderNo}}" class="btn btn-active">再次订购</a>
-                                    <textarea style="display: none;" id="J_{{=item.orderNo}}" >{{= JSON.stringify(item)}}</textarea>
-                                </div>
-                                {{??}}
-                                <div class="progress_wrapper">
-                                    <!--<div class="progress_bar" >-->
-                                        <!--<div style="width:{{=item.progress}};" class="progress_current"></div>-->
-                                    <!--</div>-->
-                                    <p class="left_over">距离下次配送: {{=item.intervalDays}}天</p>
-                                </div>
-                            {{?}}
+                        <!--{{? item.status == 1}}-->
+                            <!--{{? item.progress=="100%"}}-->
+                                <!--<div class="count-action-wrapper">-->
+                                    <!--<a id="J_book" href="/view/select" data-order="{{=item.orderNo}}" class="btn btn-active">再次订购</a>-->
+                                    <!--<textarea style="display: none;" id="J_{{=item.orderNo}}" >{{= JSON.stringify(item)}}</textarea>-->
+                                <!--</div>-->
+                                <!--{{??}}-->
+                                <!--<div class="progress_wrapper">-->
+                                    <!--&lt;!&ndash;<div class="progress_bar" >&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<div style="width:{{=item.progress}};" class="progress_current"></div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--<p class="left_over">距离下次配送: {{=item.intervalDays}}天</p>-->
+                                <!--</div>-->
+                            <!--{{?}}-->
 
-                        {{?}}
+                        <!--{{?}}-->
                         <div class="progress_wrapper">
                             <!--<div class="progress_bar" >-->
                             <!--<div style="width:{{=item.progress}};" class="progress_current"></div>-->
@@ -34,11 +34,11 @@
                             <em>{{=item.finishSub + 1}}/{{=item.totalSub}}</em>
                             <em>状态:
                                 {{? item.nextSubStatus == 0 || item.nextSubStatus == 1}}
-                                    备货中
+                                    第{{=item.finishSub + 1}}次备货中
                                     {{?? item.nextSubStatus == 2}}
-                                    已发货
+                                    第{{=item.finishSub + 1}}次已发货
                                     {{?? item.nextSubStatus == 3}}
-                                    已签收
+                                    第{{=item.finishSub + 1}}次已签收
                                 {{?}}
                             </em>
                         </p>
