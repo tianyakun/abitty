@@ -28,7 +28,9 @@ module.exports = function(ctx, tpl){
                 paySign: data.paySign
             },
             function(r){
-                if(r.err_msg == "get_brand_wcpay_request:ok" ) {}
+                if(r.err_msg == "get_brand_wcpay_request:ok" ) {
+                    alert(123);
+                }
             }
         );
     }
