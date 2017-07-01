@@ -98,10 +98,10 @@ module.exports = function(ctx, tpl){
 
         $("#J_pay").on("click", function(){
             var _this = $(this);
-            //if(!$("input[name='addressProvince']").val()){
-            //    alert("请填写收货人信息");
-            //    return;
-            //}
+            if(!$("input[name='addressProvince']").val()){
+                alert("请填写收货人信息");
+                return;
+            }
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
@@ -123,7 +123,7 @@ module.exports = function(ctx, tpl){
                     addressCity:      $("input[name='addressCity']").val(),
                     addressArea:      $("input[name='addressArea']").val(),
                     addressDetail:    $("input[name='addressDetail']").val(),
-                    postcode:         $("input[name='postcode']")
+                    postcode:         $("input[name='postcode']").val()
                 },
                 beforeSend: function(){
                     _this.addClass("pending");
