@@ -29,7 +29,13 @@ module.exports = function(ctx, tpl){
             },
             function(r){
                 if(r.err_msg == "get_brand_wcpay_request:ok" ) {
-                    alert(123);
+                    page.redirect("/view/myService");
+                }else{
+                    alert(r.err_msg);
+                    setTimeout(function(){
+                        page.redirect("/view/supports");
+                    }, 3000);
+
                 }
             }
         );
