@@ -98,7 +98,10 @@ module.exports = function(ctx, tpl){
 
         $("#J_pay").on("click", function(){
             var _this = $(this);
-            if(!$("input[name='addressProvince']").val()) alert("请填写收货人信息");
+            if(!$("input[name='addressProvince']").val()){
+                alert("请填写收货人信息");
+                return;
+            }
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
@@ -153,20 +156,10 @@ module.exports = function(ctx, tpl){
     //微信开发权限获取
     getAccess();
 
-
     wx.ready(function(){
         bindGetAdress(wx);
-        //wx.checkJsApi({
-        //    jsApiList: [
-        //        "openAddress"
-        //    ],
-        //    success:function(res){
-        //        console.log(JSON.stringify(res), '###权限校验');
-        //    }
-        //});
+
     });
-
-
 
 
     bindCreateOrder();

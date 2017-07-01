@@ -597,6 +597,25 @@ em {
 .theme-wrapper {
   margin-bottom: 1.8rem;
 }
+.order-result {
+  margin-bottom: 1rem;
+}
+.order-result,
+.adress-wrapper {
+  background-color: #fff;
+}
+.adress-wrapper {
+  padding: 1.3rem 1.5rem 1.2rem;
+}
+.adress-wrapper h3 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 2.5rem;
+}
+.adress-wrapper p {
+  font-size: 1.4rem;
+  color: #333;
+}
 .pro-page {
   background-color: #f4f4f4;
 }
