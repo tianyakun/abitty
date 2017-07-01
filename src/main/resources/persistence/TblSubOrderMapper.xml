@@ -191,4 +191,11 @@
     from tbl_sub_order
     where order_no = #{orderNo,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectBySubOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_sub_order
+    where sub_order_no = #{subOrderNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

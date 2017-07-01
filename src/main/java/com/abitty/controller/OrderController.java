@@ -9,6 +9,7 @@ import com.abitty.service.AddressService;
 import com.abitty.service.OrderService;
 import com.abitty.service.ProductService;
 import com.abitty.constant.AbittyConstants;
+import com.abitty.service.SubOrderService;
 import com.abitty.utils.IpAddrUtil;
 import com.abitty.vo.OrderDetailVo;
 import com.abitty.vo.OrderInfoVo;
@@ -44,6 +45,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private SubOrderService subOrderService;
 
     @Autowired
     private ProductService productService;
@@ -228,6 +232,18 @@ public class OrderController {
             vo.setFinishSub(input.getFinishSub());
             vo.setNextSub(input.getNextSub());
             vo.setNextSubTime(input.getNextSubTime());
+
+            if (!Strings.isNullOrEmpty(input.getNextSub())) {
+                TblSubOrder tblSubOrder = subOrderService.getBySubOrderNo(input.getNextSub());
+                if (tblSubOrder != null) {
+                    vo.setNextSubStatus(tblSubOrder.getStatus());
+                } else {
+                    vo.setNextSubStatus(0);
+                }
+            } else {
+                vo.setNextSubStatus(0);
+            }
+
             vo.setUserNumber(input.getUserNumber());
             vo.setRemark(input.getRemark());
 

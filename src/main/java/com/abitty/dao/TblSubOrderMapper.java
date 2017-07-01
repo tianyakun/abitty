@@ -18,4 +18,6 @@ public interface TblSubOrderMapper {
     int updateByPrimaryKey(TblSubOrder record);
 
     List<TblSubOrder> selectByOrderNo(String orderNo);
+
+    TblSubOrder selectBySubOrderNo(String subOrderNo);
 }

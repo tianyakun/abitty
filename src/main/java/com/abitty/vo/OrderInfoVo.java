@@ -35,6 +35,8 @@ public class OrderInfoVo {
 
     private Date nextSubTime;
 
+    private Integer nextSubStatus;
+
     private int intervalDays;
 
     private String progress;
@@ -187,6 +189,14 @@ public class OrderInfoVo {
         this.progress = progress;
     }
 
+    public Integer getNextSubStatus() {
+        return nextSubStatus;
+    }
+
+    public void setNextSubStatus(Integer nextSubStatus) {
+        this.nextSubStatus = nextSubStatus;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("OrderInfoVo{");
@@ -204,6 +214,7 @@ public class OrderInfoVo {
         sb.append(", finishSub=").append(finishSub);
         sb.append(", nextSub='").append(nextSub).append('\'');
         sb.append(", nextSubTime=").append(nextSubTime);
+        sb.append(", nextSubStatus=").append(nextSubStatus);
         sb.append(", intervalDays=").append(intervalDays);
         sb.append(", progress='").append(progress).append('\'');
         sb.append(", userNumber=").append(userNumber);
