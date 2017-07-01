@@ -85,8 +85,8 @@ module.exports = function(ctx, tpl){
                         $("input[name='addressProvince']").val(res.provinceName);
                         $("input[name='addressCity']").val(res.cityName);
                         $("input[name='addressArea']").val(res.countryName);
-                        $("#J_detailInfo").text(re.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
-                        $("#J_postalCode").text(re.postalCode); $("input[name='postcode']").val(res.postalCode);
+                        $("#J_detailInfo").text(res.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
+                        $("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
                     }
                 });
             })

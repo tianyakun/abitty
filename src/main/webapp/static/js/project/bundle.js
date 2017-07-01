@@ -1840,8 +1840,8 @@ module.exports = function(ctx, tpl){
                         $("input[name='addressProvince']").val(res.provinceName);
                         $("input[name='addressCity']").val(res.cityName);
                         $("input[name='addressArea']").val(res.countryName);
-                        $("#J_detailInfo").text(re.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
-                        $("#J_postalCode").text(re.postalCode); $("input[name='postcode']").val(res.postalCode);
+                        $("#J_detailInfo").text(res.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
+                        $("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
                     }
                 });
             })
@@ -2520,7 +2520,7 @@ module.exports = "<section class=pro-page> <div class=page-tip> <div class=page-
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"item-list order-result gray-bg has-bottom-fixed\"> <ul> <li> <div class=item-hd> <div><img src=\"{{=it.icon}}\"/></div> </div> <div class=item-bd> <h3>{{=it.name}}</h3> <p> <span>¥{{=it.totalAmount}}</span> </p> </div> </li> <li class=order-info> <div class=item-bd> <p>定几个月: {{=it.totalMouth}}个月(4次)</p> <p>每次件数: {{=it.subQuantity}}件</p> <p>备注: {{=it.remark}}</p> </div> </li> <li class=\"order-info set-adress\"> <div class=item-bd> <p>联系人: <span id=J_userName></span></p> <p>手机号码: <span id=J_telNumber></span></p> <p>收获地区: <span id=J_recive_adress></span></p> <p>详细地址: <span id=J_detailInfo></span></p> <p>右边: <span id=J_postalCode></span></p> </div> <div class=item-bd> <p id=J_get_adress>收获人信息+</p> <div class=user-adress-wrapper> <input type=hidden name=receiverName> <input type=hidden name=phoneNumber> <input type=hidden name=addressProvince> <input type=hidden name=addressCity> <input type=hidden name=addressArea> <input type=hidden name=addressDetail> <input type=hidden name=postcode> </div> </div> </li> </ul> </section> <section class=\"buttom-fixed buttom-control-wrap flex-row\"> <span><label>总价:</label> ¥{{= it.totalAmount}}</span> <a id=J_pay>马上下单</a> </section> ";
+module.exports = "<section class=\"item-list order-result gray-bg has-bottom-fixed\"> <ul> <li> <div class=item-hd> <div><img src=\"{{=it.icon}}\"/></div> </div> <div class=item-bd> <h3>{{=it.name}}</h3> <p> <span>¥{{=it.totalAmount}}</span> </p> </div> </li> <li class=order-info> <div class=item-bd> <p>定几个月: {{=it.totalMouth}}个月(4次)</p> <p>每次件数: {{=it.subQuantity}}件</p> <p>备注: {{=it.remark}}</p> </div> </li> <li class=\"order-info set-adress\"> <div class=item-bd> <p>联系人: <span id=J_userName></span></p> <p>手机号码: <span id=J_telNumber></span></p> <p>收获地区: <span id=J_recive_adress></span></p> <p>详细地址: <span id=J_detailInfo></span></p> <p>邮编: <span id=J_postalCode></span></p> </div> <div class=item-bd> <p id=J_get_adress>收获人信息+</p> <div class=user-adress-wrapper> <input type=hidden name=receiverName> <input type=hidden name=phoneNumber> <input type=hidden name=addressProvince> <input type=hidden name=addressCity> <input type=hidden name=addressArea> <input type=hidden name=addressDetail> <input type=hidden name=postcode> </div> </div> </li> </ul> </section> <section class=\"buttom-fixed buttom-control-wrap flex-row\"> <span><label>总价:</label> ¥{{= it.totalAmount}}</span> <a id=J_pay>马上下单</a> </section> ";
 
 /***/ }),
 /* 23 */
