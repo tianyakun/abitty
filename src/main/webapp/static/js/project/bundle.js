@@ -1853,10 +1853,10 @@ module.exports = function(ctx, tpl){
 
         $("#J_pay").on("click", function(){
             var _this = $(this);
-            if(!$("input[name='addressProvince']").val()){
-                alert("请填写收货人信息");
-                return;
-            }
+            //if(!$("input[name='addressProvince']").val()){
+            //    alert("请填写收货人信息");
+            //    return;
+            //}
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
