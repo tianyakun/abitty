@@ -2373,7 +2373,7 @@ module.exports = function(ctx, tpl){
         optionTpl = [
             "<option {{? it.item.gender == 'm'}}selected{{?}} value=\"m\" >男</option>",
             "<option {{? it.item.gender == 'f'}}selected{{?}} value=\"f\" >女</option>",
-            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >未知</option>"
+            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >保密</option>"
         ].join("")
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
@@ -2513,7 +2513,7 @@ module.exports = "<section class=feed-back-wrapper> <div class=feedback-icon-wra
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "{{? it.list.length}} <section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> {{~it.list:item:index}} <li> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> {{? item.status == 1}} {{? item.progress==\"100%\"}} <div class=count-action-wrapper> <a id=J_book href=/view/select data-order=\"{{=item.orderNo}}\" class=\"btn btn-active\">再次订购</a> <textarea style=display:none id=\"J_{{=item.orderNo}}\">{{= JSON.stringify(item)}}</textarea> </div> {{??}} <div class=progress_wrapper> <div class=progress_bar> <div style=width:{}; class=progress_current></div> </div> <p class=left_over>距离下次配送: {{=item.nextTime}}天</p> </div> {{?}} {{?}} </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <em>{{=item.count_desc}}</em> <em>状态: {{? item.status == 1}}正在使用{{??}}下单成功{{?}}</em> </p> </div> </li> {{~}} </ul> </section> {{??}} <section class=start-service> <h1 class=logo></h1> <div class=slogen><i class=slogen-eye-icon></i> <h2>尚无服务</h2> <h3>赶紧来享受一点生活吧</h3> </div><a class=btn href=/view/supports>添加服务</a> </section> {{?}} ";
+module.exports = "{{? it.list.length}} <section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> {{~it.list:item:index}} <li> <div class=item-hd> <img src=\"{{=item.productIcon}}\" alt=\"\"> {{? item.status == 1}} {{? item.progress==\"100%\"}} <div class=count-action-wrapper> <a id=J_book href=/view/select data-order=\"{{=item.orderNo}}\" class=\"btn btn-active\">再次订购</a> <textarea style=display:none id=\"J_{{=item.orderNo}}\">{{= JSON.stringify(item)}}</textarea> </div> {{??}} <div class=progress_wrapper> <p class=left_over>距离下次配送: {{=item.intervalDays}}天</p> </div> {{?}} {{?}} <div class=progress_wrapper> <p class=left_over>距离下次配送: {{=item.intervalDays}}天</p> </div> </div> <div class=item-bd> <h3>{{=item.productName}}</h3> <p> <em>{{=item.finishSub + 1}}/{{=item.totalSub}}</em> <em>状态: {{? item.nextSubStatus == 0 || item.nextSubStatus == 1}} 备货中 {{?? item.nextSubStatus == 2}} 已发货 {{?? item.nextSubStatus == 3}} 已签收 {{?}} </em> </p> </div> </li> {{~}} </ul> </section> {{??}} <section class=start-service> <h1 class=logo></h1> <div class=slogen><i class=slogen-eye-icon></i> <h2>尚无服务</h2> <h3>赶紧来享受一点生活吧</h3> </div><a class=btn href=/view/supports>添加服务</a> </section> {{?}} ";
 
 /***/ }),
 /* 21 */
@@ -2531,7 +2531,7 @@ module.exports = "<section class=\"item-list order-result has-bottom-fixed\"> <u
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a onclick='page(\"/view/products/{{=item.productNo}}\")' data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/feedback>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a onclick='page(\"/view/products/{{=item.productNo}}\")' data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/view/feedback>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 24 */
@@ -2555,7 +2555,7 @@ module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item 
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a onclick='page(\"/view/user/person\")'> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> {{? it.uid}} <div class=loginout-wrapper> <form action=/logout method=get> <button class=btn2 style=\"background:0 0\">退出</button> </form> </div> {{?}} </section>";
+module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a onclick='page(\"/view/user/person\")'> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> </section>";
 
 /***/ }),
 /* 28 */

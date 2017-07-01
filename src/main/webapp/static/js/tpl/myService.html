@@ -4,7 +4,7 @@
             {{~it.list:item:index}}
                 <li>
                     <div class="item-hd">
-                        <img src="{{=item.icon}}" alt="">
+                        <img src="{{=item.productIcon}}" alt="">
                         {{? item.status == 1}}
                             {{? item.progress=="100%"}}
                                 <div class="count-action-wrapper">
@@ -13,20 +13,34 @@
                                 </div>
                                 {{??}}
                                 <div class="progress_wrapper">
-                                    <div class="progress_bar" >
-                                        <div style="width:{{=item.progress}};" class="progress_current"></div>
-                                    </div>
-                                    <p class="left_over">距离下次配送: {{=item.nextTime}}天</p>
+                                    <!--<div class="progress_bar" >-->
+                                        <!--<div style="width:{{=item.progress}};" class="progress_current"></div>-->
+                                    <!--</div>-->
+                                    <p class="left_over">距离下次配送: {{=item.intervalDays}}天</p>
                                 </div>
                             {{?}}
 
                         {{?}}
+                        <div class="progress_wrapper">
+                            <!--<div class="progress_bar" >-->
+                            <!--<div style="width:{{=item.progress}};" class="progress_current"></div>-->
+                            <!--</div>-->
+                            <p class="left_over">距离下次配送: {{=item.intervalDays}}天</p>
+                        </div>
                     </div>
                     <div class="item-bd">
-                        <h3>{{=item.name}}</h3>
+                        <h3>{{=item.productName}}</h3>
                         <p>
-                            <em>{{=item.count_desc}}</em>
-                            <em>状态: {{? item.status == 1}}正在使用{{??}}下单成功{{?}}</em>
+                            <em>{{=item.finishSub + 1}}/{{=item.totalSub}}</em>
+                            <em>状态:
+                                {{? item.nextSubStatus == 0 || item.nextSubStatus == 1}}
+                                    备货中
+                                    {{?? item.nextSubStatus == 2}}
+                                    已发货
+                                    {{?? item.nextSubStatus == 3}}
+                                    已签收
+                                {{?}}
+                            </em>
                         </p>
                     </div>
                 </li>
