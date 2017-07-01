@@ -44,7 +44,7 @@ module.exports = function(ctx, tpl){
                     }
 
                 }else{
-                    alert(res.retMsg);
+                    alert(res.chineseMsg);
                 }
             });
         }
