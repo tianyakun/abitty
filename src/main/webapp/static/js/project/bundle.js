@@ -1783,7 +1783,15 @@ module.exports = function(ctx, tpl){
                 paySign: data.paySign
             },
             function(r){
-                if(r.err_msg == "get_brand_wcpay_request:ok" ) {}
+                if(r.err_msg == "get_brand_wcpay_request:ok" ) {
+                    page.redirect("/view/myService");
+                }else{
+                    alert(r.err_msg);
+                    setTimeout(function(){
+                        page.redirect("/view/supports");
+                    }, 3000);
+
+                }
             }
         );
     }
@@ -1857,10 +1865,10 @@ module.exports = function(ctx, tpl){
         $("#J_pay").on("click", function(){
 
             var _this = $(this);
-            //if(!$("input[name='addressProvince']").val()){
-            //    alert("请填写收货人信息");
-            //    return;
-            //}
+            if(!$("input[name='addressProvince']").val()){
+                alert("请填写收货人信息");
+                return;
+            }
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
@@ -2335,7 +2343,7 @@ module.exports = function(ctx, tpl){
         var topBarHtml, html;
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
-        html = topBarHtml + $Prime.render(tpl.user, $Config);
+        html = topBarHtml + $Prime.render(tpl.user, $Config) +  tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
     }
 
@@ -2365,14 +2373,14 @@ module.exports = function(ctx, tpl){
         optionTpl = [
             "<option {{? it.item.gender == 'm'}}selected{{?}} value=\"m\" >男</option>",
             "<option {{? it.item.gender == 'f'}}selected{{?}} value=\"f\" >女</option>",
-            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >未知</option>"
+            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >保密</option>"
         ].join("")
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = $Prime.render(tpl.user_person, res.data);
         optionHtml = $Prime.render(optionTpl, res.data);
         html = html.replace(/\[option\]/, optionHtml);
-        html = topBarHtml +  html
+        html = topBarHtml +  html +  tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
 
     }
@@ -2505,7 +2513,7 @@ module.exports = "<section class=feed-back-wrapper> <div class=feedback-icon-wra
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "{{? it.list.length}} <section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> {{~it.list:item:index}} <li> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> {{? item.status == 1}} {{? item.progress==\"100%\"}} <div class=count-action-wrapper> <a id=J_book href=/view/select data-order=\"{{=item.orderNo}}\" class=\"btn btn-active\">再次订购</a> <textarea style=display:none id=\"J_{{=item.orderNo}}\">{{= JSON.stringify(item)}}</textarea> </div> {{??}} <div class=progress_wrapper> <div class=progress_bar> <div style=width:{}; class=progress_current></div> </div> <p class=left_over>距离下次配送: {{=item.nextTime}}天</p> </div> {{?}} {{?}} </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <em>{{=item.count_desc}}</em> <em>状态: {{? item.status == 1}}正在使用{{??}}下单成功{{?}}</em> </p> </div> </li> {{~}} </ul> </section> {{??}} <section class=start-service> <h1 class=logo></h1> <div class=slogen><i class=slogen-eye-icon></i> <h2>尚无服务</h2> <h3>赶紧来享受一点生活吧</h3> </div><a class=btn href=/view/supports>添加服务</a> </section> {{?}} ";
+module.exports = "{{? it.list.length}} <section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> {{~it.list:item:index}} <li> <div class=item-hd> <img src=\"{{=item.productIcon}}\" alt=\"\"> <div class=progress_wrapper> <p class=left_over>距离下次配送: {{=item.intervalDays}}天</p> </div> </div> <div class=item-bd> <h3>{{=item.productName}}</h3> <p> <em>{{=item.finishSub + 1}}/{{=item.totalSub}}</em> <em>状态: {{? item.nextSubStatus == 0 || item.nextSubStatus == 1}} 第{{=item.finishSub + 1}}次备货中 {{?? item.nextSubStatus == 2}} 第{{=item.finishSub + 1}}次已发货 {{?? item.nextSubStatus == 3}} 第{{=item.finishSub + 1}}次已签收 {{?}} </em> </p> </div> </li> {{~}} </ul> </section> {{??}} <section class=start-service> <h1 class=logo></h1> <div class=slogen><i class=slogen-eye-icon></i> <h2>尚无服务</h2> <h3>赶紧来享受一点生活吧</h3> </div><a class=btn href=/view/supports>添加服务</a> </section> {{?}} ";
 
 /***/ }),
 /* 21 */
@@ -2523,7 +2531,7 @@ module.exports = "<section class=\"item-list order-result has-bottom-fixed\"> <u
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a onclick='page(\"/view/products/{{=item.productNo}}\")' data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/feedback>没有想要的?</a> </section> </section> ";
+module.exports = "<section id=J_list class=\"item-list product-list gray-bg\"> <ul> {{~it.list:item:index}} <li> <a onclick='page(\"/view/products/{{=item.productNo}}\")' data-productno=\"{{=item.productNo}}\" class=J_item> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <span>¥{{=item.price}}</span> </p> </div> </a> </li> {{~}} </ul> <section class=item-user-repy> <a class=btn href=/view/feedback>没有想要的?</a> </section> </section> ";
 
 /***/ }),
 /* 24 */
@@ -2547,7 +2555,7 @@ module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item 
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a onclick='page(\"/view/user/person\")'> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> {{? it.uid}} <div class=loginout-wrapper> <form action=/logout method=get> <button class=btn2 style=\"background:0 0\">退出</button> </form> </div> {{?}} </section>";
+module.exports = "<section id=J_user_info class=\"user-info page-list\"> <ul> <li class=item-cells> <a onclick='page(\"/view/user/person\")'> <div class=item-cell> <div class=item-cell-bd> <p class=\"text-label icon-user-info\">个人信息</p> <i class=icon-next></i> </div> </div> </a> </li> </ul> </section>";
 
 /***/ }),
 /* 28 */
@@ -2850,7 +2858,11 @@ $(function(){
 
     //前端权限校验跳转有弊端,必须等到JS, DOM加载完毕后才能跳转
     function isLogin(ctx, next){
-       !$Config.uid ? location.href="/loginIndex?redirect="+ window.location : next();
+        if(!$Config.uid){
+            page.redirect("/view/login?redirect="+ window.location);
+        }else{
+            next();
+        }
     }
 
 
@@ -2892,14 +2904,15 @@ $(function(){
     });
 
     //服务需求填写
-    page('/view/select', function(ctx){
+    page('/view/select', isLogin,  function(ctx){
+
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(12)(ctx, tpl);
         setBg("transparent");
     })
 
     //服务下单
-    page('/view/book', function(ctx){
+    page('/view/book',  function(ctx){
         $Prime.SPAWrapper("app").html("");
         __webpack_require__(8)(ctx, tpl);
         setBg("#f4f4f4");

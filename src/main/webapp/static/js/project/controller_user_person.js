@@ -5,14 +5,14 @@ module.exports = function(ctx, tpl){
         optionTpl = [
             "<option {{? it.item.gender == 'm'}}selected{{?}} value=\"m\" >男</option>",
             "<option {{? it.item.gender == 'f'}}selected{{?}} value=\"f\" >女</option>",
-            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >未知</option>"
+            "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >保密</option>"
         ].join("")
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = $Prime.render(tpl.user_person, res.data);
         optionHtml = $Prime.render(optionTpl, res.data);
         html = html.replace(/\[option\]/, optionHtml);
-        html = topBarHtml +  html
+        html = topBarHtml +  html +  tpl.buttomTab;
         $Prime.SPAWrapper("app").html(html);
 
     }

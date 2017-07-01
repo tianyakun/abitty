@@ -28,7 +28,15 @@ module.exports = function(ctx, tpl){
                 paySign: data.paySign
             },
             function(r){
-                if(r.err_msg == "get_brand_wcpay_request:ok" ) {}
+                if(r.err_msg == "get_brand_wcpay_request:ok" ) {
+                    page.redirect("/view/myService");
+                }else{
+                    alert(r.err_msg);
+                    setTimeout(function(){
+                        page.redirect("/view/supports");
+                    }, 3000);
+
+                }
             }
         );
     }
@@ -102,10 +110,10 @@ module.exports = function(ctx, tpl){
         $("#J_pay").on("click", function(){
 
             var _this = $(this);
-            //if(!$("input[name='addressProvince']").val()){
-            //    alert("请填写收货人信息");
-            //    return;
-            //}
+            if(!$("input[name='addressProvince']").val()){
+                alert("请填写收货人信息");
+                return;
+            }
             if(_this.hasClass("pending")) return;
             var currentBook = JSON.parse(window.sessionStorage["currentBook"]);
             $.ajax({
