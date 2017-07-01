@@ -47,6 +47,7 @@ public class ProductController {
             if (Strings.isNullOrEmpty(catalogNo)) {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
             } else {
                 List<TblProduct> tblProductList = productService.getAllPublish(catalogNo);
 
@@ -56,10 +57,12 @@ public class ProductController {
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             }
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("获取商品列表返回: {}", responseDto);
@@ -113,6 +116,7 @@ public class ProductController {
             if (Strings.isNullOrEmpty(productNo)) {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
             } else {
                 TblProduct tblProduct = productService.getByProductNo(productNo);
 
@@ -122,10 +126,12 @@ public class ProductController {
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             }
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("获取商品详情返回: {}", responseDto);

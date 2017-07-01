@@ -47,6 +47,7 @@ public class MessageController {
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
         }
 
         logger.info("发送短信验证码返回: {}", responseDto);

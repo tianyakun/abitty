@@ -120,5 +120,6 @@ public class WechatProxy {
 
         responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
         responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+        responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
     }
 }

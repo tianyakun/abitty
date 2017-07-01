@@ -26,31 +26,6 @@ public class WechatController {
     @Autowired
     private WechatProcessBiz wechatProcessBiz;
 
-//    @RequestMapping(value = "/ticket/{code}")
-//    @ResponseBody
-//    public ResponseDto jsapiTicket(@PathVariable("code") final String code) {
-//        logger.info("JS-SDK权限获取请求 code={}", code);
-//
-//        ResponseDto responseDto = new ResponseDto();
-//
-//        try {
-//            if (Strings.isNullOrEmpty(code)) {
-//                responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
-//                responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
-//                return responseDto;
-//            }
-//
-//            wechatProcessBiz.getTicket(code, responseDto);
-//
-//        } catch (Exception e) {
-//            responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
-//            responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
-//        }
-//
-//        logger.info("JS-SDK权限获取返回: {}", responseDto);
-//        return responseDto;
-//    }
-
     @RequestMapping(value = "/ticket")
     @ResponseBody
     public ResponseDto jsapiTicket(HttpServletRequest request) {
@@ -66,6 +41,7 @@ public class WechatController {
             if (Strings.isNullOrEmpty(ticketUrl)) {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
                 return responseDto;
             }
 
@@ -74,6 +50,7 @@ public class WechatController {
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("JS-SDK权限获取返回: {}", responseDto);

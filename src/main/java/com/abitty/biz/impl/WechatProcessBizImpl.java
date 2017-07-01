@@ -39,6 +39,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
             logger.error("获取access_token为空");
             responseDto.setRetCode(ExceptionEnum.ACCESS_TOKEN_INVALID.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.ACCESS_TOKEN_INVALID.getErrorMsg());
+            responseDto.setRetMsg(ExceptionEnum.ACCESS_TOKEN_INVALID.getChineseMessage());
             return;
         }
 
@@ -50,6 +51,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
             logger.error("获取access_token为空");
             responseDto.setRetCode(ExceptionEnum.JSAPI_TICKET_INVALID.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.JSAPI_TICKET_INVALID.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.JSAPI_TICKET_INVALID.getChineseMessage());
             return;
         }
 
@@ -69,6 +71,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
             logger.error("ticket签名异常");
             responseDto.setRetCode(ExceptionEnum.SIGN_INVALID.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SIGN_INVALID.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SIGN_INVALID.getChineseMessage());
             return;
         }
 
@@ -80,6 +83,7 @@ public class WechatProcessBizImpl implements WechatProcessBiz{
 
         responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
         responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+        responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
     }
 
 

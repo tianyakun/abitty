@@ -14,6 +14,8 @@ public class ResponseDto implements Serializable {
 
     private String retMsg;
 
+    private String chineseMsg;
+
     private Map<String, Object> data = Maps.newHashMap();
 
     public String getRetCode() {
@@ -44,11 +46,20 @@ public class ResponseDto implements Serializable {
         this.data.put(key, value);
     }
 
+    public String getChineseMsg() {
+        return chineseMsg;
+    }
+
+    public void setChineseMsg(String chineseMsg) {
+        this.chineseMsg = chineseMsg;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CommonResponseDto{");
         sb.append("retCode='").append(retCode).append('\'');
         sb.append(", retMsg='").append(retMsg).append('\'');
+        sb.append(", chineseMsg='").append(chineseMsg).append('\'');
         sb.append(", data=").append(data);
         sb.append('}');
         return sb.toString();

@@ -60,11 +60,13 @@ public class UserController {
 
             responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
 
         } catch (Exception e) {
             logger.error("查看用户信息异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("查看用户信息返回 responseDto={}", responseDto);
@@ -98,9 +100,11 @@ public class UserController {
 
             responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
         }
 
         logger.info("修改用户信息返回 {}", responseDto);

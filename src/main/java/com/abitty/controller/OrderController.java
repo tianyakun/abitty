@@ -74,6 +74,7 @@ public class OrderController {
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("订单确认返回: {}", responseDto);
@@ -95,6 +96,7 @@ public class OrderController {
             if (Strings.isNullOrEmpty(uid)) {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorCode());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
             } else {
                 List<TblOrderInfo> tblOrderInfoList = orderService.getSuccessOrderByUid(uid);
 
@@ -109,12 +111,14 @@ public class OrderController {
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorCode());
+                responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             }
 
         } catch (Exception e) {
             logger.error("获取订单列表异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("获取订单列表请求返回 responseDto={}", responseDto);
@@ -134,6 +138,7 @@ public class OrderController {
             if (Strings.isNullOrEmpty(orderNo)) {
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorCode());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
             } else {
                 TblOrderInfo tblOrderInfo = orderService.queryOrderInfo(orderNo);
 
@@ -143,11 +148,13 @@ public class OrderController {
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorCode());
+                responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             }
 
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("获取订单列表请求返回 responseDto={}", responseDto);

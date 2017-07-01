@@ -46,7 +46,6 @@ public class FeedbackController {
 
         logger.info("新增反馈 content={}", content);
 
-        Map<String, Object> resultMap = Maps.newHashMap();
         ResponseDto responseDto = new ResponseDto();
 
         try {
@@ -55,6 +54,7 @@ public class FeedbackController {
                 logger.error("新增反馈内容为空");
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
                 return responseDto;
             }
 
@@ -72,10 +72,12 @@ public class FeedbackController {
 
             responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             return responseDto;
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
             return responseDto;
         }
     }

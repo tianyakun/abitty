@@ -47,9 +47,12 @@ public class CatalogController {
 
             responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
         } catch (Exception e) {
+            logger.error("获取商品类别列表异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("获取商品类别列表返回: {}", responseDto);
@@ -83,6 +86,7 @@ public class CatalogController {
                 logger.error("参数校验失败");
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
             } else {
                 TblCatalog tblCatalog = catalogService.getByCatalogNo(catalogNo);
 
@@ -92,10 +96,12 @@ public class CatalogController {
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             }
         } catch (Exception e) {
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("获取商品类别返回 responseDto={}", responseDto);

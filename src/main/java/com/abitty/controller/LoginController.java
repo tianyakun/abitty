@@ -50,10 +50,12 @@ public class LoginController {
                 logger.error("参数校验失败:{}", constraintMessage);
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
             } else if (!messageProcessBiz.checkValidateCode(loginDto.getPhone(), loginDto.getVerifyCode())) {
                 logger.error("短信验证失败");
                 responseDto.setRetCode(ExceptionEnum.VERIFY_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.VERIFY_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.VERIFY_INVALID.getChineseMessage());
             } else {
                 TblUser tblUser = userService.getUserByUid(loginDto.getPhone());
                 if (tblUser == null) {
@@ -79,10 +81,13 @@ public class LoginController {
 
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
             }
         } catch (Exception e) {
+            logger.error("用户登录异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
 
         logger.info("用户登录返回 responseDto={}", responseDto);

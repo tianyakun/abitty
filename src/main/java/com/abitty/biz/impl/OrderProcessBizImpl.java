@@ -44,6 +44,7 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
                 logger.error("参数校验失败:{}", constraintMessage);
                 responseDto.setRetCode(ExceptionEnum.PARAM_INVALID.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.PARAM_INVALID.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.PARAM_INVALID.getChineseMessage());
                 return;
             }
 
@@ -56,6 +57,7 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
                 logger.error("订单请求数据入库失败");
                 responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
                 return;
             }
 
@@ -65,6 +67,7 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
                 logger.error("请求微信预下单失败");
                 responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+                responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
                 return;
             }
 
@@ -79,6 +82,7 @@ public class OrderProcessBizImpl implements OrderProcessBiz {
             logger.error("订单确认处理异常", e);
             responseDto.setRetCode(ExceptionEnum.SYSTEM_ERROR.getErrorCode());
             responseDto.setRetMsg(ExceptionEnum.SYSTEM_ERROR.getErrorMsg());
+            responseDto.setChineseMsg(ExceptionEnum.SYSTEM_ERROR.getChineseMessage());
         }
     }
 
