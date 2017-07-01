@@ -79,8 +79,9 @@ module.exports = function(ctx, tpl){
             $("#J_get_adress").on("click", function(){
                 wx.openAddress({
                     success: function(res){
+
                         $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
-                        $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.phoneNumber);
+                        $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.telNumber);
                         $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
                         $("input[name='addressProvince']").val(res.provinceName);
                         $("input[name='addressCity']").val(res.cityName);
