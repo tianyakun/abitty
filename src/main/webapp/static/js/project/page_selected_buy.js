@@ -67,7 +67,7 @@ $(function(){
 
     //APP服务列表 EX: 纸巾,酸奶
     page('/view/supports', function(ctx){
-       // require('./controller_support')(ctx, tpl);
+        require('./controller_support')(ctx, tpl);
         setBg("transparent");
     })
 

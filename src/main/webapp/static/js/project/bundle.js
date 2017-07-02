@@ -2287,7 +2287,50 @@ module.exports = function(ctx, tpl){
 }
 
 /***/ }),
-/* 13 */,
+/* 13 */
+/***/ (function(module, exports) {
+
+/**
+ * Created by yang on 17/5/26.
+ */
+
+module.exports = function(ctx, tpl){
+
+    function bindStoreSelect(){
+        $("#J_list").on("click", ".J_item", function(e){
+            var id = $(this).data("id");
+        })
+    }
+    function render(tpl, res){
+        res = typeof res == "string"?JSON.parse(res):res;
+        if(res.retCode != 000000){
+            alert(res.retMsg);
+            return;
+        }
+        var html, topBarHtml;
+
+        html = $Prime.render(tpl.supports, res.data);
+        $Config = $.extend($Config, {title: "一点生活"});
+        topBarHtml = $Prime.render(tpl.topBar, $Config);
+        html = topBarHtml+html + tpl.buttomTab;
+        $Prime.SPAWrapper("app").html(html);
+
+        bindStoreSelect();
+    }
+
+    $.ajax({
+        url: $Config.root + "/catalog/list",
+        type: "GET",
+        beforeSend: function(){
+        }
+    }).done(function(res){
+        render(tpl, res);
+    }).fail(function(){
+
+    });
+}
+
+/***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
@@ -2841,7 +2884,7 @@ $(function(){
 
     //APP服务列表 EX: 纸巾,酸奶
     page('/view/supports', function(ctx){
-       // require('./controller_support')(ctx, tpl);
+        __webpack_require__(13)(ctx, tpl);
         setBg("transparent");
     })
 
