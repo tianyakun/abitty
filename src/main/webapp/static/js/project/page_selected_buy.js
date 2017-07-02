@@ -78,7 +78,7 @@ $(function(){
     })
 
     page('/view/products/:id', function(ctx){
-       // require('./controller_products_detail')(ctx, tpl);
+        require('./controller_products_detail')(ctx, tpl);
         setBg("transparent");
     });
 
@@ -106,7 +106,7 @@ $(function(){
 
 
     page('/view/user', function(ctx){
-        $Prime.SPAWrapper("app").html("");
+        //$Prime.SPAWrapper("app").html("");
         require('./controller_user')(ctx, tpl);
         setBg("#f4f4f4");
     });

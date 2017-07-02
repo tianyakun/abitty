@@ -2895,7 +2895,7 @@ $(function(){
     })
 
     page('/view/products/:id', function(ctx){
-       // require('./controller_products_detail')(ctx, tpl);
+        __webpack_require__(36)(ctx, tpl);
         setBg("transparent");
     });
 
@@ -2923,7 +2923,7 @@ $(function(){
 
 
     page('/view/user', function(ctx){
-        $Prime.SPAWrapper("app").html("");
+        //$Prime.SPAWrapper("app").html("");
         __webpack_require__(14)(ctx, tpl);
         setBg("#f4f4f4");
     });
@@ -2961,7 +2961,52 @@ module.exports = "<section class=bottom-tab> <a href=/view/myService> <i class=t
 module.exports = "<section id=J_list class=\"item-list item-service-list gray-bg buttom-height\"> <ul> <li> <div class=item-hd> <img src=\"{{=item.icon}}\" alt=\"\"> {{? item.status == 1}} <div class=progress_wrapper> <div class=progress_bar> <div style=width:{}; class=progress_current></div> </div> <p class=left_over>距离下次配送: {{=item.nextTime}}天</p> </div> {{?}} </div> <div class=item-bd> <h3>{{=item.name}}</h3> <p> <em>{{=item.count_desc}}</em> <em>状态: {{? item.status == 1}}正在使用{{??}}下单成功{{?}}</em> </p> </div> </li> </ul> </section> <section class=user-service-action> <button class=btn2>延时配送</button> <p class=action-tip>注: 提前三天为您备货, 该期间无法操作.</p> </section>";
 
 /***/ }),
-/* 36 */,
+/* 36 */
+/***/ (function(module, exports) {
+
+module.exports = function(ctx, tpl){
+
+
+    var currentData = null;
+    function render(res, tpl){
+        if(res.retCode != 000000){
+            alert(res.retMsg);
+            return;
+        }
+        var topBarHtml, html;
+        $Config = $.extend($Config, {back: true, title: '一点生活'});
+        topBarHtml = $Prime.render(tpl.topBar, $Config);
+
+        html = topBarHtml + $Prime.render( tpl.productsDetail, res.data);
+        $Prime.SPAWrapper("app").html(html);
+        currentData = res.data.item;
+    }
+
+    function bind(){
+        $("#J_start_book").on("click", function(){
+            window.sessionStorage["currentBook"] = JSON.stringify(currentData);
+        })
+    }
+
+
+
+    $.ajax({
+        url: $Config.root + "/product/detail/"+ ctx.params.id,
+        type: "GET",
+        data: {
+            __: new Date().getTime()
+        },
+        beforeSend: function(){}
+    }).done(function(res){
+       render(res, tpl);
+       bind();
+    }).fail(function(){
+
+    });
+
+}
+
+/***/ }),
 /* 37 */,
 /* 38 */
 /***/ (function(module, exports) {
