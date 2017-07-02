@@ -66,7 +66,7 @@ module.exports = function(ctx, tpl){
                         if(redirect){
                             location.href = redirect;
                         }else{
-                            page.redirect("/view/supports");
+                            page.redirect("/view/supports?t=" + new Date().getTime());
                         }
 
                     }else{
