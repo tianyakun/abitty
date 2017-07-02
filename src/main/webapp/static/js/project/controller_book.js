@@ -31,11 +31,7 @@ module.exports = function(ctx, tpl){
                 if(r.err_msg == "get_brand_wcpay_request:ok" ) {
                     page.redirect("/view/myService");
                 }else{
-                    alert(r.err_msg);
-                    setTimeout(function(){
-                        page.redirect("/view/supports");
-                    }, 3000);
-
+                    page.redirect(window.sessionStorage.selectPath);
                 }
             }
         );

@@ -1786,11 +1786,7 @@ module.exports = function(ctx, tpl){
                 if(r.err_msg == "get_brand_wcpay_request:ok" ) {
                     page.redirect("/view/myService");
                 }else{
-                    alert(r.err_msg);
-                    setTimeout(function(){
-                        page.redirect("/view/supports");
-                    }, 3000);
-
+                    page.redirect(window.sessionStorage.selectPath);
                 }
             }
         );
@@ -2100,7 +2096,7 @@ module.exports = function(ctx, tpl){
 
 module.exports = function(ctx, tpl){
 
-
+    window.sessionStorage.selectPath = ctx.path;
 
 
     function formDataToJson(formdata){
@@ -3022,24 +3018,48 @@ module.exports = "<section class=\"item-list has-foot-btn item-service-list\" st
 /***/ (function(module, exports) {
 
 module.exports = function(ctx, tpl){
+    var Jform,
+        Jphone,
+        Jvcode,
+        Jcode,
+        timer;
+    $.ajax({
+        url: $Config.root + '/auth',
+        type: "GET",
+        beforeSend: function(){}
+    }).done(function(res){
+        if(res.retCode == 000000){
+            page.redirect("/view/supports");
+        }else{
+            render(tpl);
+            bind();
+        }
+    });
+
     function render(tpl){
         var html = tpl.login
         $Prime.SPAWrapper("app").html(html);
     }
 
-    render(tpl);
 
-    var Jform = $("#J_login_form"),
-        Jphone = Jform.find("input[name='phone']"),
-        Jvcode = Jform.find("input[name='vcode']"),
-        Jcode = $("#J_code"),
-        timer = null;
-    regPhone = /^1[34578]\d{9}$/;
-    errorMsg = {
-        phone: "请输入正确的手机号",
-        vcode: "请输入验证码",
-        serverErr: "服务器发生未知错误,请稍后重试"
-    };
+    function bind(){
+            Jform = $("#J_login_form"),
+            Jphone = Jform.find("input[name='phone']"),
+            Jvcode = Jform.find("input[name='vcode']"),
+            Jcode = $("#J_code"),
+            timer = null;
+        regPhone = /^1[34578]\d{9}$/;
+        errorMsg = {
+            phone: "请输入正确的手机号",
+            vcode: "请输入验证码",
+            serverErr: "服务器发生未知错误,请稍后重试"
+        };
+
+        bindSubmit(Jform);
+        bindCode(Jcode);
+    }
+
+
 
 
     function getUrlParam(name){
@@ -3048,31 +3068,36 @@ module.exports = function(ctx, tpl){
         if (r != null) return decodeURIComponent(r[2]);
         return null; //返回参数值
     }
-    Jform.on("submit", function(){
-        if(checkForm()){
-            $.ajax({
-                url: $Config.root + "/login",
-                type: "POST",
-                data: {
-                    phone: Jphone.val(),
-                    verifyCode: Jvcode.val()
-                }
-            }).done(function(res){
-                if(res.retCode == 000000){
-                    var redirect = getUrlParam("redirect");
-                    if(redirect){
-                        location.href = redirect;
-                    }else{
-                        page.redirect("/view/supports");
-                    }
 
-                }else{
-                    alert(res.chineseMsg);
-                }
-            });
-        }
-        return false;
-    });
+    function bindSubmit(form){
+        form.on("submit", function(){
+            if(checkForm()){
+                $.ajax({
+                    url: $Config.root + "/login",
+                    type: "POST",
+                    data: {
+                        phone: Jphone.val(),
+                        verifyCode: Jvcode.val()
+                    }
+                }).done(function(res){
+                    if(res.retCode == 000000){
+                        var redirect = getUrlParam("redirect");
+                        if(redirect){
+                            location.href = redirect;
+                        }else{
+                            page.redirect("/view/supports");
+                        }
+
+                    }else{
+                        alert(res.chineseMsg);
+                    }
+                });
+            }
+            return false;
+        });
+    }
+
+
 
     function checkForm(){
         var isValidate = false;
@@ -3101,32 +3126,36 @@ module.exports = function(ctx, tpl){
         }, 1000)
     }
 
-    Jcode.on("click", function(){
-        var _this = $(this);
-        if(!regPhone.test(Jphone.val())){
-            alert(errorMsg.phone);
-            return;
-        }
-        if(_this.hasClass("pending") || _this.hasClass("counting")) return;
-        $.ajax({
-            url: $Config.root + "/verify/send/"+Jphone.val(),
-            type: "GET",
-            beforeSend: function(){
-                _this.addClass("pending");
+    function bindCode(code){
+        code.on("click", function(){
+            var _this = $(this);
+            if(!regPhone.test(Jphone.val())){
+                alert(errorMsg.phone);
+                return;
             }
-        }).done(function(res){
-            if(res.retCode == 000000){
-                setTimer(_this);
-            }else{
-                alert(res.retMsg);
-            }
+            if(_this.hasClass("pending") || _this.hasClass("counting")) return;
+            $.ajax({
+                url: $Config.root + "/verify/send/"+Jphone.val(),
+                type: "GET",
+                beforeSend: function(){
+                    _this.addClass("pending");
+                }
+            }).done(function(res){
+                if(res.retCode == 000000){
+                    setTimer(_this);
+                }else{
+                    alert(res.retMsg);
+                }
 
-        }).fail(function(){
-            alert(errorMsg.serverErr);
-        }).always(function(){
-            _this.removeClass("pending");
-        });
-    })
+            }).fail(function(){
+                alert(errorMsg.serverErr);
+            }).always(function(){
+                _this.removeClass("pending");
+            });
+        })
+    }
+
+
 
 
 
