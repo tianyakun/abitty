@@ -2549,7 +2549,7 @@ module.exports = "<section class=product-select-wrapper> <div class=page-service
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a {{? it.uid}}href=/view/user {{??}}href=/view/login {{?}} class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
+module.exports = "<section id=J_top_bar class=top-bar> <h1 class=\"top-bar-item top-bar-tit\">{{=it.title}}</h1> <a {{? it.uid}}href=\"/view/user?t={{=new Date().getTime()}}\" {{??}}href=/view/login {{?}} class=\"user-item icon-user\">{{? it.uid}}{{=it.uid}}{{??}}登录{{?}}</a> </section>";
 
 /***/ }),
 /* 27 */
@@ -2950,7 +2950,7 @@ $(function(){
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=bottom-tab> <a href=/view/myService> <i class=\"tab-service-icon {{? it.active == 'myservice'}}tab-service-icon-hover{{?}}\"></i> <p>已订购</p> </a> <a href=/view/supports> <i class=\"tab-supports-icon {{? it.active == 'supports'}}tab-supports-icon-hover{{?}}\"></i> <p>商城</p> </a> <a href=/view/user> <i class=\"tab-user-icon {{? it.active == 'user'}}tab-user-icon-hover{{?}}\"></i> <p>我的</p> </a> </section>";
+module.exports = "<section class=bottom-tab> <a href=\"/view/myService?t={{=new Date().getTime()}}\"> <i class=\"tab-service-icon {{? it.active == 'myservice'}}tab-service-icon-hover{{?}}\"></i> <p>已订购</p> </a> <a href=/view/supports> <i class=\"tab-supports-icon {{? it.active == 'supports'}}tab-supports-icon-hover{{?}}\"></i> <p>商城</p> </a> <a href=/view/user> <i class=\"tab-user-icon {{? it.active == 'user'}}tab-user-icon-hover{{?}}\"></i> <p>我的</p> </a> </section>";
 
 /***/ }),
 /* 34 */
