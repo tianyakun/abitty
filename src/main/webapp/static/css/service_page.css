@@ -643,7 +643,7 @@ em {
   margin: 0 1rem;
 }
 .page-tip .page-tip-inner:before {
-  top: 50%;
+  top: 48%;
   border-top: 1px solid #d2daca;
 }
 .page-tip h5 {
@@ -826,6 +826,18 @@ em {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
+.book-select .icon-next {
+  background: url("../img/back.png") no-repeat left 0;
+  background-size: contain;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  margin-top: -0.75rem;
+  height: 1.5rem;
+  width: 1.4rem;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 .loginout-wrapper {
   position: absolute;
   left: 0;
@@ -896,11 +908,21 @@ em {
   word-break: break-all;
 }
 .book-wrapper .cell-label {
-  width: 7.25rem;
+  width: 8.3rem;
   display: block;
 }
 .book-wrapper .total-price {
   font-size: 1.5rem;
+}
+.book-wrapper textarea {
+  padding: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  border-color: #9ea997;
+  width: 100%;
 }
 .order-result ul li {
   margin-bottom: 0;

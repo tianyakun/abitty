@@ -28,7 +28,7 @@
       margin: 0 20/@base;
     }
     &:before{
-      top: 50%;
+      top: 48%;
       border-top: 1px solid #d2daca;
     }
   }
@@ -242,6 +242,20 @@
   }
 
 }
+.book-select{
+  .icon-next{
+    background: url("../img/back.png") no-repeat left 0;
+    background-size: contain;
+    position: absolute;
+    right: 20/@base;
+    top: 50%;
+    margin-top: -15/@base;
+    height: 30/@base;
+    width: 28/@base;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
 
 .loginout-wrapper{
   position: absolute;
@@ -319,13 +333,19 @@
 
 .book-wrapper{
   .cell-label{
-    width: 145/@base;
+    width: 166/@base;
     //text-align: right;
     //margin-right: 10px;
     display: block;
   }
   .total-price{
     font-size: 30/@base;
+  }
+  textarea{
+    padding: 0;
+    .radius(0);
+    border-color: @color;
+    width: 100%;
   }
 }
 
