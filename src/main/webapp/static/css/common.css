@@ -176,7 +176,7 @@ select {
 body {
   font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
-input,
+input[type='text'],
 textarea {
   -webkit-appearance: none;
   appearance: none;
