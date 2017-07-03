@@ -12,13 +12,14 @@ module.exports = function(ctx, tpl){
         html = $Prime.render(tpl.user_person, res.data);
         optionHtml = $Prime.render(optionTpl, res.data);
         html = html.replace(/\[option\]/, optionHtml);
-        html = topBarHtml +  html +  tpl.buttomTab;
+        var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'user'});
+        html = topBarHtml +  html +  buttomTabHtml;
         $Prime.SPAWrapper("app").html(html);
 
     }
 
     function bindUpdate(){
-        $("#J_save").on("click", function(){
+        $("select[name='gender'],input[name='birthday']").on("change", function(){
             var _this = $(this);
             if(_this.hasClass("pending") ) return;
             $.ajax({
@@ -29,7 +30,7 @@ module.exports = function(ctx, tpl){
                     gender: $("select[name='gender']").val()
                 },
                 beforeSend: function(){
-                    _this.addClass("pending").text("保存中...");
+                    _this.addClass("pending");
                 }
             }).done(function(res){
                 $Prime.isAccess(res);
@@ -41,7 +42,7 @@ module.exports = function(ctx, tpl){
             }).fail(function(){
 
             }).always(function(){
-                _this.removeClass("pending").text("保存");
+                _this.removeClass("pending");
             });
         })
     }

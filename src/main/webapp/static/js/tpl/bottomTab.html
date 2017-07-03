@@ -1,14 +1,14 @@
 <section class="bottom-tab">
     <a href="/view/myService">
-        <i class="tab-service-icon"></i>
+        <i class="tab-service-icon {{? it.active == 'myservice'}}tab-service-icon-hover{{?}}"></i>
         <p>已订购</p>
     </a>
     <a href="/view/supports">
-        <i class="tab-supports-icon"></i>
+        <i class="tab-supports-icon {{? it.active == 'supports'}}tab-supports-icon-hover{{?}}"></i>
         <p>商城</p>
     </a>
     <a href="/view/user">
-        <i class="tab-user-icon"></i>
+        <i class="tab-user-icon {{? it.active == 'user'}}tab-user-icon-hover{{?}}"></i>
         <p>我的</p>
     </a>
 </section>

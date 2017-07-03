@@ -3,7 +3,8 @@ module.exports = function(ctx, tpl){
         var topBarHtml, html;
         $Config = $.extend($Config, {back: true, title: '个人信息'});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
-        html = topBarHtml + $Prime.render(tpl.user, $Config) +  tpl.buttomTab;
+        var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'user'});
+        html = topBarHtml + $Prime.render(tpl.user, $Config) +  buttomTabHtml;
         $Prime.SPAWrapper("app").html(html);
     }
 

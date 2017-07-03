@@ -4,7 +4,8 @@ module.exports = function(ctx, tpl){
         if(res.data.list.length != 0){
             $Config = $.extend($Config, {back: false, title: ""});
             var topBarHtml = $Prime.render(tpl.topBar, $Config);
-            html = topBarHtml+html+ tpl.buttomTab;
+            var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'myservice'});
+            html = topBarHtml+html+ buttomTabHtml;
         }
         $Prime.SPAWrapper("app").html(html);
         bindAction();

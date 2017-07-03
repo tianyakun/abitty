@@ -20,7 +20,8 @@ module.exports = function(ctx, tpl){
         html = $Prime.render(tpl.supports, res.data);
         $Config = $.extend($Config, {title: "一点生活"});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
-        html = topBarHtml+html + tpl.buttomTab;
+        var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'supports'});
+        html = topBarHtml+html + buttomTabHtml;
         $Prime.SPAWrapper("app").html(html);
 
         bindStoreSelect();
