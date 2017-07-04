@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,7 +39,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseDto login(LoginDto loginDto, HttpServletRequest httpServletRequest) {
+    public ResponseDto login(LoginDto loginDto, HttpServletRequest httpServletRequest, HttpServletResponse response) {
         logger.info("用户登录请求 loginDto={}", loginDto);
 
         ResponseDto responseDto = new ResponseDto();
@@ -74,8 +75,13 @@ public class LoginController {
                 session.setAttribute("user", tblUser);
                 session.setAttribute("uid", tblUser.getUid());
 
-//                String callback = (String) session.getAttribute("callback");
-//                session.removeAttribute("callback"); // 获取之后移除
+                Cookie cookie = new Cookie("JSESSIONID", session.getId());
+
+                cookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
+
+                cookie.setPath("/");
+
+                response.addCookie(cookie);
 
                 logger.info("用户登录成功 user={}", session.getAttribute("user"));
 
