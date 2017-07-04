@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -21,13 +23,20 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/auth")
     @ResponseBody
-    public ResponseDto auth(HttpSession session) {
+    public ResponseDto auth(HttpServletRequest request) {
 
         logger.info("用户鉴权请求");
 
         ResponseDto responseDto = new ResponseDto();
 
         try {
+            HttpSession session = request.getSession();
+            logger.info("auth sessionId={}", session.getId());
+
+            for (Cookie cookie : request.getCookies()) {
+                logger.info("auth cookie: name={} value={}", cookie.getName(), cookie.getValue());
+            }
+
             TblUser user = (TblUser)session.getAttribute("user");
 
             if(user != null){  //判断用户是否存在，不存在返回登录界面，继续拦截，存在通过拦截，放行到访问页面

@@ -75,6 +75,8 @@ public class LoginController {
                 session.setAttribute("user", tblUser);
                 session.setAttribute("uid", tblUser.getUid());
 
+                logger.info("login JSESSIONID={}", session.getId());
+
 //                Cookie cookie = new Cookie("JSESSIONID", session.getId());
 //                cookie.setSecure(true);
 //                cookie.setHttpOnly(true);
