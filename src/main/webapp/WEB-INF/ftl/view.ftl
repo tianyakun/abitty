@@ -14,6 +14,6 @@
         <div id="app" class="wrapper"></div>
         <script src="http://www.abitty.com/static/js/prime/zepto.js"></script>
         <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
-        <script src="http://www.abitty.com/static/js/project/bundle.js?v=6.0"></script>
+        <script src="http://www.abitty.com/static/js/project/bundle.js?v=8.0"></script>
     </body>
 </html>

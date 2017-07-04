@@ -1862,7 +1862,7 @@ module.exports = function(ctx, tpl){
                     wx.openAddress({
                         success: function(res){
 
-                            if(/北京/.test(res.provinceName)){
+                            if(!/北京/.test(res.provinceName)){
                                 $("#J_trigger_address").prop("checked", false)
                                 alert("对不起,该商品暂时只支持北京地地区!");
                                 return;
@@ -1892,7 +1892,7 @@ module.exports = function(ctx, tpl){
                 wx.openAddress({
                     success: function(res){
 
-                        if(/北京/.test(res.provinceName)){
+                        if(!/北京/.test(res.provinceName)){
                             $("#J_trigger_address").prop("checked", false)
                             alert("对不起,该商品暂时只支持北京地地区!");
                             return;
