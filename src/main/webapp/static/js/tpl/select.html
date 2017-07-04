@@ -5,9 +5,9 @@
                 <li class="item-cells">
                     <div class="item-cell">
                         <div class="item-cell-hd">
-                            <label for="" class="cell-label">定几个月?</label>
+                            <label for="" class="cell-label">订几个月?</label>
                         </div>
-                        <div class="item-cell-bd">
+                        <div class="item-cell-bd book-select">
                             <!--<div id="J_user_select_person" class="user-select-wrapper">-->
                                 <!--<span data-ui="btn" data-op="reduce" class="user-select-control-btn">-</span>-->
                                 <!--<span data-type="count" class="user-select-result">1</span>-->
@@ -26,6 +26,7 @@
                                         <option value="6|6">6月(6次)</option>
                                 {{?}}
                             </select>
+                            <i class="icon-next"></i>
 
 
                         </div>
@@ -34,9 +35,9 @@
                 <li class="item-cells">
                     <div class="item-cell">
                         <div class="item-cell-hd">
-                            <label class="cell-label">每次件数?</label>
+                            <label class="cell-label">每次几件?</label>
                         </div>
-                        <div class="item-cell-bd">
+                        <div class="item-cell-bd book-select">
                             <!--<div id="J_user_select_count" class="user-select-wrapper">-->
                                 <!--<span data-ui="btn" data-op="reduce" class="user-select-control-btn">-</span>-->
                                 <!--<span data-type="count" class="user-select-result">1</span>-->
@@ -48,13 +49,14 @@
                                 <option value="2">2件</option>
                                 <option value="3">3件</option>
                             </select>
+                            <i class="icon-next"></i>
                         </div>
                     </div>
                 </li>
                 <li class="item-cells last-child-sub-wrapper">
                     <div class="item-cell">
                         <div class="item-cell-hd">
-                            <label class="cell-label">其他需求：</label>
+                            <label class="cell-label">备注：</label>
                         </div>
                         <div class="item-cell-bd">
                             <textarea name="remark" id="" cols="30" rows="10"></textarea>
@@ -67,7 +69,7 @@
                             <label class="cell-label">总价：</label>
                         </div>
                         <div class="item-cell-bd">
-                            <p class="total-price"><span id="J_total">0</span>元</p>
+                            <p class="total-price">￥<span id="J_total">0</span></p>
 
                             <!--单次配送数量-->
                             <input type="hidden" name="subQuantity" >
@@ -92,4 +94,4 @@
 </section>
 
 <!--<a href="/view/book" id="J_select" class="foot-fixed-btn">开始订购</a>-->
-<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6567f481349fba16&redirect_uri=http://www.abitty.com/view/book&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect;" id="J_select" class="foot-fixed-btn">开始订购</a>
+<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6567f481349fba16&redirect_uri=http://www.abitty.com/view/book&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect;" id="J_select" class="foot-fixed-btn">确定</a>

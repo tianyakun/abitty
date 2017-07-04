@@ -28,7 +28,7 @@
       margin: 0 20/@base;
     }
     &:before{
-      top: 50%;
+      top: 48%;
       border-top: 1px solid #d2daca;
     }
   }
@@ -121,22 +121,24 @@
 
     overflow: hidden;
     li img{
-      width: 54/@base;
-      height: 60/@base;
+      width: 130/@base;
+      height: 130/@base;
+      .radius(50%);
+      overflow: hidden;
       touch-action: none;
     }
     li{
       float: left;
-      width: 100/4%;
+      width: 100/3%;
       text-align: center;
-      margin-bottom: 54/@base;
+      margin-bottom: 50/@base;
       a{
         display: block;
       }
       p{
         font-size: 28/@base;
         padding-top: 16/@base;
-        color: #999;
+        color: #333;
       }
     }
   }
@@ -240,6 +242,20 @@
   }
 
 }
+.book-select{
+  .icon-next{
+    background: url("../img/back.png") no-repeat left 0;
+    background-size: contain;
+    position: absolute;
+    right: 20/@base;
+    top: 50%;
+    margin-top: -15/@base;
+    height: 30/@base;
+    width: 28/@base;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
 
 .loginout-wrapper{
   position: absolute;
@@ -253,34 +269,44 @@
   padding-bottom: @ButtomHeight;
 }
 .bottom-tab{
-  background-color: #fff;
-  border-top: 1px solid @color;
-  .boxflex();
+
+  height: 100/@base;
+  background-color: #f9f9f9;
   position: fixed;
   left: 0;
   bottom: 0;
-  height: 85/@base;
   width: 100%;
+
+  &:before{
+    border-top: 1px solid #d5d5d5;
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    color: #e5e5e5;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    z-index: 2;
+  }
+  .boxflex();
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+
   a{
     box-sizing: border-box;
-    padding-top: 12/@base;
     color: #595C60;
     font-size: 12px;
     flex: 1;
     text-align: center;
-    height: 100%;
-
-    &:first-child{
-      border-right: 1px solid @color;
-    }
-    &:last-child{
-      border-left: 1px solid @color;
-    }
-    p{
-      -webkit-transform: scale(10/12);
-      transform: scale(10/12);
-    }
-
+  }
+  p{
+    font-size: 22/@base;
+    color: #929291;
   }
 }
 
@@ -307,13 +333,21 @@
 
 .book-wrapper{
   .cell-label{
-    width: 145/@base;
+    width: 160/@base;
     //text-align: right;
     //margin-right: 10px;
     display: block;
   }
   .total-price{
     font-size: 30/@base;
+  }
+  textarea{
+    padding: 5px;
+    .radius(4px);
+    border-color: #ced4cb;
+    box-sizing: border-box;
+    height: 118/@base;
+    width: 100%;
   }
 }
 
@@ -343,22 +377,33 @@
 
 .tab-service-icon, .tab-supports-icon, .tab-user-icon{
   display: block;
-  width: 38/@base;
-  height: 38/@base;
+  width: 40/@base;
+  height: 40/@base;
   background-size: contain;
   background-repeat:  no-repeat;
-  margin: 0 auto 6/@base;
+  margin: 0 auto 8/@base;
 }
 .tab-service-icon{
-  background-image: url('../img/my.png');
+  background-image: url('../img/my_service.png');
+}
+.tab-service-icon-hover{
+  background-image: url('../img/my_service_hover.png');
+  color: #87987b;
 }
 
 .tab-supports-icon{
-  background-image: url('../img/fenlei.png');
+  background-image: url('../img/shop.png');
 }
-
+.tab-supports-icon-hover{
+  background-image: url('../img/shop_hover.png');
+  color: #87987b;
+}
 .tab-user-icon{
-  background-image: url('../img/me.png');
+  background-image: url('../img/my_info.png');
+}
+.tab-user-icon-hover{
+  background-image: url('../img/my_info_hover.png');
+  color: #87987b;
 }
 .set-adress .item-bd p{
   text-align: left;

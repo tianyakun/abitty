@@ -643,7 +643,7 @@ em {
   margin: 0 1rem;
 }
 .page-tip .page-tip-inner:before {
-  top: 50%;
+  top: 48%;
   border-top: 1px solid #d2daca;
 }
 .page-tip h5 {
@@ -713,15 +713,21 @@ em {
   overflow: hidden;
 }
 .support-wrapper ul li img {
-  width: 2.7rem;
-  height: 3rem;
+  width: 6.5rem;
+  height: 6.5rem;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  overflow: hidden;
   touch-action: none;
 }
 .support-wrapper ul li {
   float: left;
-  width: 25%;
+  width: 33.33333333%;
   text-align: center;
-  margin-bottom: 2.7rem;
+  margin-bottom: 2.5rem;
 }
 .support-wrapper ul li a {
   display: block;
@@ -729,7 +735,7 @@ em {
 .support-wrapper ul li p {
   font-size: 1.4rem;
   padding-top: 0.8rem;
-  color: #999;
+  color: #333;
 }
 .support-btn-wrapper {
   padding-top: 2rem;
@@ -820,6 +826,18 @@ em {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
+.book-select .icon-next {
+  background: url("../img/back.png") no-repeat left 0;
+  background-size: contain;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  margin-top: -0.75rem;
+  height: 1.5rem;
+  width: 1.4rem;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 .loginout-wrapper {
   position: absolute;
   left: 0;
@@ -830,38 +848,45 @@ em {
   padding-bottom: 5rem;
 }
 .bottom-tab {
-  background-color: #fff;
-  border-top: 1px solid #9ea997;
+  height: 5rem;
+  background-color: #f9f9f9;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
-  position: fixed;
+}
+.bottom-tab:before {
+  border-top: 1px solid #d5d5d5;
+  content: " ";
+  position: absolute;
+  top: 0;
   left: 0;
-  bottom: 0;
-  height: 4.25rem;
-  width: 100%;
+  right: 0;
+  height: 1px;
+  color: #e5e5e5;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  z-index: 2;
 }
 .bottom-tab a {
   box-sizing: border-box;
-  padding-top: 0.6rem;
   color: #595C60;
   font-size: 12px;
   flex: 1;
   text-align: center;
-  height: 100%;
 }
-.bottom-tab a:first-child {
-  border-right: 1px solid #9ea997;
-}
-.bottom-tab a:last-child {
-  border-left: 1px solid #9ea997;
-}
-.bottom-tab a p {
-  -webkit-transform: scale(0.83333333);
-  transform: scale(0.83333333);
+.bottom-tab p {
+  font-size: 1.1rem;
+  color: #929291;
 }
 .ui-select {
   -webkit-appearance: none;
@@ -883,11 +908,23 @@ em {
   word-break: break-all;
 }
 .book-wrapper .cell-label {
-  width: 7.25rem;
+  width: 8rem;
   display: block;
 }
 .book-wrapper .total-price {
   font-size: 1.5rem;
+}
+.book-wrapper textarea {
+  padding: 5px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  border-color: #ced4cb;
+  box-sizing: border-box;
+  height: 5.9rem;
+  width: 100%;
 }
 .order-result ul li {
   margin-bottom: 0;
@@ -913,20 +950,32 @@ em {
 .tab-supports-icon,
 .tab-user-icon {
   display: block;
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 2rem;
+  height: 2rem;
   background-size: contain;
   background-repeat: no-repeat;
-  margin: 0 auto 0.3rem;
+  margin: 0 auto 0.4rem;
 }
 .tab-service-icon {
-  background-image: url('../img/my.png');
+  background-image: url('../img/my_service.png');
+}
+.tab-service-icon-hover {
+  background-image: url('../img/my_service_hover.png');
+  color: #87987b;
 }
 .tab-supports-icon {
-  background-image: url('../img/fenlei.png');
+  background-image: url('../img/shop.png');
+}
+.tab-supports-icon-hover {
+  background-image: url('../img/shop_hover.png');
+  color: #87987b;
 }
 .tab-user-icon {
-  background-image: url('../img/me.png');
+  background-image: url('../img/my_info.png');
+}
+.tab-user-icon-hover {
+  background-image: url('../img/my_info_hover.png');
+  color: #87987b;
 }
 .set-adress .item-bd p {
   text-align: left;

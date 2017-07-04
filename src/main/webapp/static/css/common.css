@@ -176,6 +176,11 @@ select {
 body {
   font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
 }
+input[type='text'],
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+}
 ul,
 ol {
   list-style: none;

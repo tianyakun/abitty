@@ -4,7 +4,7 @@
 
 module.exports = function(ctx, tpl){
 
-
+    window.sessionStorage.selectPath = ctx.path;
 
 
     function formDataToJson(formdata){
