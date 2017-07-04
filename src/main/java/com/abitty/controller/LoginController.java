@@ -75,13 +75,13 @@ public class LoginController {
                 session.setAttribute("user", tblUser);
                 session.setAttribute("uid", tblUser.getUid());
 
-                Cookie cookie = new Cookie("JSESSIONID", session.getId());
-                cookie.setSecure(true);
-                cookie.setHttpOnly(true);
-                cookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
-                cookie.setPath("/");
-
-                response.addCookie(cookie);
+//                Cookie cookie = new Cookie("JSESSIONID", session.getId());
+//                cookie.setSecure(true);
+//                cookie.setHttpOnly(true);
+//                cookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
+//                cookie.setPath("/");
+//
+//                response.addCookie(cookie);
 
                 logger.info("用户登录成功 user={}", session.getAttribute("user"));
 
