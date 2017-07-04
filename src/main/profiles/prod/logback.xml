@@ -11,7 +11,7 @@
 			<level>INFO</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log_dir}/logs/info.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>${catalina.base}/logs/info.%d{yyyy-MM-dd}.log</FileNamePattern>
 		</rollingPolicy>
 	</appender>
 
@@ -25,7 +25,7 @@
 			<level>ERROR</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>${log_dir}/logs/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<FileNamePattern>${catalina.base}/logs/error.%d{yyyy-MM-dd}.log</FileNamePattern>
 		</rollingPolicy>
 	</appender>
 
