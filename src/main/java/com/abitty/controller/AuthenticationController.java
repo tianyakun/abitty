@@ -32,7 +32,7 @@ public class AuthenticationController {
         try {
             if (request.getCookies() != null) {
                 for (Cookie cookie : request.getCookies()) {
-                    logger.info("auth cookie: name={} value={}", cookie.getName(), cookie.getValue());
+                    logger.info("auth cookie: name={} value={}", cookie.getName(), cookie.getValue(), cookie.getPath());
                 }
             }
 
