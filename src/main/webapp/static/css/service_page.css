@@ -262,6 +262,13 @@ em {
   font-size: 1.4rem;
   line-height: 22px;
   color: #000;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 .item-list .item-bd span:first-child {
   color: #eb4f4e;
@@ -1021,7 +1028,7 @@ em {
 .adress-wrapper h4 {
   font-size: 1.4rem;
   color: #333;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 .adress-wrapper p {
   font-size: 1.4rem;
@@ -1030,9 +1037,11 @@ em {
 .adress-wrapper .item-book-adress-info {
   width: 100%;
 }
+.adress-wrapper .item-book-adress-info .label {
+  width: 2.5rem;
+}
 .adress-wrapper .item-book-adress-info input[type='checkbox'] {
   margin-top: -1px;
-  margin-right: 1.1rem;
 }
 .adress-wrapper .item-book-adress-info td {
   padding: 1.2rem 0;
