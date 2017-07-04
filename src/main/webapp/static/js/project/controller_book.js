@@ -78,25 +78,82 @@ module.exports = function(ctx, tpl){
     }
 
 
-    function bindGetAdress(wx){
+    function bindGetAdress(){
         wx.ready(function(){
-            $("#J_get_adress").on("click", function(){
+            //$("#J_get_adress").on("click", function(){
+            //    wx.openAddress({
+            //        success: function(res){
+            //
+            //
+            //
+            //            $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
+            //            $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.telNumber);
+            //            $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
+            //            $("input[name='addressProvince']").val(res.provinceName);
+            //            $("input[name='addressCity']").val(res.cityName);
+            //            $("input[name='addressArea']").val(res.countryName);
+            //            $("#J_detailInfo").text(res.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
+            //            $("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+            //
+            //
+            //        }
+            //    });
+            //})
+
+
+            $("#J_trigger_address").on("change", function(){
+               var _checked = this.checked;
+                if(_checked){
+                    wx.openAddress({
+                        success: function(res){
+
+                            if(!/北京/.test(res.provinceName)){
+                                alert("对不起,该商品暂时只支持北京地地区!");
+                            }
+
+                            $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
+                            $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.telNumber);
+                            $("#J_detailInfo").text(res.provinceName+res.cityName+res.countryName+res.detailInfo);
+                            $("input[name='addressProvince']").val(res.provinceName);
+                            $("input[name='addressCity']").val(res.cityName);
+                            $("input[name='addressArea']").val(res.countryName);
+                            $("input[name='addressDetail']").val(res.detailInfo);
+                            //$("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+
+                            //dom操作
+                            $("#J_current_address").removeClass("hide");
+                            $("#J_select_address_btn").prop("checked", true);
+                            $("#J_trigger_address").prop("checked", false)
+                        }
+                    });
+                }
+            })
+
+            $("#J_change_address").on("click", function(){
                 wx.openAddress({
                     success: function(res){
 
+                        if(!/北京/.test(res.provinceName)){
+                            alert("对不起,该商品暂时只支持北京地地区!");
+                        }
+
                         $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
                         $("#J_telNumber").text(res.telNumber); $("input[name='phoneNumber']").val(res.telNumber);
-                        $("#J_recive_adress").text(res.provinceName+" "+res.cityName+" "+res.countryName);
+                        $("#J_detailInfo").text(res.provinceName+res.cityName+res.countryName+res.detailInfo);
                         $("input[name='addressProvince']").val(res.provinceName);
                         $("input[name='addressCity']").val(res.cityName);
                         $("input[name='addressArea']").val(res.countryName);
-                        $("#J_detailInfo").text(res.detailInfo); $("input[name='addressDetail']").val(res.detailInfo);
-                        $("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+                        $("input[name='addressDetail']").val(res.detailInfo);
+                        //$("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
 
-
+                        //dom操作
+                        $("#J_current_address").removeClass("hide");
+                        $("#J_select_address_btn").prop("checked", true);
+                        $("#J_trigger_address").prop("checked", false)
                     }
                 });
             })
+
         });
 
     }
@@ -106,7 +163,7 @@ module.exports = function(ctx, tpl){
         $("#J_pay").on("click", function(){
 
             var _this = $(this);
-            if(!$("input[name='addressProvince']").val()){
+            if(!$("#J_select_address_btn").prop("checked")){
                 alert("请填写收货人信息");
                 return;
             }
@@ -165,7 +222,7 @@ module.exports = function(ctx, tpl){
     getAccess();
 
     wx.ready(function(){
-        bindGetAdress(wx);
+        bindGetAdress();
 
     });
 
