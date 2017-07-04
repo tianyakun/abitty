@@ -33,8 +33,10 @@ public class AuthenticationController {
             HttpSession session = request.getSession();
             logger.info("auth sessionId={}", session.getId());
 
-            for (Cookie cookie : request.getCookies()) {
-                logger.info("auth cookie: name={} value={}", cookie.getName(), cookie.getValue());
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    logger.info("auth cookie: name={} value={}", cookie.getName(), cookie.getValue());
+                }
             }
 
             TblUser user = (TblUser)session.getAttribute("user");
