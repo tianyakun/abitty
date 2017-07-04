@@ -11,6 +11,7 @@ module.exports = function(ctx, tpl){
     }).done(function(res){
         if(res.retCode == 000000){
             page.redirect("/view/supports");
+            //page({dispatch: false});
         }else{
             render(tpl);
             bind();

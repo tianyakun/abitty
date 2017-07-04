@@ -697,6 +697,9 @@ em {
 .slider-wrapper ul li {
   background-color: #fff;
 }
+.support-wrapper {
+  margin-top: 10px;
+}
 .support-wrapper h3 {
   font-size: 1.5rem;
   color: #333;
@@ -1023,6 +1026,13 @@ em {
 .adress-wrapper p {
   font-size: 1.4rem;
   color: #333;
+}
+.adress-wrapper .item-book-adress-info {
+  width: 100%;
+}
+.adress-wrapper .item-book-adress-info input[type='checkbox'] {
+  margin-top: -1px;
+  margin-right: 1.1rem;
 }
 .adress-wrapper .item-book-adress-info td {
   padding: 1.2rem 0;

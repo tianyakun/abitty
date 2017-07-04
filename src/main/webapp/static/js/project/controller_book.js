@@ -119,6 +119,8 @@ module.exports = function(ctx, tpl){
                             $("input[name='addressArea']").val(res.countryName);
                             $("input[name='addressDetail']").val(res.detailInfo);
                             //$("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+                            $("input[name='postcode']").val(res.postalCode);
+
 
                             //dom操作
                             $("#J_current_address").removeClass("hide");
@@ -145,6 +147,7 @@ module.exports = function(ctx, tpl){
                         $("input[name='addressArea']").val(res.countryName);
                         $("input[name='addressDetail']").val(res.detailInfo);
                         //$("#J_postalCode").text(res.postalCode); $("input[name='postcode']").val(res.postalCode);
+                        $("input[name='postcode']").val(res.postalCode);
 
                         //dom操作
                         $("#J_current_address").removeClass("hide");
