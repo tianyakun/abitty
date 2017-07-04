@@ -39,8 +39,6 @@ public class AuthenticationController {
             HttpSession session = request.getSession();
             logger.info("auth sessionId={}", session.getId());
 
-
-
             TblUser user = (TblUser)session.getAttribute("user");
 
             if(user != null){  //判断用户是否存在，不存在返回登录界面，继续拦截，存在通过拦截，放行到访问页面

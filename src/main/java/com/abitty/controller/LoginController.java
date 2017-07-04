@@ -73,7 +73,7 @@ public class LoginController {
 
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("user", tblUser);
-                session.setAttribute("uid", tblUser.getUid());
+//                session.setAttribute("uid", tblUser.getUid());
 
                 logger.info("login JSESSIONID={}", session.getId());
 
