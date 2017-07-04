@@ -76,9 +76,9 @@ public class LoginController {
                 session.setAttribute("uid", tblUser.getUid());
 
                 Cookie cookie = new Cookie("JSESSIONID", session.getId());
-
+                cookie.setSecure(true);
+                cookie.setHttpOnly(true);
                 cookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
-
                 cookie.setPath("/");
 
                 response.addCookie(cookie);
