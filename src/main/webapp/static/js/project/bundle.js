@@ -1862,8 +1862,10 @@ module.exports = function(ctx, tpl){
                     wx.openAddress({
                         success: function(res){
 
-                            if(!/北京/.test(res.provinceName)){
+                            if(/北京/.test(res.provinceName)){
+                                $("#J_trigger_address").prop("checked", false)
                                 alert("对不起,该商品暂时只支持北京地地区!");
+                                return;
                             }
 
                             $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
@@ -1890,8 +1892,10 @@ module.exports = function(ctx, tpl){
                 wx.openAddress({
                     success: function(res){
 
-                        if(!/北京/.test(res.provinceName)){
+                        if(/北京/.test(res.provinceName)){
+                            $("#J_trigger_address").prop("checked", false)
                             alert("对不起,该商品暂时只支持北京地地区!");
+                            return;
                         }
 
                         $("#J_userName").text(res.userName); $("input[name='receiverName']").val(res.userName);
@@ -2585,7 +2589,7 @@ module.exports = "<section class=pro-page> <div class=page-tip> <div class=page-
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"book-wrapper-box has-bottom-fixed\"> <section class=\"item-list order-result\"> <ul> <li> <div class=item-hd> <div><img src=\"{{=it.icon}}\"/></div> </div> <div class=item-bd> <h3>{{=it.name}}</h3> <p> <span>¥{{=it.totalAmount}}</span> </p> </div> </li> <li class=order-info> <div class=item-bd> <table class=item-book-info> <tr> <td class=label>定几个月:</td> <td class=des>{{=it.totalMouth}}个月(4次)</td> </tr> <tr> <td>每次件数:</td> <td>{{=it.subQuantity}}件</td> </tr> <tr> <td>备注:</td> <td><p class=remark-des>{{? it.remark}}{{=it.remark}}{{??}}暂无{{?}}</p></td> </tr> </table> </div> </li> </ul> </section> <section class=\"order-result adress-wrapper\"> <ul> <li class=\"order-info order-info2\"> <div class=item-bd> <h4>收件人信息</h4> <table class=item-book-adress-info> <tr id=J_current_address class=hide> <td class=label><input id=J_select_address_btn type=checkbox></td> <td> <p><span id=J_userName>穆先生</span> <span id=J_telNumber>18555555555</span> <span id=J_change_address class=change-address>[修改地址]</span></p> <p id=J_detailInfo>地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p> </td> </tr> <tr> <td class=label><input id=J_trigger_address type=checkbox></td> <td><p>使用新地址</p></td> </tr> </table> </div> </li> </ul> </section> <section class=\"buttom-fixed buttom-control-wrap flex-row\"> <span><label>总价:</label> ¥{{= it.totalAmount}}</span> <a id=J_pay>支付</a> </section> </section> ";
+module.exports = "<section class=\"book-wrapper-box has-bottom-fixed\"> <section class=\"item-list order-result\"> <ul> <li> <div class=item-hd> <div><img src=\"{{=it.icon}}\"/></div> </div> <div class=item-bd> <h3>{{=it.name}}</h3> <p> <span>¥{{=it.totalAmount}}</span> </p> </div> </li> <li class=order-info> <div class=item-bd> <table class=item-book-info> <tr> <td class=label>定几个月:</td> <td class=des>{{=it.totalMouth}}个月(4次)</td> </tr> <tr> <td>每次件数:</td> <td>{{=it.subQuantity}}件</td> </tr> <tr> <td>备注:</td> <td><p class=remark-des>{{? it.remark}}{{=it.remark}}{{??}}暂无{{?}}</p></td> </tr> </table> </div> </li> </ul> </section> <section class=\"order-result adress-wrapper\"> <ul> <li class=\"order-info order-info2\"> <div class=item-bd> <h4>收件人信息</h4> <table class=item-book-adress-info> <tr id=J_current_address class=hide> <td class=label><input id=J_select_address_btn type=checkbox></td> <td> <p><span id=J_userName>穆先生</span> <span id=J_telNumber>18555555555</span> <span id=J_change_address class=change-address>[修改地址]</span></p> <p id=J_detailInfo>地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p> </td> </tr> <tr> <td class=label><input id=J_trigger_address type=checkbox></td> <td><p>使用新地址</p></td> </tr> </table> </div> <input type=hidden name=receiverName> <input type=hidden name=phoneNumber> <input type=hidden name=addressProvince> <input type=hidden name=addressCity> <input type=hidden name=addressArea> <input type=hidden name=addressDetail> <input type=hidden name=postcode> </li> </ul> </section> <section class=\"buttom-fixed buttom-control-wrap flex-row\"> <span><label>总价:</label> ¥{{= it.totalAmount}}</span> <a id=J_pay>支付</a> </section> </section> ";
 
 /***/ }),
 /* 23 */
