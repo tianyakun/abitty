@@ -254,20 +254,29 @@ em {
   display: block;
 }
 .item-list .item-bd {
-  padding: 1.7rem 0 0.9rem 0;
+  padding: 1.2rem 0 0.9rem 0;
   border-bottom: 1px solid #e8e9ea;
   text-align: center;
 }
 .item-list .item-bd h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  padding: 0 4px;
+  font-size: 1.4rem;
   line-height: 22px;
   color: #000;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 .item-list .item-bd span:first-child {
   color: #eb4f4e;
-  font-size: 2rem;
+  font-size: 1.6rem;
+}
+.item-list .item-bd span:first-child em {
+  font-size: 1.2rem;
+  margin-right: 4px;
 }
 .item-list .item-ft {
   display: -webkit-box;
@@ -289,6 +298,13 @@ em {
 }
 .item-list .item-ft span:first-child {
   border-right: 1px solid #e8e9ea;
+}
+.product-list ul li .item-bd {
+  box-sizing: border-box;
+  text-align: left;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .login-form,
 .page-item-form {
@@ -455,6 +471,7 @@ em {
   width: 100%;
   left: 0;
   bottom: 0;
+  z-index: 10;
 }
 .flex-row {
   display: -webkit-flex;
@@ -493,10 +510,10 @@ em {
 }
 .progress_wrapper {
   box-sizing: border-box;
-  padding-left: 0.8rem;
-  padding-top: 1.2rem;
   background-color: rgba(255, 255, 255, 0.6);
   height: 4.7rem;
+  line-height: 4.7rem;
+  text-align: center;
   width: 23.5rem;
   margin-left: -11.75rem;
 }
@@ -599,22 +616,6 @@ em {
 }
 .order-result {
   margin-bottom: 1rem;
-}
-.order-result,
-.adress-wrapper {
-  background-color: #fff;
-}
-.adress-wrapper {
-  padding: 1.3rem 1.5rem 1.2rem;
-}
-.adress-wrapper h3 {
-  font-size: 1.4rem;
-  color: #333;
-  margin-bottom: 2.5rem;
-}
-.adress-wrapper p {
-  font-size: 1.4rem;
-  color: #333;
 }
 .start-service {
   padding-top: 3.6rem;

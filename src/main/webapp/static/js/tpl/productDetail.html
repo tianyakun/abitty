@@ -1,92 +1,74 @@
-<section class="item-list order-result has-bottom-fixed" >
-    <ul>
-        <li>
-            <div class="item-hd">
-                <div><img src="{{=it.icon}}" /></div>
-            </div>
-            <div class="item-bd">
-                <h3>{{=it.name}}</h3>
-                <p>
-                    <span>¥{{=it.totalAmount}}</span>
-                </p>
-            </div>
-        </li>
-        <li class="order-info" >
-            <div class="item-bd">
-                <p>定几个月: {{=it.totalMouth}}个月(4次)</p>
-                <p>每次件数: {{=it.subQuantity}}件</p>
-                <p>备注: {{=it.remark}}</p>
-            </div>
-        </li>
-        <li class="order-info set-adress">
-            <!--<input type="checkbox"> <label for="">使用新地址</label>-->
-            <div class="item-bd">
-            <p>联系人: <span id="J_userName"></span></p>
-            <p>手机号码: <span id="J_telNumber"></span></p>
-            <p>收获地区: <span id="J_recive_adress"></span></p>
-            <p>详细地址: <span id="J_detailInfo"></span></p>
-            <p>邮编: <span id="J_postalCode"></span></p>
-            </div>
-            <div class="item-bd">
-            <p id="J_get_adress">收获人信息+</p>
-            <div class="user-adress-wrapper">
-            <input type="hidden" name="receiverName">
-            <input type="hidden" name="phoneNumber">
-            <input type="hidden" name="addressProvince" >
-            <input type="hidden" name="addressCity" >
-            <input type="hidden" name="addressArea" >
-            <input type="hidden" name="addressDetail" >
-            <input type="hidden" name="postcode" >
-            </div>
-            </div>
-        </li>
-    </ul>
-</section>
+<section class="book-wrapper-box has-bottom-fixed">
+    <section class="item-list order-result" >
+        <ul>
+            <li>
+                <div class="item-hd">
+                    <div><img src="{{=it.icon}}" /></div>
+                </div>
+                <div class="item-bd">
+                    <h3>{{=it.name}}</h3>
+                    <p>
+                        <span>¥{{=it.totalAmount}}</span>
+                    </p>
+                </div>
+            </li>
+            <li class="order-info" >
+                <div class="item-bd">
+                    <table class="item-book-info">
+                        <tr>
+                            <td class="label">定几个月:</td>
+                            <td class="des">{{=it.totalMouth}}个月(4次)</td>
+                        </tr>
+                        <tr>
+                            <td>每次件数:</td>
+                            <td>{{=it.subQuantity}}件</td>
+                        </tr>
+                        <tr>
+                            <td>备注:</td>
+                            <td><p class="remark-des">{{? it.remark}}{{=it.remark}}{{??}}暂无{{?}}</p></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </li>
+
+        </ul>
+    </section>
+
+    <section class="order-result adress-wrapper">
+        <ul>
+            <li class="order-info order-info2" >
+                <div class="item-bd">
+                    <h4>收件人信息</h4>
+                    <table class="item-book-adress-info">
+                        <tr id="J_current_address" class="hide">
+                            <td class="label" ><input id="J_select_address_btn" type="checkbox"></td>
+                            <td >
+                                <p><span id="J_userName">穆先生</span> <span id="J_telNumber">18555555555</span> <span id="J_change_address" class="change-address">[修改地址]</span></p>
+                                <p id="J_detailInfo">地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址地址</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label"><input id="J_trigger_address" type="checkbox"></td>
+                            <td><p>使用新地址</p></td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="hidden" name="receiverName">
+                <input type="hidden" name="phoneNumber">
+                <input type="hidden" name="addressProvince" >
+                <input type="hidden" name="addressCity" >
+                <input type="hidden" name="addressArea" >
+                <input type="hidden" name="addressDetail" >
+                <input type="hidden" name="postcode" >
+            </li>
+        </ul>
+
+    </section>
 
 
-<!--<section class="adress-wrapper has-bottom-fixed">-->
-    <!--<h3>收件人信息</h3>-->
-    <!--<ul>-->
-        <!--<li >-->
-            <!--<input type="checkbox">-->
-            <!--<div>-->
-                <!--<p>穆先生</p>-->
-                <!--<p>18558086808</p>-->
-                <!--<p>[修改地址]</p>-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<p>北京市朝阳区磨房北里178号是云好听5号楼1单元103是</p>-->
-            <!--</div>-->
-        <!--</li>-->
-        <!--<li class="order-info set-adress">-->
-            <!--<input type="checkbox"> <label for="">使用新地址</label>-->
-            <!--&lt;!&ndash;<div class="item-bd">&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>联系人: <span id="J_userName"></span></p>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>手机号码: <span id="J_telNumber"></span></p>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>收获地区: <span id="J_recive_adress"></span></p>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>详细地址: <span id="J_detailInfo"></span></p>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p>邮编: <span id="J_postalCode"></span></p>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="item-bd">&ndash;&gt;-->
-                <!--&lt;!&ndash;<p id="J_get_adress">收获人信息+</p>&ndash;&gt;-->
-                <!--&lt;!&ndash;<div class="user-adress-wrapper">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="receiverName">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="phoneNumber">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="addressProvince" >&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="addressCity" >&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="addressArea" >&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="addressDetail" >&ndash;&gt;-->
-                    <!--&lt;!&ndash;<input type="hidden" name="postcode" >&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</li>-->
-
-    <!--</ul>-->
-<!--</section>-->
-<!--<section class="product-des has-bottom-fixed">-->
-<!--<img src="{{=it.des}}" width="100%" />-->
-<!--</section>-->
-<section class="buttom-fixed buttom-control-wrap flex-row">
-    <span><label>总价:</label> ¥{{= it.totalAmount}}</span>
-    <a id="J_pay">支付</a>
+    <section class="buttom-fixed buttom-control-wrap flex-row">
+        <span><label>总价:</label> ¥{{= it.totalAmount}}</span>
+        <a id="J_pay">支付</a>
+    </section>
 </section>

@@ -112,6 +112,7 @@
   }
 }
 .support-wrapper{
+  margin-top: 10px;
   h3{
     font-size: 30/@base;
     color: #333;
@@ -284,7 +285,6 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
     color: #e5e5e5;
     -webkit-transform-origin: 0 100%;
     transform-origin: 0 100%;
@@ -364,13 +364,48 @@
       padding: 0;
 
     }
-    p{
-      border-top: 1px dashed #dcdcdc;
+    .item-book-info{
+      width: 100%;
+      padding: 0 10/@base;
+
       color: #666;
       font-size: 28/@base;
       text-align: left;
       height: 68/@base;
-      line-height: 68/@base;
+      //line-height: 68/@base;
+      td{
+        position: relative;
+        &:before{
+          border-top: 1px dashed #dcdcdc;
+          content: " ";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          color: #e5e5e5;
+          -webkit-transform-origin: 0 100%;
+          transform-origin: 0 100%;
+          -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+          z-index: 2;
+        }
+      }
+      .remark-des{
+        line-height: 28/@base;
+      }
+      td{
+        padding: 20/@base 0;
+        .remark-des{
+          line-height: 24px;
+        }
+      }
+      .label{
+        width: 134/@base;
+        //display: inline-block;
+      }
+      .des{
+        //display: inline-block;
+      }
     }
   }
 }
@@ -414,4 +449,78 @@
     display: block;
     width: 100%;
   }
+}
+.book-wrapper-box{
+  background-color: #f4f4f4;
+}
+
+
+.order-result, .adress-wrapper{
+  background-color: #fff;
+}
+.adress-wrapper{
+  padding-top: 30/@base;
+  h4{
+    font-size: 28/@base;
+    color: #333;
+    margin-bottom: 10/@base;
+  }
+  p{
+    font-size: 28/@base;
+    color: #333;
+  }
+  .item-book-adress-info{
+    .label{
+      width: 50/@base;
+    }
+    width: 100%;
+    input[type='checkbox']{
+      margin-top: -1px;
+    }
+    td{
+
+      padding: 24/@base 0;
+      position: relative;
+      font-size: 28/@base;
+      &:after{
+        border-top: 1px solid #dcdcdc;
+        content: " ";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #e5e5e5;
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        z-index: 2;
+
+      }
+
+      p{
+        line-height: 42/@base;
+      }
+    }
+    .change-address{
+      float: right;
+      color: @color;
+    }
+    tr{
+      &:last-child{
+        td:after{
+          display: none;
+        }
+      }
+    }
+  }
+}
+.order-result ul .order-info2{
+  padding: 0;
+  .item-bd{
+    padding: 0 20/@base;
+  }
+}
+.hide{
+  display: none;
 }
