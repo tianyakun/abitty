@@ -509,10 +509,10 @@ em {
 }
 .progress_wrapper {
   box-sizing: border-box;
-  padding-left: 0.8rem;
-  padding-top: 1.2rem;
   background-color: rgba(255, 255, 255, 0.6);
   height: 4.7rem;
+  line-height: 4.7rem;
+  text-align: center;
   width: 23.5rem;
   margin-left: -11.75rem;
 }
