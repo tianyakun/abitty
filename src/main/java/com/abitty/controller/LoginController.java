@@ -89,6 +89,7 @@ public class LoginController {
                 responseDto.setRetCode(ExceptionEnum.SUCCESS.getErrorCode());
                 responseDto.setRetMsg(ExceptionEnum.SUCCESS.getErrorMsg());
                 responseDto.setChineseMsg(ExceptionEnum.SUCCESS.getChineseMessage());
+                responseDto.addAttribute("uid", tblUser.getUid());
             }
         } catch (Exception e) {
             logger.error("用户登录异常", e);
