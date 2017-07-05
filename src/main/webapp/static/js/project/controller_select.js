@@ -175,15 +175,15 @@ module.exports = function(ctx, tpl){
     function render(tpl){
         var currentBook = window.sessionStorage["currentBook"];
         if(!currentBook){
-            location = "/myService";
+            page.redirect('/view/supports');
             return;
         }
 
         currentBook = JSON.parse(currentBook);
 
         var html = $Prime.render(tpl.select, currentBook);
-        $Config = $.extend($Config, {back: true, title: "一点生活"})
-        var topBarHtml = $Prime.render(tpl.topBar, $Config);
+        $Config = $.extend($Config, {back: true, title: "一点生活", uid: window.localStorage["uid"] })
+        var topBarHtml = $Prime.render(tpl.topBar, $Config );
         var pageTip = $Prime.render(tpl.pageTip, {pageTip: "填写需求"});
         html = topBarHtml + pageTip + html;
         $Prime.SPAWrapper("app").html(html);

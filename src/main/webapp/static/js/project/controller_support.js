@@ -18,7 +18,7 @@ module.exports = function(ctx, tpl){
         var html, topBarHtml;
 
         html = $Prime.render(tpl.supports, res.data);
-        $Config = $.extend($Config, {title: "一点生活"});
+        $Config = $.extend($Config, {title: "一点生活", uid: window.localStorage["uid"]});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'supports'});
         html = topBarHtml+html + buttomTabHtml;

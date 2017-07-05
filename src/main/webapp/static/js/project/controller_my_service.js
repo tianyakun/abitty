@@ -2,8 +2,8 @@ module.exports = function(ctx, tpl){
     function render(tpl, res){
         var html = $Prime.render(tpl.myService, res.data);
         if(res.data.list.length != 0){
-            $Config = $.extend($Config, {back: false, title: ""});
-            var topBarHtml = $Prime.render(tpl.topBar, $Config);
+            $Config = $.extend($Config, {back: false, title: "", uid: window.localStorage["uid"] } );
+            var topBarHtml = $Prime.render(tpl.topBar, $Config );
             var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'myservice'});
             html = topBarHtml+html+ buttomTabHtml;
         }
