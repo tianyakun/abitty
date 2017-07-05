@@ -73,19 +73,16 @@ public class LoginController {
 
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("user", tblUser);
-//                session.setAttribute("uid", tblUser.getUid());
 
-                logger.info("login JSESSIONID={}", session.getId());
+                Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
+                sessionCookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
+                sessionCookie.setPath("/");
+                response.addCookie(sessionCookie);
 
-//                Cookie cookie = new Cookie("JSESSIONID", session.getId());
-//                cookie.setSecure(true);
-//                cookie.setHttpOnly(true);
-//                cookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
-//                response.addCookie(cookie);
-//                cookie.setPath("/");
-
-
-
+                Cookie uidCookie = new Cookie("uid", tblUser.getUid());
+                uidCookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
+                uidCookie.setPath("/");
+                response.addCookie(uidCookie);
 
                 logger.info("用户登录成功 user={}", session.getAttribute("user"));
 

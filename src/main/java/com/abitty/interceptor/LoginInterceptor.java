@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         String url = requestUri.substring(contextPath.length()); //请求页面
 
         logger.info("登录拦截器处理请求: requestUri={}", requestUri);
+
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                logger.info("interceptor cookie: name={} value={}", cookie.getName(), cookie.getValue(), cookie.getPath());
+            }
+        }
 
         HttpSession session = request.getSession();
 

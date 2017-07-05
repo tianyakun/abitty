@@ -14,9 +14,7 @@ import java.util.List;
 public class IndexController {
     @RequestMapping("")
     public ModelAndView index(Model model) {
-        ModelAndView modelAndView = new ModelAndView("index");
-        model.addAttribute("name", "风清扬");
-        return modelAndView;
+        return new ModelAndView("redirect:/view/supports");
     }
 
 }
