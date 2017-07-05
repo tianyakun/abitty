@@ -30,14 +30,7 @@ public class AuthenticationController {
         ResponseDto responseDto = new ResponseDto();
 
         try {
-            if (request.getCookies() != null) {
-                for (Cookie cookie : request.getCookies()) {
-                    logger.info("auth cookie: name={} value={}", cookie.getName(), cookie.getValue(), cookie.getPath());
-                }
-            }
-
             HttpSession session = request.getSession();
-            logger.info("auth sessionId={}", session.getId());
 
             TblUser user = (TblUser)session.getAttribute("user");
 

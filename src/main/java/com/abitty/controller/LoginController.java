@@ -80,7 +80,7 @@ public class LoginController {
                 response.addCookie(sessionCookie);
 
                 Cookie uidCookie = new Cookie("uid", tblUser.getUid());
-                uidCookie.setMaxAge(7 * 24 * 3600);  // 客户端的JSESSIONID保存7天
+                uidCookie.setMaxAge(7 * 24 * 3600);  // 客户端的uid保存7天
                 uidCookie.setPath("/");
                 response.addCookie(uidCookie);
 
