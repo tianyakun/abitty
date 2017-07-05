@@ -1719,11 +1719,10 @@ module.exports = {
         return null; //返回参数值
     },
     isAccess: function(res){
-        console.log(typeof res);
         var b = false;
         if(res.retCode == 100009){
             var redirect = window.location.href;
-           // window.location.href = "/loginIndex?redirect="+redirect;
+            window.localStorage["uid"] = "";
             page.redirect("/view/login?redirect="+redirect);
             b = true;
             console.log('登陆失效...');
@@ -1764,9 +1763,9 @@ module.exports = function(ctx, tpl){
 
     function render(tpl, res){
         var data = JSON.parse(window.sessionStorage.currentBook);
-        $Config = $.extend($Config, {back: true, title: "一点生活"});
+        $Config = $.extend($Config, {back: true, title: "一点生活", uid: window.localStorage["uid"] });
         var html = $Prime.render(tpl.products.detail, data);
-        var topBarHtml = $Prime.render(tpl.topBar, $Config);
+        var topBarHtml = $Prime.render(tpl.topBar, $Config );
         html = topBarHtml+html;
         $Prime.SPAWrapper("app").html(html);
     }
@@ -2046,8 +2045,8 @@ module.exports = function(ctx, tpl){
     function render(tpl, res){
         var html = $Prime.render(tpl.myService, res.data);
         if(res.data.list.length != 0){
-            $Config = $.extend($Config, {back: false, title: ""});
-            var topBarHtml = $Prime.render(tpl.topBar, $Config);
+            $Config = $.extend($Config, {back: false, title: "", uid: window.localStorage["uid"] } );
+            var topBarHtml = $Prime.render(tpl.topBar, $Config );
             var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'myservice'});
             html = topBarHtml+html+ buttomTabHtml;
         }
@@ -2130,7 +2129,7 @@ module.exports = function(ctx, tpl){
          var title, html, topBarHtml;
          title  = $Prime.getUrlParam("title");
          html = $Prime.render(tpl.products.list, res.data);
-         $Config = $.extend($Config, {back: true, title: title});
+         $Config = $.extend($Config, {back: true, title: title, uid: window.localStorage["uid"]});
          topBarHtml = $Prime.render(tpl.topBar, $Config);
          html = topBarHtml+html;
          $Prime.SPAWrapper("app").html(html);
@@ -2332,15 +2331,15 @@ module.exports = function(ctx, tpl){
     function render(tpl){
         var currentBook = window.sessionStorage["currentBook"];
         if(!currentBook){
-            location = "/myService";
+            page.redirect('/view/supports');
             return;
         }
 
         currentBook = JSON.parse(currentBook);
 
         var html = $Prime.render(tpl.select, currentBook);
-        $Config = $.extend($Config, {back: true, title: "一点生活"})
-        var topBarHtml = $Prime.render(tpl.topBar, $Config);
+        $Config = $.extend($Config, {back: true, title: "一点生活", uid: window.localStorage["uid"] })
+        var topBarHtml = $Prime.render(tpl.topBar, $Config );
         var pageTip = $Prime.render(tpl.pageTip, {pageTip: "填写需求"});
         html = topBarHtml + pageTip + html;
         $Prime.SPAWrapper("app").html(html);
@@ -2375,7 +2374,7 @@ module.exports = function(ctx, tpl){
         var html, topBarHtml;
 
         html = $Prime.render(tpl.supports, res.data);
-        $Config = $.extend($Config, {title: "一点生活"});
+        $Config = $.extend($Config, {title: "一点生活", uid: window.localStorage["uid"]});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'supports'});
         html = topBarHtml+html + buttomTabHtml;
@@ -2403,7 +2402,7 @@ module.exports = function(ctx, tpl){
 module.exports = function(ctx, tpl){
     function render(tpl){
         var topBarHtml, html;
-        $Config = $.extend($Config, {back: true, title: '个人信息'});
+        $Config = $.extend($Config, {back: true, title: '个人信息', uid: window.localStorage["uid"]});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'user'});
         html = topBarHtml + $Prime.render(tpl.user, $Config) +  buttomTabHtml;
@@ -2438,7 +2437,7 @@ module.exports = function(ctx, tpl){
             "<option {{? it.item.gender == 'f'}}selected{{?}} value=\"f\" >女</option>",
             "<option {{? it.item.gender == 's'}}selected{{?}} value=\"s\" >保密</option>"
         ].join("")
-        $Config = $.extend($Config, {back: true, title: '个人信息'});
+        $Config = $.extend($Config, {back: true, title: '个人信息', uid: window.localStorage["uid"]});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         html = $Prime.render(tpl.user_person, res.data);
         optionHtml = $Prime.render(optionTpl, res.data);
@@ -2930,6 +2929,15 @@ $(function(){
     }
 
 
+    function isUserLogin(ctx, next){
+        if(!window.localStorage["uid"]){
+            page.redirect("/view/login?redirect="+ window.location);
+        }else{
+            next();
+        }
+    }
+
+
     page('/view/login', function(ctx){
        // $Prime.SPAWrapper("app").html("");
         __webpack_require__(39)(ctx, tpl);
@@ -2937,18 +2945,18 @@ $(function(){
     });
 
     //当前用户订购服务列表
-    page('/view/myService', function(ctx){
+    page('/view/myService', isUserLogin, function(ctx){
        // $Prime.SPAWrapper("app").html("");
         __webpack_require__(10)(ctx, tpl);
         setBg("transparent");
     })
 
-    //当前用户订购服务详情
-    page('/view/myService/:id', function(ctx){
-       // $Prime.SPAWrapper("app").html("");
-        __webpack_require__(34)(ctx, tpl);
-        setBg("transparent");
-    })
+    ////当前用户订购服务详情
+    //page('/view/myService/:id', function(ctx){
+    //   // $Prime.SPAWrapper("app").html("");
+    //    require('./controller_my_service_detail')(ctx, tpl);
+    //    setBg("transparent");
+    //})
 
     //APP服务列表 EX: 纸巾,酸奶
     page('/view/supports', function(ctx){
@@ -2968,7 +2976,7 @@ $(function(){
     });
 
     //服务需求填写
-    page('/view/select', isLogin,  function(ctx){
+    page('/view/select', isUserLogin,  function(ctx){
 
        // $Prime.SPAWrapper("app").html("");
         __webpack_require__(12)(ctx, tpl);
@@ -2976,7 +2984,7 @@ $(function(){
     })
 
     //服务下单
-    page('/view/book',  function(ctx){
+    page('/view/book', isUserLogin,  function(ctx){
        // $Prime.SPAWrapper("app").html("");
         __webpack_require__(8)(ctx, tpl);
         setBg("#f4f4f4");
@@ -2997,7 +3005,7 @@ $(function(){
     });
 
 
-    page('/view/user/person', function(ctx){
+    page('/view/user/person', isUserLogin, function(ctx){
        // $Prime.SPAWrapper("app").html("");
         __webpack_require__(15)(ctx, tpl);
         setBg("#f4f4f4");
@@ -3017,12 +3025,7 @@ $(function(){
 module.exports = "<section class=bottom-tab> <a href=\"/view/myService?t={{=new Date().getTime()}}\"> <i class=\"tab-service-icon {{? it.active == 'myservice'}}tab-service-icon-hover{{?}}\"></i> <p>已订购</p> </a> <a href=/view/supports> <i class=\"tab-supports-icon {{? it.active == 'supports'}}tab-supports-icon-hover{{?}}\"></i> <p>商城</p> </a> <a href=/view/user> <i class=\"tab-user-icon {{? it.active == 'user'}}tab-user-icon-hover{{?}}\"></i> <p>我的</p> </a> </section>";
 
 /***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
+/* 34 */,
 /* 35 */
 /***/ (function(module, exports) {
 
@@ -3042,7 +3045,7 @@ module.exports = function(ctx, tpl){
             return;
         }
         var topBarHtml, html;
-        $Config = $.extend($Config, {back: true, title: '一点生活'});
+        $Config = $.extend($Config, {back: true, title: '一点生活', uid: window.localStorage["uid"] });
         topBarHtml = $Prime.render(tpl.topBar, $Config);
 
         html = topBarHtml + $Prime.render( tpl.productsDetail, res.data);
@@ -3098,7 +3101,6 @@ module.exports = function(ctx, tpl){
     }).done(function(res){
         if(res.retCode == 000000){
             page.redirect("/view/supports");
-            //page({dispatch: false});
         }else{
             render(tpl);
             bind();
@@ -3150,11 +3152,12 @@ module.exports = function(ctx, tpl){
                     }
                 }).done(function(res){
                     if(res.retCode == 000000){
+                        window.localStorage["uid"] = res.data.uid;
                         var redirect = getUrlParam("redirect");
                         if(redirect){
-                            location.href = redirect;
+                            page.redirect(redirect);
                         }else{
-                            page.redirect("/view/supports?t=" + new Date().getTime());
+                            page.redirect("/view/supports");
                         }
 
                     }else{

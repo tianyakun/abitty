@@ -1,7 +1,7 @@
 module.exports = function(ctx, tpl){
     function render(tpl){
         var topBarHtml, html;
-        $Config = $.extend($Config, {back: true, title: '个人信息'});
+        $Config = $.extend($Config, {back: true, title: '个人信息', uid: window.localStorage["uid"]});
         topBarHtml = $Prime.render(tpl.topBar, $Config);
         var buttomTabHtml = $Prime.render(tpl.buttomTab, {active: 'user'});
         html = topBarHtml + $Prime.render(tpl.user, $Config) +  buttomTabHtml;

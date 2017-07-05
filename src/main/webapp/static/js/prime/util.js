@@ -14,11 +14,10 @@ module.exports = {
         return null; //返回参数值
     },
     isAccess: function(res){
-        console.log(typeof res);
         var b = false;
         if(res.retCode == 100009){
             var redirect = window.location.href;
-           // window.location.href = "/loginIndex?redirect="+redirect;
+            window.localStorage["uid"] = "";
             page.redirect("/view/login?redirect="+redirect);
             b = true;
             console.log('登陆失效...');

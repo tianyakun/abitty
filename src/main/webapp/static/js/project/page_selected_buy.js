@@ -45,6 +45,15 @@ $(function(){
     }
 
 
+    function isUserLogin(ctx, next){
+        if(!window.localStorage["uid"]){
+            page.redirect("/view/login?redirect="+ window.location);
+        }else{
+            next();
+        }
+    }
+
+
     page('/view/login', function(ctx){
        // $Prime.SPAWrapper("app").html("");
         require('./controller_my_login')(ctx, tpl);
@@ -52,18 +61,18 @@ $(function(){
     });
 
     //当前用户订购服务列表
-    page('/view/myService', function(ctx){
+    page('/view/myService', isUserLogin, function(ctx){
        // $Prime.SPAWrapper("app").html("");
         require('./controller_my_service')(ctx, tpl);
         setBg("transparent");
     })
 
-    //当前用户订购服务详情
-    page('/view/myService/:id', function(ctx){
-       // $Prime.SPAWrapper("app").html("");
-        require('./controller_my_service_detail')(ctx, tpl);
-        setBg("transparent");
-    })
+    ////当前用户订购服务详情
+    //page('/view/myService/:id', function(ctx){
+    //   // $Prime.SPAWrapper("app").html("");
+    //    require('./controller_my_service_detail')(ctx, tpl);
+    //    setBg("transparent");
+    //})
 
     //APP服务列表 EX: 纸巾,酸奶
     page('/view/supports', function(ctx){
@@ -83,7 +92,7 @@ $(function(){
     });
 
     //服务需求填写
-    page('/view/select', isLogin,  function(ctx){
+    page('/view/select', isUserLogin,  function(ctx){
 
        // $Prime.SPAWrapper("app").html("");
         require('./controller_select')(ctx, tpl);
@@ -91,7 +100,7 @@ $(function(){
     })
 
     //服务下单
-    page('/view/book',  function(ctx){
+    page('/view/book', isUserLogin,  function(ctx){
        // $Prime.SPAWrapper("app").html("");
         require('./controller_book')(ctx, tpl);
         setBg("#f4f4f4");
@@ -112,7 +121,7 @@ $(function(){
     });
 
 
-    page('/view/user/person', function(ctx){
+    page('/view/user/person', isUserLogin, function(ctx){
        // $Prime.SPAWrapper("app").html("");
         require('./controller_user_person')(ctx, tpl);
         setBg("#f4f4f4");

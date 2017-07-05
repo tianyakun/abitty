@@ -11,7 +11,6 @@ module.exports = function(ctx, tpl){
     }).done(function(res){
         if(res.retCode == 000000){
             page.redirect("/view/supports");
-            //page({dispatch: false});
         }else{
             render(tpl);
             bind();
@@ -63,11 +62,12 @@ module.exports = function(ctx, tpl){
                     }
                 }).done(function(res){
                     if(res.retCode == 000000){
+                        window.localStorage["uid"] = res.data.uid;
                         var redirect = getUrlParam("redirect");
                         if(redirect){
-                            location.href = redirect;
+                            page.redirect(redirect);
                         }else{
-                            page.redirect("/view/supports?t=" + new Date().getTime());
+                            page.redirect("/view/supports");
                         }
 
                     }else{

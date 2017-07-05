@@ -16,7 +16,7 @@ module.exports = function(ctx, tpl){
          var title, html, topBarHtml;
          title  = $Prime.getUrlParam("title");
          html = $Prime.render(tpl.products.list, res.data);
-         $Config = $.extend($Config, {back: true, title: title});
+         $Config = $.extend($Config, {back: true, title: title, uid: window.localStorage["uid"]});
          topBarHtml = $Prime.render(tpl.topBar, $Config);
          html = topBarHtml+html;
          $Prime.SPAWrapper("app").html(html);

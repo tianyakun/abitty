@@ -8,7 +8,7 @@ module.exports = function(ctx, tpl){
             return;
         }
         var topBarHtml, html;
-        $Config = $.extend($Config, {back: true, title: '一点生活'});
+        $Config = $.extend($Config, {back: true, title: '一点生活', uid: window.localStorage["uid"] });
         topBarHtml = $Prime.render(tpl.topBar, $Config);
 
         html = topBarHtml + $Prime.render( tpl.productsDetail, res.data);
