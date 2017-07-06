@@ -25,7 +25,7 @@ public class EntityDTOUtil {
     public static TblOrderInfo OrderConfirmRequestDtoToTblOrderInfo(OrderConfirmRequestDto requestDto) {
         TblOrderInfo tblOrderInfo = new TblOrderInfo();
 
-        tblOrderInfo.setOrderNo("O" + Sequence.next());
+        tblOrderInfo.setOrderNo("A" + Sequence.next());
         tblOrderInfo.setUid(requestDto.getUid());
         tblOrderInfo.setProductNo(requestDto.getProductNo());
         tblOrderInfo.setServiceAtomCount(requestDto.getServiceAtomCount());

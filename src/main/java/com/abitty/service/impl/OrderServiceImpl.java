@@ -104,7 +104,7 @@ public class OrderServiceImpl implements OrderService{
 
         for (int i = 0; i < tblOrderInfo.getTotalSub(); i++) {
             TblSubOrder tblSubOrder = new TblSubOrder();
-            tblSubOrder.setSubOrderNo("sub" + Sequence.next());
+            tblSubOrder.setSubOrderNo("S" + Sequence.next());
             tblSubOrder.setOrderNo(orderNo);
             tblSubOrder.setProductNo(productNo);
             tblSubOrder.setQuantity(quantity);
