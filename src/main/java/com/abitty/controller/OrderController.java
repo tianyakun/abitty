@@ -250,10 +250,15 @@ public class OrderController {
             TblProduct tblProduct = productService.getByProductNo(input.getProductNo());
             if (tblProduct != null) {
                 vo.setProductName(tblProduct.getProductName());
-                vo.setProductIcon(tblProduct.getIcon());
+//                vo.setProductIcon(tblProduct.getIcon());
+                vo.setProductIcon(tblProduct.getDetail());
             }
 
-            vo.setIntervalDays(getIntervalDays(new Date(), vo.getNextSubTime()));
+            if (vo.getStatus() == AbittyConstants.OrderState.FINISH || vo.getNextSubTime() == null) {
+                vo.setIntervalDays(0);
+            } else {
+                vo.setIntervalDays(getIntervalDays(new Date(), vo.getNextSubTime()));
+            }
             vo.setProgress(getProgess(vo.getIntervalDays(), vo.getDeliveryType()));
 
             return vo;
@@ -261,19 +266,19 @@ public class OrderController {
         return null;
     }
 
-    private int getIntervalDays(Date fDate, Date oDate) {
+    private int getIntervalDays(Date fromDate, Date toDate) {
 
         Calendar aCalendar = Calendar.getInstance();
 
-        aCalendar.setTime(fDate);
+        aCalendar.setTime(fromDate);
 
-        int day1 = aCalendar.get(Calendar.DAY_OF_YEAR);
+        int fromDay = aCalendar.get(Calendar.DAY_OF_YEAR);
 
-        aCalendar.setTime(oDate);
+        aCalendar.setTime(toDate);
 
-        int day2 = aCalendar.get(Calendar.DAY_OF_YEAR);
+        int endDay = aCalendar.get(Calendar.DAY_OF_YEAR);
 
-        return day2 - day1;
+        return endDay <= fromDay ? 0 : endDay - fromDay;
     }
 
     private String getProgess(int intervalDays, String deliveryType) {
